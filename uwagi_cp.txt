@@ -15,7 +15,8 @@
 (nie, bo odrzucony pytania nie bedą grany - ich jakość zasłaba)
 + Czy jedno pytanie może mieć wielu autorów? Jeśli jest tylko jeden autor, to zamiast tabeli autorzy_pytan wystarczy informacja w tabeli pytania. Jeśli możę być wielu autorów, to jest OK. 
 (jedno pytanie może mieć wiele autorów)
-* Miejscowości bedą się powtarzać, powinna być osobna tabela z możliwymi miejscowościami.
++ Miejscowości bedą się powtarzać, powinna być osobna tabela z możliwymi miejscowościami.
+(ulicy pozostają char, bo prawie nigdy nie powtarzaja)
 +- Proszę się zastanowić nad typami, zamiast VARCHAR w wielu przypadkach dobrze użyć VARCHAR(n) z jakimś sensownym ograniczeniem na n. Poza tym jest jeszcze typ TEXT, może będzie lepszy np. dla treści pytań czy opisu turnieju.
 + Czy pytania mogą być wykorzystywane wielokrotnie?(nie)
 + Dlaczego interesują nas tylko poprawne odpowiedzi? Czy nie wystarczy w tabeli pytania_na_turniejach dodać flagi, czy dany zespół odpowiedział poprawnie?
