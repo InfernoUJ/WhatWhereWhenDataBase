@@ -617,7 +617,7 @@ COPY organizacja FROM STDIN DELIMITER ';' NULL 'null';
 
 DROP TABLE IF EXISTS pytania_na_turniejach CASCADE;
 CREATE TABLE pytania_na_turniejach(
-    id_turnieju INT NOT,
+    id_turnieju INT NOT NULL,
     id_pytania INT NOT NULL,
     PRIMARY KEY(id_turnieju, id_pytania),
     numer_pytania INT NOT NULL,
