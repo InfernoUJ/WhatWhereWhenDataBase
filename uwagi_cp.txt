@@ -5,8 +5,8 @@
 */
 
 + Proszę nazywać pliki zgodnie ze specyfikacją.(zrobimy)
-* Nie każda tabela ma klucz główny.
-* Czasami brakuje zapewnienia obowiązkowości atrybutów 
++- Nie każda tabela ma klucz główny.
++- Czasami brakuje zapewnienia obowiązkowości atrybutów 
 (np. w tabeli sklady_w_zespolach).
 * Diagram jest trudny do odczytu, ponieważ nie widać wyraźnie, które tabele są ze sobą połączone.
 + Dla płci zamiast varchar(1) proszę użyć char(1) [lub równoważnie char]. 
