@@ -214,11 +214,28 @@ COPY autorzy_pytan FROM STDIN DELIMITER ';' NULL 'null';
 24;50
 \.
 
+DROP TABLE IF EXISTS miejscowosci CASCADE;
+CREATE TABLE miejscowosci (
+    id SERIAL PRIMARY KEY,
+    nazwa VARCHAR(30) NOT NULL
+);
+
+COPY miejscowosci FROM STDIN DELIMITER ',' NULL 'null';
+0,Łaziska Górne
+1,Zambrów
+2,Oława
+3,Stargard Szczeciński
+4,Koszalin
+\.
+
 
 DROP TABLE IF EXISTS adresy CASCADE;
 CREATE TABLE adresy (
     id SERIAL PRIMARY KEY,
-    miejscowosc VARCHAR NOT NULL,
+    miejscowosc INT NOT NULL,
+    CONSTRAINT fk_miejscowosci_adresy
+        FOREIGN KEY(miejscowosc)
+            REFERENCES miejscowosci(id),
     ulica VARCHAR,
     kod_pocztowy VARCHAR(6) NOT NULL,
     numer_budynku VARCHAR(6),
@@ -226,11 +243,11 @@ CREATE TABLE adresy (
 );
 
 COPY adresy FROM STDIN DELIMITER ',' NULL 'null';
-0,Łaziska Górne,Tęczowa,38-070,33,94
-1,Zambrów,Pałacowa,16-985,30,63
-2,Oława,Wiklinowa,89-563,19,29
-3,Stargard Szczeciński,Dąbrowskiej,36-443,20,17
-4,Koszalin,Chopina,26-751,36,24
+0,0,Tęczowa,38-070,33,94
+1,1,Pałacowa,16-985,30,63
+2,2,Wiklinowa,89-563,19,29
+3,3,Dąbrowskiej,36-443,20,17
+4,4,Chopina,26-751,36,24
 \.
 
 
