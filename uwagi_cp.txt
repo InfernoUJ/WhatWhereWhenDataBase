@@ -1,17 +1,29 @@
+/*
++ ZROBIONE
+* DO ZROBIENIA
++- JESZCZE NIE WSZYSTKO
+*/
+
 + Proszę nazywać pliki zgodnie ze specyfikacją.(zrobimy)
 * Nie każda tabela ma klucz główny.
-* Czasami brakuje zapewnienia obowiązkowości atrybutów (np. w tabeli sklady_w_zespolach).
+* Czasami brakuje zapewnienia obowiązkowości atrybutów 
+(np. w tabeli sklady_w_zespolach).
 * Diagram jest trudny do odczytu, ponieważ nie widać wyraźnie, które tabele są ze sobą połączone.
-+ Dla płci zamiast varchar(1) proszę użyć char(1) [lub równoważnie char]. * * * +- Jeśli jest to atrybut obowiązkowy, to potrzebny jest NOT NULL (nie jest zagwarantowany przez checka).
-* Może zamiast atrybutu ilosc_pytan_odrzuconych, który będzie ulegał częstym zmianom, lepiej przechowywać informację w tabeli pytania z flagą odrzucony/zaakceptowany?
-* Czy jedno pytanie może mieć wielu autorów? Jeśli jest tylko jeden autor, to zamiast tabeli autorzy_pytan wystarczy informacja w tabeli pytania. Jeśli możę być wielu autorów, to jest OK.
++ Dla płci zamiast varchar(1) proszę użyć char(1) [lub równoważnie char]. 
++- Jeśli jest to atrybut obowiązkowy, to potrzebny jest NOT NULL (nie jest zagwarantowany przez checka).
++ Może zamiast atrybutu ilosc_pytan_odrzuconych, który będzie ulegał częstym zmianom, lepiej przechowywać informację w tabeli pytania z flagą odrzucony/zaakceptowany?
+(nie, bo odrzucony pytania nie bedą grany - ich jakość zasłaba)
++ Czy jedno pytanie może mieć wielu autorów? Jeśli jest tylko jeden autor, to zamiast tabeli autorzy_pytan wystarczy informacja w tabeli pytania. Jeśli możę być wielu autorów, to jest OK. 
+(jedno pytanie może mieć wiele autorów)
 * Miejscowości bedą się powtarzać, powinna być osobna tabela z możliwymi miejscowościami.
-* Proszę się zastanowić nad typami, zamiast VARCHAR w wielu przypadkach dobrze użyć VARCHAR(n) z jakimś sensownym ograniczeniem na n. Poza tym jest jeszcze typ TEXT, może będzie lepszy np. dla treści pytań czy opisu turnieju.
++- Proszę się zastanowić nad typami, zamiast VARCHAR w wielu przypadkach dobrze użyć VARCHAR(n) z jakimś sensownym ograniczeniem na n. Poza tym jest jeszcze typ TEXT, może będzie lepszy np. dla treści pytań czy opisu turnieju.
 + Czy pytania mogą być wykorzystywane wielokrotnie?(nie)
-* Dlaczego interesują nas tylko poprawne odpowiedzi? Czy nie wystarczy w tabeli pytania_na_turniejach dodać flagi, czy dany zespół odpowiedział poprawnie?
-* Warto w turnieju dodać różne fazy (np. eliminacje, półfinał, finał).
++ Dlaczego interesują nas tylko poprawne odpowiedzi? Czy nie wystarczy w tabeli pytania_na_turniejach dodać flagi, czy dany zespół odpowiedział poprawnie?
+(jak to Pani chcę przechowywać?)
++ Warto w turnieju dodać różne fazy (np. eliminacje, półfinał, finał).
+(Zrobimy to w opisie)
 * Nie rozumiem, dlaczego w bazie mają się znaleźć tylko zakończone turnieje. Bez tego ograniczenia w trakcie trwania turnieju można uzupełniać na bieżąco wyniki.
-* Dlaczego w tabeli zmiany znajduje się numer_pytania? Czy chodzi o to, po którym pytaniu doszło do zmiany?
++ Dlaczego w tabeli zmiany znajduje się numer_pytania? Czy chodzi o to, po którym pytaniu doszło do zmiany? (tak)
 
 OGÓLNE WRAŻENIE
 Pomysł na projekt jest fajny i ma potencjał, jednak trzeba całość jeszcze dopracować. Moje uwagi są dość pobieżne - spisuję to, co akurat zauważę, więc możliwe, że jest jeszcze sporo kwestii do przemyślenia jeszcze na tym etapie.
