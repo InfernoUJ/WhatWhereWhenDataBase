@@ -48,8 +48,8 @@ COPY uczestnicy FROM STDIN DELIMITER ';' NULL 'null';
 
 DROP TABLE IF EXISTS autor CASCADE;
 CREATE TABLE autor(
-    id_uczestnika INT,
-    ilosc_pytan_odrzuconych INT,
+    id_uczestnika INT PRIMARY KEY,
+    ilosc_pytan_odrzuconych INT NOT NULL DEFAULT 0,
     CONSTRAINT fk_autor_uczestnicy
         FOREIGN KEY(id_uczestnika)
             REFERENCES uczestnicy(id)
@@ -151,7 +151,8 @@ COPY pytania FROM STDIN DELIMITER ';' NULL 'null';
 DROP TABLE IF EXISTS autorzy_pytan CASCADE;
 CREATE TABLE autorzy_pytan (
     id_autora INT,
-    id_pytania int,
+    id_pytania INT,
+    PRIMARY KEY(id_autora, id_pytania),
     CONSTRAINT fk_autorzy_patan_uczestnicy
         FOREIGN KEY(id_autora)
             REFERENCES uczestnicy(id),
@@ -255,7 +256,7 @@ COPY turnieje FROM STDIN DELIMITER ';' NULL 'null';
 DROP TABLE IF EXISTS typy_kar CASCADE;
 CREATE TABLE typy_kar (
     id SERIAL PRIMARY KEY,
-    nazwa VARCHAR(20) UNIQUE
+    nazwa VARCHAR(20) UNIQUE NOT NULL
 );
 
 COPY typy_kar FROM STDIN DELIMITER ',' NULL 'null';
@@ -284,7 +285,7 @@ COPY zespoly FROM STDIN DELIMITER ';' NULL 'null';
 DROP TABLE IF EXISTS "role" CASCADE;
 CREATE TABLE role (
     id SERIAL PRIMARY KEY,
-    nazwa VARCHAR(20) UNIQUE
+    nazwa VARCHAR(20) UNIQUE NOT NULL
 );
 
 COPY "role" FROM STDIN DELIMITER ' ' NULL 'null';
@@ -296,10 +297,11 @@ COPY "role" FROM STDIN DELIMITER ' ' NULL 'null';
 
 DROP TABLE IF EXISTS sklady_w_zespolach CASCADE;
 CREATE TABLE sklady_w_zespolach(
-    id_osoby INT,
-    id_zespolu INT,
-    id_turnieju INT,
-    rola INT,
+    id_osoby INT NOT NULL,
+    id_zespolu INT NOT NULL,
+    id_turnieju INT NOT NULL,
+    rola INT NOT NULL,
+    PRIMARY KEY(id_osoby, id_zespolu, id_turnieju),
     CONSTRAINT fk_sklady_w_zespolach_uczestnicy
         FOREIGN KEY(id_osoby)
             REFERENCES uczestnicy(id),
@@ -379,9 +381,11 @@ COPY sklady_w_zespolach FROM STDIN DELIMITER ';' NULL 'null';
 
 DROP TABLE IF EXISTS kary_dla_zespolow CASCADE;
 CREATE TABLE kary_dla_zespolow(
-    typ_kary INT,
-    id_zespolu INT,
-    id_turnieju INT,
+    -- PRIMARY KEY nie jest potrzebny
+    -- bo po co? - tak nie ma potrzeby(po chwyli przemyślenia)
+    typ_kary INT NOT NULL,
+    id_zespolu INT NOT NULL,
+    id_turnieju INT NOT NULL,
     CONSTRAINT fk_kary_dla_zespolow_typy_kar
         FOREIGN KEY(typ_kary)
             REFERENCES typy_kar(id),
@@ -400,9 +404,9 @@ COPY kary_dla_zespolow FROM STDIN DELIMITER ';' NULL 'null';
 \.
 
 DROP TABLE IF EXISTS nagrody CASCADE;
-    CREATE TABLE nagrody(
+CREATE TABLE nagrody(
     id SERIAL PRIMARY KEY,
-    opis VARCHAR(100) UNIQUE
+    opis VARCHAR(100) UNIQUE NOT NULL
 );
 
 COPY nagrody FROM STDIN DELIMITER ',' NULL 'null';
@@ -413,9 +417,10 @@ COPY nagrody FROM STDIN DELIMITER ',' NULL 'null';
 
 DROP TABLE IF EXISTS nagrody_w_turniejach CASCADE;
 CREATE TABLE nagrody_w_turniejach(
-    id_nagrody INT,
-    id_turnieju INT,
-    miejsce INT,
+    id_nagrody INT NOT NULL,
+    id_turnieju INT NOT NULL,
+    miejsce INT NOT NULL,
+    PRIMARY KEY(id_turnieju, miejsce),
     CONSTRAINT fk_nagrody_w_turniejach_nagrody
         FOREIGN KEY(id_nagrody)
             REFERENCES nagrody(id),
@@ -435,10 +440,12 @@ COPY nagrody_w_turniejach FROM STDIN DELIMITER ';' NULL 'null';
 
 DROP TABLE IF EXISTS zmiany CASCADE;
 CREATE TABLE zmiany (
-    id_turnieju INT,
-    id_zchodzacego INT,
-    id_wchodzacego INT,
-    numer_pytania INT,
+    -- Chyba nie jest portzebny primary key
+    -- trzeba tylko trigger dodać
+    id_turnieju INT NOT NULL,
+    id_zchodzacego INT NOT NULL,
+    id_wchodzacego INT NOT NULL,
+    numer_pytania INT NOT NULL,
     CONSTRAINT fk_zmiany_turnieje
         FOREIGN KEY(id_turnieju)
             REFERENCES turnieje(id),
@@ -455,9 +462,10 @@ COPY zmiany FROM STDIN DELIMITER ';' NULL 'null';
 
 DROP TABLE IF EXISTS poprawne_odpowiedzi CASCADE;
 CREATE TABLE poprawne_odpowiedzi(
-    id_turnieju INT,
-    id_zespolu INT,
-    numer_pytania INT,
+    id_turnieju INT NOT NULL,
+    id_zespolu INT NOT NULL,
+    numer_pytania INT NOT NULL,
+    PRIMARY KEY(id_turnieju, id_zespolu, numer_pytania),
     CONSTRAINT fk_poprawne_odpowiedzi_turnieje
         FOREIGN KEY(id_turnieju)
             REFERENCES turnieje(id),
@@ -590,7 +598,7 @@ COPY poprawne_odpowiedzi FROM STDIN DELIMITER ';' NULL 'null';
 
 DROP TABLE IF EXISTS organizacja CASCADE;
 CREATE TABLE organizacja(
-    id_turnieju INT,
+    id_turnieju INT PRIMARY KEY,
     sedzia_glowny INT,
     organizator VARCHAR(30) NOT NULL,
     CONSTRAINT fk_organizacja_turnieje
@@ -609,8 +617,9 @@ COPY organizacja FROM STDIN DELIMITER ';' NULL 'null';
 
 DROP TABLE IF EXISTS pytania_na_turniejach CASCADE;
 CREATE TABLE pytania_na_turniejach(
-    id_turnieju INT,
-    id_pytania INT,
+    id_turnieju INT NOT,
+    id_pytania INT NOT NULL,
+    PRIMARY KEY(id_turnieju, id_pytania),
     numer_pytania INT NOT NULL,
     CONSTRAINT fk_pytania_na_turniejach_turnieje
         FOREIGN KEY(id_turnieju)
