@@ -220,7 +220,7 @@ CREATE TABLE adresy (
     miejscowosc VARCHAR NOT NULL,
     ulica VARCHAR,
     kod_pocztowy VARCHAR(6) NOT NULL,
-    numer_budynku varchar(6) NOT NULL,
+    numer_budynku VARCHAR(6),
     numer_mieszkania VARCHAR(6)
 );
 
