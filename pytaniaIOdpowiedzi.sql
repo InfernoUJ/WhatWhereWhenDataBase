@@ -267,8 +267,8 @@ COPY typy_kar FROM STDIN DELIMITER ',' NULL 'null';
 DROP TABLE IF EXISTS zespoly CASCADE;
 CREATE TABLE zespoly(
     id SERIAL PRIMARY KEY,
-    nazwa VARCHAR(20) UNIQUE,
-    data_zalozenia DATE,
+    nazwa VARCHAR(20) NOT NULL,
+    data_zalozenia DATE NOT NULL DEFAULT CURRENT_DATE,
     data_likwidacji DATE,
     CHECK (data_likwidacji > data_zalozenia)
 );
