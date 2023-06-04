@@ -1,5 +1,7 @@
 begin;
 
+SELECT 'TWROZENIE TABELE I INSERTOWANIE DANYCH';
+
 DROP TABLE IF EXISTS uczestnicy CASCADE;
 CREATE TABLE uczestnicy (
     id SERIAL PRIMARY KEY,
@@ -701,6 +703,17 @@ COPY pytania_na_turniejach FROM STDIN DELIMITER ';' NULL 'null';
 
 commit;
 
+begin;
+
+SELECT 'TWROZENIE WIDOKOW';
+CREATE OR REPLACE VIEW role_zaangazowane AS
+    SELECT id 
+    FROM "role"
+    WHERE id < 3;
+
+commit;
+
+
 -- Dodanie triggerów do
 -- pytania_na_turniejach
 begin;
@@ -842,4 +855,27 @@ DROP TRIGGER IF EXISTS zmniejszanie_numerow_pytan ON pytania_na_turniejach;
 CREATE TRIGGER zmniejszanie_numerow_pytan AFTER DELETE ON pytania_na_turniejach
 FOR EACH ROW EXECUTE PROCEDURE zmniejsz_numer_pytan();
 
+
+CREATE OR REPLACE FUNCTION sprawdz_autora_pytania()
+RETURNS TRIGGER
+AS $$
+DECLARE 
+    autor_id INTEGER;
+BEGIN
+    autor_id := (SELECT id_autora FROM autorzy_pytan WHERE id_pytania = NEW.id_pytania);
+    IF (SELECT TRUE 
+        FROM sklady_w_zespolach 
+        WHERE id_turnieju=NEW.id_turnieju 
+        AND id_osoby=autor_id
+        AND rola IN (SELECT id FROM role_zaangazowane))
+    THEN
+        RAISE EXCEPTION 'Autor pytania o id % jest zaangażowany w turniej o id %', NEW.id_pytania, NEW.id_turnieju;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS sprawdzanie_autora_pytania ON pytania_na_turniejach;
+CREATE TRIGGER sprawdzanie_autora_pytania BEFORE INSERT ON pytania_na_turniejach
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_autora_pytania();
 commit;

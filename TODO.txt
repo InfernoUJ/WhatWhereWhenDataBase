@@ -2,4 +2,4 @@ DONE(ulicy będą przechowane charem - bo one prwie nigdy się nie powtarzają)
 Rozdielic tabele adresy: 
     - zamiast przechowywania nazw ulic, miast i t.d. przechowujemy numery ID do tabeli adresow, miast
 
-Zrobić trigger na insert do "zmiany"
+Zrobić trigger na insert do "zmiany"    
