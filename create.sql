@@ -1,4 +1,3 @@
-
 begin;
 
 DROP TABLE IF EXISTS uczestnicy CASCADE;
@@ -699,5 +698,24 @@ COPY pytania_na_turniejach FROM STDIN DELIMITER ';' NULL 'null';
 1;49;13
 1;50;14
 \.
+
+commit;
+
+-- Dodanie triggerów 
+begin;
+
+CREATE FUNCTION sprawdz_czy_pytanie_juz_bylo_na_turnieju()
+RETURNS TRIGGER
+AS $$
+BEGIN
+    IF NEW.id_pytania IN (SELECT id_pytanie FROM pytania_na_turniejach) THEN
+        RAISE EXCEPTION 'Pytanie o id % było już grane. Nie można go dodac do turnieju %', NEW.id_pytania, NEW.id_turnieju;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER sprawdzanie_juz_granych_pytan BEFORE INSERT OR UPDATE ON pytania_na_turniejach
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_pytanie_juz_bylo_na_turnieju();
 
 commit;
