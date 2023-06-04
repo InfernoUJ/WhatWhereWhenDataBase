@@ -701,7 +701,8 @@ COPY pytania_na_turniejach FROM STDIN DELIMITER ';' NULL 'null';
 
 commit;
 
--- Dodanie triggerów 
+-- Dodanie triggerów do
+-- pytania_na_turniejach
 begin;
 -- Głowne zasady jak dodawać/updatować/usuwać pytania:
 --    (numer - kolejność grania tego pytania na turnieju)
@@ -711,18 +712,72 @@ begin;
 -- 4. Przy usunięciu pytania, jeśli na turnieju obecnie nie ma pytania z taką kolejnością, 
 --    to numery wszystkich pytań o wyższych numerach niż usunięte, zmniejszamy o 1
 
-CREATE FUNCTION sprawdz_czy_pytanie_juz_bylo_na_turnieju()
+CREATE OR REPLACE FUNCTION sprawdz_czy_pytanie_juz_bylo_na_turnieju()
 RETURNS TRIGGER
 AS $$
 BEGIN
-    IF NEW.id_pytania IN (SELECT id_pytanie FROM pytania_na_turniejach) THEN
+    IF NEW.id_pytania IN (SELECT id_pytania FROM pytania_na_turniejach) THEN
         RAISE EXCEPTION 'Pytanie o id % było już grane. Nie można go dodac do turnieju %', NEW.id_pytania, NEW.id_turnieju;
     END IF;
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS sprawdzanie_juz_granych_pytan ON pytania_na_turniejach;
 CREATE TRIGGER sprawdzanie_juz_granych_pytan BEFORE INSERT OR UPDATE ON pytania_na_turniejach
 FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_pytanie_juz_bylo_na_turnieju();
+
+-- Jesli jego numer jest conajwyzej od delta wyżej niż maksymalny
+CREATE OR REPLACE FUNCTION sprawdz_czy_pytanie_ma_poprawny_numer()
+RETURNS TRIGGER
+AS $$
+BEGIN
+    IF(TG_NARGS != 1) THEN
+        RAISE EXCEPTION 'Niepoprawna ilość argumantów';
+    END IF;
+
+    IF(pg_typeof(TG_ARGV[0]) != 'integer') THEN
+        RAISE EXCEPTION 'Niepoprawny typ argumentu';
+    END IF;
+
+    IF NEW.numer_pytania != (
+        SELECT COALESCE(MAX(numer_pytania), 0)
+        FROM pytania_na_turniejach 
+        WHERE id_turnieju = NEW.id_turnieju
+        GROUP BY id_turnieju) + TG_ARGV[0]
+    THEN
+        RAISE EXCEPTION 'Pytanie o id % na turnieju % ma niepoprawny numer %', NEW.id_pytania, NEW.id_turnieju, NEW.numer_pytania;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS sprawdzanie_numeru_pytania ON pytania_na_turniejach;
+CREATE TRIGGER sprawdzanie_numeru_pytania BEFORE INSERT ON pytania_na_turniejach
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_pytanie_ma_poprawny_numer(1);
+
+
+CREATE OR REPLACE FUNCTION sprawdz_czy_pytanie_ma_prawie_unikalny_numer()
+RETURNS TRIGGER
+AS $$
+BEGIN
+    IF (SELECT COUNT(numer_pytania) 
+        FROM pytania_na_turniejach 
+        WHERE id_turnieju = NEW.id_turnieju 
+        AND numer_pytania = NEW.numer_pytania) > 1 
+    THEN
+        RAISE EXCEPTION 'Pytanie o id % na turnieju % ma niepoprawny numer %', NEW.id_pytania, NEW.id_turnieju, NEW.numer_pytania;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS sprawdzanie_prawie_unikalnosci_numeru_pytania ON pytania_na_turniejach;
+CREATE TRIGGER sprawdzanie_prawie_unikalnosci_numeru_pytania BEFORE UPDATE ON pytania_na_turniejach
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_pytanie_ma_prawie_unikalny_numer();
+
+DROP TRIGGER IF EXISTS sprawdzanie_maksymalnego_numeru_pytania ON pytania_na_turniejach;
+CREATE TRIGGER sprawdzanie_maksymalnego_numeru_pytania BEFORE UPDATE ON pytania_na_turniejach
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_pytanie_ma_poprawny_numer(0);
 
 commit;
