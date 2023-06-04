@@ -703,6 +703,13 @@ commit;
 
 -- Dodanie triggerów 
 begin;
+-- Głowne zasady jak dodawać/updatować/usuwać pytania:
+--    (numer - kolejność grania tego pytania na turnieju)
+-- 1. Nie można dodać pytania, które już było na jakim kołwiek turnieju
+-- 2. Dodawać można tylko pytanie o kolejnym numerze
+-- 3. Przy update'cie nie może powstać sytuacja, że dwa pytania mają ten sam numer
+-- 4. Przy usunięciu pytania, jeśli na turnieju obecnie nie ma pytania z taką kolejnością, 
+--    to numery wszystkich pytań o wyższych numerach niż usunięte, zmniejszamy o 1
 
 CREATE FUNCTION sprawdz_czy_pytanie_juz_bylo_na_turnieju()
 RETURNS TRIGGER
