@@ -725,6 +725,8 @@ begin;
 -- 4. Przy usunięciu pytania, jeśli na turnieju obecnie nie ma pytania z taką kolejnością, 
 --    to numery wszystkich pytań o wyższych numerach niż usunięte, zmniejszamy o 1
 
+SELECT 'TWROZENIE TRIGGEROW DLA pytania_na_turniejach';
+
 CREATE OR REPLACE FUNCTION sprawdz_czy_pytanie_juz_bylo_na_turnieju_insert()
 RETURNS TRIGGER
 AS $$
@@ -876,6 +878,114 @@ END;
 $$ LANGUAGE plpgsql;
 
 DROP TRIGGER IF EXISTS sprawdzanie_autora_pytania ON pytania_na_turniejach;
-CREATE TRIGGER sprawdzanie_autora_pytania BEFORE INSERT ON pytania_na_turniejach
+CREATE TRIGGER sprawdzanie_autora_pytania BEFORE INSERT OR UPDATE ON pytania_na_turniejach
 FOR EACH ROW EXECUTE PROCEDURE sprawdz_autora_pytania();
+
+commit; 
+
+
+begin;
+
+SELECT 'TWROZENIE TRIGGEROW DLA ZMAIN/SKLADOW';
+
+CREATE OR REPLACE FUNCTION sprawdz_czy_jest_max5_gracze()
+RETURNS TRIGGER
+AS $$
+BEGIN
+    IF(TG_NARGS != 1) THEN
+        RAISE EXCEPTION 'Niepoprawna ilość argumantów';
+    END IF;
+
+    IF (SELECT COUNT(*) FROM sklady_w_zespolach WHERE id_zespolu = NEW.id_zespolu AND rola=1) >= 5+TG_ARGV[0]::INT THEN
+        RAISE EXCEPTION 'Zespół o id % ma już 5 graczy', NEW.id_zespolu;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS sprawdzanie_czy_jest_max5_gracze_insert ON sklady_w_zespolach;
+CREATE TRIGGER sprawdzanie_czy_jest_max5_gracze_insert BEFORE INSERT ON sklady_w_zespolach
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_jest_max5_gracze(0);
+
+
+DROP TRIGGER IF EXISTS sprawdzanie_czy_jest_max5_gracze_update ON sklady_w_zespolach;
+CREATE TRIGGER sprawdzanie_czy_jest_max5_gracze_update BEFORE UPDATE ON sklady_w_zespolach
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_jest_max5_gracze(1);
+
+
+CREATE OR REPLACE FUNCTION sprawdz_czy_jest_max1_trener()
+RETURNS TRIGGER
+AS $$
+BEGIN
+    IF(TG_NARGS != 1) THEN
+        RAISE EXCEPTION 'Niepoprawna ilość argumantów';
+    END IF;
+
+    IF (SELECT COUNT(*) FROM sklady_w_zespolach WHERE id_zespolu = NEW.id_zespolu AND rola=2) >= 1+TG_ARGV[0]::INT THEN
+        RAISE EXCEPTION 'Zespół o id % ma już trenera', NEW.id_zespolu;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS sprawdzanie_czy_jest_max1_trener_insert ON sklady_w_zespolach;
+CREATE TRIGGER sprawdzanie_czy_jest_max1_trener_insert BEFORE INSERT ON sklady_w_zespolach
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_jest_max1_trener(0);
+
+
+DROP TRIGGER IF EXISTS sprawdzanie_czy_jest_max1_trener_update ON sklady_w_zespolach;
+CREATE TRIGGER sprawdzanie_czy_jest_max1_trener_update BEFORE UPDATE ON sklady_w_zespolach
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_jest_max1_trener(1);
+
+
+CREATE OR REPLACE FUNCTION sprawdz_czy_jest_max2_zapasowych()
+RETURNS TRIGGER
+AS $$
+BEGIN
+    IF(TG_NARGS != 1) THEN
+        RAISE EXCEPTION 'Niepoprawna ilość argumantów';
+    END IF;
+
+    IF (SELECT COUNT(*) FROM sklady_w_zespolach WHERE id_zespolu = NEW.id_zespolu AND rola=3) >= 2+TG_ARGV[0]::INT THEN
+        RAISE EXCEPTION 'Zespół o id % ma już 2 gracze zapasowe', NEW.id_zespolu;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS sprawdzanie_czy_jest_max2_zapasowych_insert ON sklady_w_zespolach;
+CREATE TRIGGER sprawdzanie_czy_jest_max2_zapasowych_insert BEFORE INSERT ON sklady_w_zespolach
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_jest_max2_zapasowych(0);
+
+
+DROP TRIGGER IF EXISTS sprawdzanie_czy_jest_max2_zapasowych_update ON sklady_w_zespolach;
+CREATE TRIGGER sprawdzanie_czy_jest_max2_zapasowych_update BEFORE UPDATE ON sklady_w_zespolach
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_jest_max2_zapasowych(1);
+
+
+CREATE OR REPLACE FUNCTION sprawdz_czy_jest_max2_zapasowych()
+RETURNS TRIGGER
+AS $$
+BEGIN
+    IF(TG_NARGS != 1) THEN
+        RAISE EXCEPTION 'Niepoprawna ilość argumantów';
+    END IF;
+
+    IF (SELECT COUNT(*) FROM sklady_w_zespolach WHERE id_zespolu = NEW.id_zespolu AND rola=3) >= 2+TG_ARGV[0]::INT THEN
+        RAISE EXCEPTION 'Zespół o id % ma już 2 gracze zapasowe', NEW.id_zespolu;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS sprawdzanie_czy_jest_max2_zapasowych_insert ON sklady_w_zespolach;
+CREATE TRIGGER sprawdzanie_czy_jest_max2_zapasowych_insert BEFORE INSERT ON sklady_w_zespolach
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_jest_max2_zapasowych(0);
+
+
+DROP TRIGGER IF EXISTS sprawdzanie_czy_jest_max2_zapasowych_update ON sklady_w_zespolach;
+CREATE TRIGGER sprawdzanie_czy_jest_max2_zapasowych_update BEFORE UPDATE ON sklady_w_zespolach
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_jest_max2_zapasowych(1);
+
 commit;
+

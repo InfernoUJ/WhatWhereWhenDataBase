@@ -2,4 +2,8 @@ DONE(ulicy będą przechowane charem - bo one prwie nigdy się nie powtarzają)
 Rozdielic tabele adresy: 
     - zamiast przechowywania nazw ulic, miast i t.d. przechowujemy numery ID do tabeli adresow, miast
 
+DONE
 Zrobić trigger na insert do "zmiany"    
+
+Zrobić mechanizm sprawdzania poprawności dannych
+(żeby był conajmniej 1 kapitan, nie została sytuacja z 6 graczamy i td)
