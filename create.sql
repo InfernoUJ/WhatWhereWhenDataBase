@@ -712,7 +712,7 @@ begin;
 -- 4. Przy usunięciu pytania, jeśli na turnieju obecnie nie ma pytania z taką kolejnością, 
 --    to numery wszystkich pytań o wyższych numerach niż usunięte, zmniejszamy o 1
 
-CREATE OR REPLACE FUNCTION sprawdz_czy_pytanie_juz_bylo_na_turnieju()
+CREATE OR REPLACE FUNCTION sprawdz_czy_pytanie_juz_bylo_na_turnieju_insert()
 RETURNS TRIGGER
 AS $$
 BEGIN
@@ -723,9 +723,26 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-DROP TRIGGER IF EXISTS sprawdzanie_juz_granych_pytan ON pytania_na_turniejach;
-CREATE TRIGGER sprawdzanie_juz_granych_pytan BEFORE INSERT OR UPDATE ON pytania_na_turniejach
-FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_pytanie_juz_bylo_na_turnieju();
+CREATE OR REPLACE FUNCTION sprawdz_czy_pytanie_juz_bylo_na_turnieju_update()
+RETURNS TRIGGER
+AS $$
+BEGIN
+    IF (SELECT TRUE FROM pytania_na_turniejach WHERE id_turnieju != NEW.id_turnieju AND id_pytania = NEW.id_pytania)
+        OR 1 < (SELECT COUNT(*) FROM pytania_na_turniejach WHERE id_turnieju = NEW.id_turnieju AND id_pytania = NEW.id_pytania)    
+    THEN
+        RAISE EXCEPTION 'Pytanie o id % było już grane. Nie można go dodac do turnieju %', NEW.id_pytania, NEW.id_turnieju;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS sprawdzanie_juz_granych_pytan1 ON pytania_na_turniejach;
+CREATE TRIGGER sprawdzanie_juz_granych_pytan1 BEFORE INSERT ON pytania_na_turniejach
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_pytanie_juz_bylo_na_turnieju_insert();
+
+DROP TRIGGER IF EXISTS sprawdzanie_juz_granych_pytan2 ON pytania_na_turniejach;
+CREATE TRIGGER sprawdzanie_juz_granych_pytan2 AFTER UPDATE ON pytania_na_turniejach
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_pytanie_juz_bylo_na_turnieju_update();
 
 -- Jesli jego numer jest conajwyzej od delta wyżej niż maksymalny
 CREATE OR REPLACE FUNCTION sprawdz_czy_pytanie_ma_poprawny_numer()
@@ -736,15 +753,18 @@ BEGIN
         RAISE EXCEPTION 'Niepoprawna ilość argumantów';
     END IF;
 
-    IF(pg_typeof(TG_ARGV[0]) != 'integer') THEN
-        RAISE EXCEPTION 'Niepoprawny typ argumentu';
-    END IF;
+    -- RAISE NOTICE 'Tyo argumentu: %', pg_typeof(TG_ARGV[0])::oid;
+    -- RAISE NOTICE 'Tyo argumentu: %', pg_typeof(TG_ARGV[0])::oid;
+    -- RAISE NOTiCE 'Typ inta: %', 42::oid;
+    -- IF(pg_typeof(TG_ARGV[0])::oid != 42::oid) THEN
+    --     RAISE EXCEPTION 'Niepoprawny typ argumentu';
+    -- END IF;
 
     IF NEW.numer_pytania != (
         SELECT COALESCE(MAX(numer_pytania), 0)
         FROM pytania_na_turniejach 
         WHERE id_turnieju = NEW.id_turnieju
-        GROUP BY id_turnieju) + TG_ARGV[0]
+        GROUP BY id_turnieju) + TG_ARGV[0]::INT
     THEN
         RAISE EXCEPTION 'Pytanie o id % na turnieju % ma niepoprawny numer %', NEW.id_pytania, NEW.id_turnieju, NEW.numer_pytania;
     END IF;
@@ -776,8 +796,50 @@ DROP TRIGGER IF EXISTS sprawdzanie_prawie_unikalnosci_numeru_pytania ON pytania_
 CREATE TRIGGER sprawdzanie_prawie_unikalnosci_numeru_pytania BEFORE UPDATE ON pytania_na_turniejach
 FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_pytanie_ma_prawie_unikalny_numer();
 
+
+CREATE OR REPLACE FUNCTION sprawdz_czy_pytanie_ma_poprawny_numer_update()
+RETURNS TRIGGER
+AS $$
+BEGIN
+    IF NEW.numer_pytania > (
+        SELECT COALESCE(MAX(numer_pytania), 0)
+        FROM pytania_na_turniejach 
+        WHERE id_turnieju = NEW.id_turnieju
+        GROUP BY id_turnieju)
+    THEN
+        RAISE EXCEPTION 'Pytanie o id % na turnieju % ma niepoprawny numer %', NEW.id_pytania, NEW.id_turnieju, NEW.numer_pytania;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
 DROP TRIGGER IF EXISTS sprawdzanie_maksymalnego_numeru_pytania ON pytania_na_turniejach;
 CREATE TRIGGER sprawdzanie_maksymalnego_numeru_pytania BEFORE UPDATE ON pytania_na_turniejach
-FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_pytanie_ma_poprawny_numer(0);
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_pytanie_ma_poprawny_numer_update();
+
+
+CREATE OR REPLACE FUNCTION zmniejsz_numer_pytan()
+RETURNS TRIGGER
+AS $$
+BEGIN
+    RAISE NOTICE 'Zmniejszam numer pytania % na turnieju %', OLD.numer_pytania, OLD.id_turnieju;
+    IF OLD.numer_pytania NOT IN 
+        (SELECT numer_pytania 
+        FROM pytania_na_turniejach 
+        WHERE id_turnieju = OLD.id_turnieju) 
+    THEN
+        UPDATE pytania_na_turniejach
+        SET numer_pytania = numer_pytania - 1
+        WHERE id_turnieju = OLD.id_turnieju
+        AND numer_pytania > OLD.numer_pytania;
+    END IF;
+
+    RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS zmniejszanie_numerow_pytan ON pytania_na_turniejach;
+CREATE TRIGGER zmniejszanie_numerow_pytan AFTER DELETE ON pytania_na_turniejach
+FOR EACH ROW EXECUTE PROCEDURE zmniejsz_numer_pytan();
 
 commit;
