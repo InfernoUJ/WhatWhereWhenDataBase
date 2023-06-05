@@ -988,7 +988,7 @@ CREATE TRIGGER sprawdzanie_czy_jest_max2_zapasowych_update BEFORE UPDATE ON skla
 FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_jest_max2_zapasowych(1);
 
 
-CREATE OR REPLACE FUNCTION sprawdz_czy_gra_w_turnieju()
+CREATE OR REPLACE FUNCTION sprawdz_czy_gra_w_turnieju_sklady()
 RETURNs TRIGGER
 AS $$
 DECLARE
@@ -1016,7 +1016,7 @@ BEGIN
 
         (SELECT TRUE
          FROM zmiany
-         WHERE id_osoby=NEW.id_osoby
+         WHERE id_wchodzacego=NEW.id_osoby
          AND id_turnieju=NEW.id_turnieju) 
          
         OR
@@ -1025,21 +1025,92 @@ BEGIN
          FROM zmiany z
          JOIN turnieje t ON z.id_turnieju=t.id_turnieju
          -- it was checked befor WHERE z.id_turnieju!=NEW.id_turnieju
-         WHERE z.id_osoby=NEW.id_osoby
+         WHERE z.id_wchodzacego=NEW.id_osoby
          AND moj_turniej.data_rozpoczecia BETWEEN t.data_rozpoczecia AND t.data_zakonczenia
             OR moj_turniej.data_zakonczenia BETWEEN t.data_rozpoczecia AND t.data_zakonczenia)
     THEN
-        RAISE EXCEPTION 'Gracz o id % już gra w turnieju o id %', NEW.id_osoby, NEW.id_turnieju;
+        RAISE EXCEPTION 'Gracz o id % już gra w turnieju', NEW.id_osoby;
     END IF;
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
-DROP TRIGGER IF EXISTS sprawdzanie_czy_gra_w_turnieju_insert ON sklady_w_zespolach;
-CREATE TRIGGER sprawdzanie_czy_gra_w_turnieju_insert BEFORE INSERT OR UPDATE ON sklady_w_zespolach
-FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_gra_w_turnieju();
+DROP TRIGGER IF EXISTS sprawdzanie_czy_gra_w_turnieju_sklady ON sklady_w_zespolach;
+CREATE TRIGGER sprawdzanie_czy_gra_w_turnieju__sklady BEFORE INSERT OR UPDATE ON sklady_w_zespolach
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_gra_w_turnieju_sklady();
 
 
+CREATE OR REPLACE FUNCTION sprawdz_wczhodzacego_zmiany()
+RETURNs TRIGGER
+AS $$
+DECLARE
+    moj_turniej turnieje%ROWTYPE;
+BEGIN
+    SELECT * INTO moj_turniej FROM turnieje WHERE id_turnieju=NEW.id_turnieju;
+
+    IF  (SELECT TRUE
+         FROM sklady_w_zespolach
+         WHERE id_turnieju=NEW.id_turnieju
+         AND id_osoby=NEW.id_wchodzacego
+         AND id_zespolu!=NEW.id_zespolu)
+
+        OR
+
+        (SELECT TRUE
+         FROM sklady_w_zespolach swz
+         JOIN turnieje t ON swz.id_turnieju=t.id_turnieju
+         -- it was checked befor WHERE szw.id_turnieju!=NEW.id_turnieju
+         AND szw.id_osoby=NEW.id_wchodzacego
+         AND moj_turniej.data_rozpoczecia BETWEEN t.data_rozpoczecia AND t.data_zakonczenia
+            OR moj_turniej.data_zakonczenia BETWEEN t.data_rozpoczecia AND t.data_zakonczenia) 
+        
+        OR
+
+        (SELECT TRUE
+         FROM zmiany
+         WHERE id_wchodzacego=NEW.id_wchodzacego
+         AND id_turnieju=NEW.id_turnieju) 
+         
+        OR
+
+        (SELECT TRUE
+         FROM zmiany z
+         JOIN turnieje t ON z.id_turnieju=t.id_turnieju
+         -- it was checked befor WHERE z.id_turnieju!=NEW.id_turnieju
+         WHERE z.id_wchodzacego=NEW.id_wchodzacego
+         AND moj_turniej.data_rozpoczecia BETWEEN t.data_rozpoczecia AND t.data_zakonczenia
+            OR moj_turniej.data_zakonczenia BETWEEN t.data_rozpoczecia AND t.data_zakonczenia)
+    THEN
+        RAISE EXCEPTION 'Wchodzacy o id % już gra w turnieju', NEW.id_wchodzacego;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS sprawdzanie_czy_gra_w_turnieju_zmainy ON zmiany;
+CREATE TRIGGER sprawdzanie_czy_gra_w_turnieju_zmainy BEFORE INSERT OR UPDATE ON zmiany
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_wczhodzacego_zmiany();
+
+
+CREATE OR REPLACE FUNCTION sprawdz_zchodzacego_zmiany()
+RETURNS TRIGGER
+AS $$
+BEGIN
+    IF (SELECT TRUE 
+        FROM sklady_w_zespolach
+        WHERE id_turnieju=NEW.id_turnieju
+        AND id_osoby=NEW.id_zchodzacego
+        ) IS NULL
+    THEN 
+        RAISE EXCEPTION 'Zchodzacy o id % nie gra w turnieju o id %', NEW.id_zchodzacego, NEW.id_turnieju;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS sprawdzanie_czy_zchdzacy_bul_w_turnieju ON zmiany;
+CREATE TRIGGER sprawdzanie_czy_zchdzacy_bul_w_turnieju BEFORE INSERT OR UPDATE ON zmiany
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_zchodzacego_zmiany();
 
 commit;
 
