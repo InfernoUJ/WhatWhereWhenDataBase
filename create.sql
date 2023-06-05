@@ -250,7 +250,7 @@ SELECT 'TWROZENIE WIDOKOW';
 CREATE OR REPLACE VIEW role_zaangazowane AS
     SELECT id 
     FROM "role"
-    WHERE id < 3;
+    WHERE id < 4;
 
 commit;
 
@@ -552,6 +552,49 @@ DROP TRIGGER IF EXISTS sprawdzanie_czy_gra_w_turnieju_sklady ON sklady_w_zespola
 CREATE TRIGGER sprawdzanie_czy_gra_w_turnieju__sklady BEFORE INSERT OR UPDATE ON sklady_w_zespolach
 FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_gra_w_turnieju_sklady();
 
+CREATE OR REPLACE FUNCTION sprawdz_autora_pytania_sklady()
+RETURNS TRIGGER
+AS $$
+BEGIN
+    IF (SELECT TRUE 
+        FROM autorzy_pytan ap
+        INNER JOIN pytania_na_turniejach pnt ON ap.id_pytania=pnt.id_pytania
+        WHERE pnt.id_turnieju=NEW.id_turnieju
+        AND ap.id_autora=NEW.id_osoby
+        AND rola IN (SELECT id FROM role_zaangazowane))
+    THEN
+        RAISE EXCEPTION 'Autor % pytania o id % jest zaangażowany w turniej o id %',NEW.id_osoby NEW.id_pytania, NEW.id_turnieju;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS sprawdzanie_autora_pytania ON sklady_w_zespolach;
+CREATE TRIGGER sprawdzanie_autora_pytania BEFORE INSERT OR UPDATE ON sklady_w_zespolach
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_autora_pytania_sklady();
+
+
+CREATE OR REPLACE FUNCTION sprawdz_wchodzacy_autor_pytania()
+RETURNS TRIGGER
+AS $$
+BEGIN
+    IF (SELECT TRUE 
+        FROM autorzy_pytan ap
+        INNER JOIN pytania_na_turniejach pnt ON ap.id_pytania=pnt.id_pytania
+        WHERE pnt.id_turnieju=NEW.id_turnieju
+        AND ap.id_autora=NEW.id_wchodzacego
+        AND rola IN (SELECT id FROM role_zaangazowane))
+    THEN
+        RAISE EXCEPTION 'Autor % pytania o id % jest zaangażowany w turniej o id %',NEW.id_osoby NEW.id_pytania, NEW.id_turnieju;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS sprawdzanie_wchodzacego_autor_pytania ON zmiany;
+CREATE TRIGGER sprawdzanie_wchodzacego_autor_pytania BEFORE INSERT OR UPDATE ON zmiany
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_wchodzacy_autor_pytania();
+
 
 CREATE OR REPLACE FUNCTION sprawdz_wczodzacy_zarejestrowany()
 RETURNS TRIGGER
@@ -568,6 +611,7 @@ $$ LANGUAGE plpgsql;
 DROP TRIGGER IF EXISTS sprawdzanie_czy_zapasowy_zarejestrowany ON zmiany;
 CREATE TRIGGER sprawdzanie_czy_zapasowy_zarejestrowany BEFORE INSERT OR UPDATE ON zmiany
 FOR EACH ROW EXECUTE PROCEDURE sprawdz_wczodzacy_zarejestrowany();
+
 
 CREATE OR REPLACE FUNCTION sprawdz_wczhodzacego_zmiany()
 RETURNs TRIGGER
