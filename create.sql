@@ -987,5 +987,40 @@ DROP TRIGGER IF EXISTS sprawdzanie_czy_jest_max2_zapasowych_update ON sklady_w_z
 CREATE TRIGGER sprawdzanie_czy_jest_max2_zapasowych_update BEFORE UPDATE ON sklady_w_zespolach
 FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_jest_max2_zapasowych(1);
 
+
+CREATE OR REPLACE FUNCTION sprawdz_czy_gra_w_turnieju()
+RETURNs TRIGGER
+AS $$
+DECLARE
+    moj_turniej turnieje%ROWTYPE;
+BEGIN
+    SELECT * INTO moj_turniej FROM turnieje WHERE id_turnieju=NEW.id_turnieju;
+
+    IF  (SELECT TRUE
+         FROM sklady_w_zespolach
+         WHERE id_turnieju=NEW.id_turnieju
+         AND id_osoby=NEW.id_osoby
+         AND id_zespolu!=NEW.id_zespolu) OR
+        (SELECT TRUE
+         FROM sklady_w_zespolach swz
+         JOIN turnieje t ON swz.id_turnieju=t.id_turnieju
+         WHERE szw.id_turnieju!=NEW.id_turnieju
+         AND szw.id_osoby=NEW.id_osoby
+         AND moj_turniej.data_rozpoczecia BETWEEN t.data_rozpoczecia AND t.data_zakonczenia
+            OR moj_turniej.data_zakonczenia BETWEEN t.data_rozpoczecia AND t.data_zakonczenia
+        )
+    THEN
+        RAISE EXCEPTION 'Gracz o id % już gra w turnieju o id %', NEW.id_osoby, NEW.id_turnieju;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS sprawdzanie_czy_gra_w_turnieju_insert ON sklady_w_zespolach;
+CREATE TRIGGER sprawdzanie_czy_gra_w_turnieju_insert BEFORE INSERT OR UPDATE ON sklady_w_zespolach
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_gra_w_turnieju();
+
+
+
 commit;
 
