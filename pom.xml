@@ -1,53 +1,57 @@
 <!-- Typical Maven header information -->
 <project  xmlns="http://maven.apache.org/POM/4.0.0"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-http://maven.apache.org/xsd/maven-4.0.0.xsd">
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+        http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <modelVersion>4.0.0</modelVersion>
+<modelVersion>4.0.0</modelVersion>
 
-    <!-- Typical Maven information for your project -->
-    <groupId>com.my.thing</groupId>
-    <artifactId>WhatWhereWhenDataBase</artifactId>
-    <version>1.0</version>
-    <!-- Maven hierarchy of elements for your project -->
-    <build>
-           <plugins>
-                <plugin>
-                    <!--start with basic information to get Liquibase plugin:
-                    include <groupId>, <artifactID>, and <version> elements-->
-                    <groupId>org.liquibase</groupId>
-                    <artifactId>liquibase-maven-plugin</artifactId>
-                    <version>4.21.1</version>
-                    <configuration>
-                        <changeLogFile>
-                            $(basedir)/src/main/resources/changelog.sql
-                        </changeLogFile>
-                        <url>
-                        jdbc:postgresql://localhost:5432/WhatWhenWhereDataBase
-                        </url>
-                        <username>
-                        postgres
-                        </username>
-                        <password>
-                        Abcd1234
-                        </password>
-                        <driver>
-                        org.postgresql.Driver
-                        </driver>
-                        <!--set values for Liquibase properties and settings
-                        for example, the location of a properties file to use-->
-                        <propertyFile>liquibase.properties</propertyFile>
-                    </configuration>
-                    <dependencies>
-                        <!--set up any dependencies for Liquibase to function in your environment for example, a database-specific plugin-->
-                        <dependency>
-                            <groupId>org.postgresql</groupId>
-                            <artifactId>postgresql</artifactId>
-                            <version>42.6.0</version>
-                        </dependency>
-                    </dependencies>
-                </plugin>
-            </plugins>
-    </build>
-</project>
+        <!-- Typical Maven information for your project -->
+<groupId>com.my.thing</groupId>
+<artifactId>WhatWhereWhenDataBase</artifactId>
+<version>1.0</version>
+        <!-- Maven hierarchy of elements for your project -->
+<build>
+<plugins>
+    <plugin>
+
+        <groupId>org.liquibase</groupId>
+        <artifactId>liquibase-maven-plugin</artifactId>
+        <version>4.21.1</version>
+        <configuration>
+            <propertyFile>liquibase.properties</propertyFile>
+        </configuration>
+        <executions>
+            <execution>
+                <phase>package</phase>
+                <goals>
+                    <goal>update</goal>
+                </goals>
+            </execution>
+        </executions>
+
+        <dependencies>
+            <!--set up any dependencies for Liquibase to
+function in your environment for example, a database-specific plugin-->
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>42.6.0</version>
+            </dependency>
+        </dependencies>
+    </plugin>
+</plugins>
+</build>
+<dependencies>
+<dependency>
+    <groupId>org.liquibase</groupId>
+    <artifactId>liquibase-core</artifactId>
+    <version>4.16.1</version>
+</dependency>
+    <dependency>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <version>42.6.0</version>
+    </dependency>
+</dependencies>
+        </project>
