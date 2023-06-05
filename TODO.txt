@@ -7,3 +7,5 @@ Zrobić trigger na insert do "zmiany"
 
 Zrobić mechanizm sprawdzania poprawności dannych
 (żeby był conajmniej 1 kapitan, nie została sytuacja z 6 graczamy i td)
+
+Uniemożliwić dodawanie do turnieju likiwdowanego zespolu

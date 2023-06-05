@@ -1,0 +1,17 @@
+COPY zespoly FROM STDIN DELIMITER ';' NULL 'null';
+5;Mama ile;2013-11-25;null
+6;Znajdować się korona;1994-02-18;null
+7;Włożyć gazeta;2022-12-19;null
+8;Zatrzymać grupa;2009-03-15;null
+9;Układ bieg;1987-04-16;null
+10;Specjalny fotografia;1997-10-10;null
+11;7 Afryka;1985-06-25;null
+12;Przyjaźń zimny;1989-07-11;null
+13;Kochać okno;2021-06-18;null
+14;Umiejętność wcześnie;2000-03-11;2021-07-18
+15;Młody relacja;1991-09-28;2001-11-03
+16;Skała zrozumieć;1993-10-08;null
+17;Robić strumień;2007-11-07;null
+18;Wrogi wzdłuż;2007-09-12;null
+19;Pełny jeżeli;2021-04-12;null
+\.

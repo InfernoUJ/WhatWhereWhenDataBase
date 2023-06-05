@@ -1,0 +1,22 @@
+COPY adresy FROM STDIN DELIMITER ',' NULL 'null';
+0,Mielec,Asnyka,44-563,34,30
+1,Marki,Jeżynowa,94-451,39,55
+2,Pszczyna,Szczęśliwa,55-293,20,9
+3,Zabrze,Bukowa,16-929,5,6
+4,Augustów,Kościelna,52-283,19,35
+5,Inowrocław,Malinowa,59-974,13,77
+6,Zamość,Lipowa,81-824,9,51
+7,Lubartów,Tulipanowa,49-901,29,24
+8,Elbląg,Zacisze,81-804,9,40
+9,Tychy,Porzeczkowa,16-992,11,13
+10,Warszawa,Żeglarska,28-998,7,89
+11,Łaziska Górne,Południowa,48-378,24,63
+12,Nowa Ruda,Srebrna,86-466,36,34
+13,Jastrzębie-Zdrój,Niepodległości,50-543,22,67
+14,Warszawa,Tulipanowa,65-229,30,63
+15,Lubliniec,Handlowa,62-218,30,95
+16,Gorlice,Majowa,24-561,7,93
+17,Rzeszów,Podgórna,04-926,38,27
+18,Bełchatów,Cedrowa,34-403,13,34
+19,Opole,Stroma,28-860,36,94
+\.
