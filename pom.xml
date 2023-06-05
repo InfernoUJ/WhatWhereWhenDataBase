@@ -20,6 +20,8 @@
         <version>4.21.1</version>
         <configuration>
             <propertyFile>liquibase.properties</propertyFile>
+            <searchPath>target/classes</searchPath>
+            <changeLogFile>changelog.sql</changeLogFile>
         </configuration>
         <executions>
             <execution>
