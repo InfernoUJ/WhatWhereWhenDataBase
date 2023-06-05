@@ -433,64 +433,60 @@ CREATE OR REPLACE FUNCTION sprawdz_czy_jest_max5_gracze()
 RETURNS TRIGGER
 AS $$
 BEGIN
-    IF(TG_NARGS != 1) THEN
-        RAISE EXCEPTION 'Niepoprawna ilość argumantów';
-    END IF;
-
     IF (SELECT COUNT(*) FROM sklady_w_zespolach 
         WHERE id_zespolu = NEW.id_zespolu AND rola=1 
-        AND id_turnieju=NEW.id_turnieju) >= 5+TG_ARGV[0]::INT THEN
+        AND id_turnieju=NEW.id_turnieju) >= 5
         RAISE EXCEPTION 'Zespół o id % ma już 5 graczy', NEW.id_zespolu;
     END IF;
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
-DROP TRIGGER IF EXISTS sprawdzanie_czy_jest_max5_gracze_insert ON sklady_w_zespolach;
-CREATE TRIGGER sprawdzanie_czy_jest_max5_gracze_insert BEFORE INSERT ON sklady_w_zespolach
-FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_jest_max5_gracze(0);
-
-
-DROP TRIGGER IF EXISTS sprawdzanie_czy_jest_max5_gracze_update ON sklady_w_zespolach;
-CREATE TRIGGER sprawdzanie_czy_jest_max5_gracze_update BEFORE UPDATE ON sklady_w_zespolach
-FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_jest_max5_gracze(1);
+DROP TRIGGER IF EXISTS sprawdzanie_czy_jest_max5_gracze ON sklady_w_zespolach;
+CREATE TRIGGER sprawdzanie_czy_jest_max5_gracze BEFORE INSERT OR UPDATE ON sklady_w_zespolach
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_jest_max5_gracze();
 
 
 CREATE OR REPLACE FUNCTION sprawdz_czy_jest_max1_trener()
 RETURNS TRIGGER
 AS $$
 BEGIN
-    IF(TG_NARGS != 1) THEN
-        RAISE EXCEPTION 'Niepoprawna ilość argumantów';
-    END IF;
-
     IF (SELECT COUNT(*) FROM sklady_w_zespolach 
         WHERE id_zespolu = NEW.id_zespolu AND rola=2
-        AND id_turnieju=NEW.id_turnieju) >= 1+TG_ARGV[0]::INT THEN
+        AND id_turnieju=NEW.id_turnieju) >= 1
         RAISE EXCEPTION 'Zespół o id % ma już trenera', NEW.id_zespolu;
     END IF;
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
-DROP TRIGGER IF EXISTS sprawdzanie_czy_jest_max1_trener_insert ON sklady_w_zespolach;
-CREATE TRIGGER sprawdzanie_czy_jest_max1_trener_insert BEFORE INSERT ON sklady_w_zespolach
-FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_jest_max1_trener(0);
-
-
-DROP TRIGGER IF EXISTS sprawdzanie_czy_jest_max1_trener_update ON sklady_w_zespolach;
-CREATE TRIGGER sprawdzanie_czy_jest_max1_trener_update BEFORE UPDATE ON sklady_w_zespolach
-FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_jest_max1_trener(1);
+DROP TRIGGER IF EXISTS sprawdzanie_czy_jest_max1_trener ON sklady_w_zespolach;
+CREATE TRIGGER sprawdzanie_czy_jest_max1_trener BEFORE INSERT OR UPDATE ON sklady_w_zespolach
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_jest_max1_trener();
 
 
 CREATE OR REPLACE FUNCTION sprawdz_czy_jest_max2_zapasowych()
 RETURNS TRIGGER
 AS $$
 BEGIN
-    IF(TG_NARGS != 1) THEN
-        RAISE EXCEPTION 'Niepoprawna ilość argumantów';
+    IF (SELECT COUNT(*) FROM sklady_w_zespolach 
+        WHERE id_zespolu = NEW.id_zespolu AND rola=3
+        AND id_turnieju=NEW.id_turnieju) >= 2
+        RAISE EXCEPTION 'Zespół o id % ma już 2 gracze zapasowe', NEW.id_zespolu;
     END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS sprawdzanie_czy_jest_max2_zapasowych ON sklady_w_zespolach;
+CREATE TRIGGER sprawdzanie_czy_jest_max2_zapasowych BEFORE INSERT ON sklady_w_zespolach
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_jest_max2_zapasowych();
+
+
+CREATE OR REPLACE FUNCTION sprawdz_czy_jest_max2_zapasowych()
+RETURNS TRIGGER
+AS $$
+BEGIN
     IF (SELECT COUNT(*) FROM sklady_w_zespolach 
         WHERE id_zespolu = NEW.id_zespolu AND rola=3
         AND id_turnieju=NEW.id_turnieju) >= 2+TG_ARGV[0]::INT THEN
@@ -500,41 +496,9 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-DROP TRIGGER IF EXISTS sprawdzanie_czy_jest_max2_zapasowych_insert ON sklady_w_zespolach;
-CREATE TRIGGER sprawdzanie_czy_jest_max2_zapasowych_insert BEFORE INSERT ON sklady_w_zespolach
-FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_jest_max2_zapasowych(0);
-
-
-DROP TRIGGER IF EXISTS sprawdzanie_czy_jest_max2_zapasowych_update ON sklady_w_zespolach;
-CREATE TRIGGER sprawdzanie_czy_jest_max2_zapasowych_update BEFORE UPDATE ON sklady_w_zespolach
-FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_jest_max2_zapasowych(1);
-
-
-CREATE OR REPLACE FUNCTION sprawdz_czy_jest_max2_zapasowych()
-RETURNS TRIGGER
-AS $$
-BEGIN
-    IF(TG_NARGS != 1) THEN
-        RAISE EXCEPTION 'Niepoprawna ilość argumantów';
-    END IF;
-
-    IF (SELECT COUNT(*) FROM sklady_w_zespolach 
-        WHERE id_zespolu = NEW.id_zespolu AND rola=3
-        AND id_turnieju=NEW.id_turnieju) >= 2+TG_ARGV[0]::INT THEN
-        RAISE EXCEPTION 'Zespół o id % ma już 2 gracze zapasowe', NEW.id_zespolu;
-    END IF;
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-DROP TRIGGER IF EXISTS sprawdzanie_czy_jest_max2_zapasowych_insert ON sklady_w_zespolach;
-CREATE TRIGGER sprawdzanie_czy_jest_max2_zapasowych_insert BEFORE INSERT ON sklady_w_zespolach
-FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_jest_max2_zapasowych(0);
-
-
-DROP TRIGGER IF EXISTS sprawdzanie_czy_jest_max2_zapasowych_update ON sklady_w_zespolach;
-CREATE TRIGGER sprawdzanie_czy_jest_max2_zapasowych_update BEFORE UPDATE ON sklady_w_zespolach
-FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_jest_max2_zapasowych(1);
+DROP TRIGGER IF EXISTS sprawdzanie_czy_jest_max2_zapasowych ON sklady_w_zespolach;
+CREATE TRIGGER sprawdzanie_czy_jest_max2_zapasowychBEFORE INSERT ON sklady_w_zespolach
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_jest_max2_zapasowych();
 
 
 CREATE OR REPLACE FUNCTION sprawdz_czy_gra_w_turnieju_sklady()
