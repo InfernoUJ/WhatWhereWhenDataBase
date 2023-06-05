@@ -553,6 +553,22 @@ CREATE TRIGGER sprawdzanie_czy_gra_w_turnieju__sklady BEFORE INSERT OR UPDATE ON
 FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_gra_w_turnieju_sklady();
 
 
+CREATE OR REPLACE FUNCTION sprawdz_wczodzacy_zarejestrowany()
+RETURNS TRIGGER
+AS $$
+BEGIN
+    IF NOT EXISTS (SELECT * FROM ososklady_w_zespolachby 
+                   WHERE id_turnieju=NEW.id_turnieju AND id_osoby=NEW.id_wchodzacego AND rola=3)
+        RAISE EXCEPTION 'Osoba o id % nie jest zarejestrowana jako gracz zapasowy', NEW.id_wchodzacego;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS sprawdzanie_czy_zapasowy_zarejestrowany ON zmiany;
+CREATE TRIGGER sprawdzanie_czy_zapasowy_zarejestrowany BEFORE INSERT OR UPDATE ON zmiany
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_wczodzacy_zarejestrowany();
+
 CREATE OR REPLACE FUNCTION sprawdz_wczhodzacego_zmiany()
 RETURNs TRIGGER
 AS $$
