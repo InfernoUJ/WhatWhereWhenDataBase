@@ -1108,9 +1108,31 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-DROP TRIGGER IF EXISTS sprawdzanie_czy_zchdzacy_bul_w_turnieju ON zmiany;
-CREATE TRIGGER sprawdzanie_czy_zchdzacy_bul_w_turnieju BEFORE INSERT OR UPDATE ON zmiany
+DROP TRIGGER IF EXISTS sprawdzanie_czy_zchodzacy_byl_w_turnieju ON zmiany;
+CREATE TRIGGER sprawdzanie_czy_zchodzacy_byl_w_turnieju BEFORE INSERT OR UPDATE ON zmiany
 FOR EACH ROW EXECUTE PROCEDURE sprawdz_zchodzacego_zmiany();
 
 commit;
 
+
+begin;
+
+SELECT 'TWROZENIE TRIGGEROW DLA poprawne odpowiedzi';
+
+CREATE OR REPLACE FUNCTION sprawdz_numer_odpowiedzi()
+RETURNS TRIGGER
+AS $$
+BEGIN 
+    IF (SELECT TRUE FROM pytania_na_turniejach p 
+        WHERE NEW.numer_pytania=p.numer_pytania AND NEW.id_turnieju=p.id_turnieju) IS NULL
+    THEN
+        RAISE EXCEPTION 'Pytanie o numerze % nie istnieje w turnieju o id %', NEW.numer_pytania, NEW.id_turnieju;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS sprawdzanie_numeru_odpowiedzi ON poprawne_odpowiedzi;
+CREATE TRIGGER sprawdzanie_numeru_odpowiedzi BEFORE INSERT OR UPDATE ON poprawne_odpowiedzi
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_numer_odpowiedzi();
+commit;
