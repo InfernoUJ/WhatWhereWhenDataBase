@@ -1,4 +1,6 @@
-import random;
+import random
+import fillerAutorzy_pytan
+
 from copy import deepcopy
 with (open('uczestnicy.data', 'r') as uczestnicy, open('turnieje.data', 'r') as turnieje, 
       open('sklady_w_zespolach.data', 'w') as f, open('zespoly.data', 'r') as zespoly):

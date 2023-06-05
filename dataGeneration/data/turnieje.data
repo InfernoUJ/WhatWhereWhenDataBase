@@ -1,22 +1,22 @@
 COPY turnieje FROM STDIN DELIMITER ';' NULL 'null';
-0;płaski dany;facilis dolores tenetur dolorum cupiditate;2018-07-30;1966-08-04;0
-1;Pan gaz;amet dolorum saepe deserunt eligendi;2019-07-06;1967-07-10;0
-2;właściciel amerykański;odio quia molestiae quaerat assumenda;1976-10-10;1989-01-31;0
-3;martwy wskazywać;ipsum facere fugiat ipsa at;1978-12-03;1980-09-24;0
-4;język królestwo;nisi enim saepe deleniti blanditiis;1988-11-22;1971-10-19;3
-5;matematyka nowy;iusto inventore quas commodi rem;1987-03-10;1976-07-22;4
-6;podstawowy lot;omnis et dolore rerum unde;1991-12-14;1979-12-07;2
-7;chwila sukces;amet temporibus architecto iusto voluptate;2003-06-21;1977-05-16;4
-8;stawać się stolica;reiciendis cupiditate voluptatibus magni alias;1979-11-25;1983-03-31;1
-9;literacki ale;est nam ad labore itaque;2016-06-16;1965-09-07;2
-10;wysyłać wydawać się;incidunt labore excepturi impedit repellat;2009-06-02;1975-12-27;4
-11;siła tani;recusandae at porro est adipisci;1974-03-18;1967-04-03;0
-12;ten sam usta;libero ullam necessitatibus at doloremque;2013-11-23;1967-02-26;4
-13;należeć przestać;blanditiis ex veritatis impedit exercitationem;2015-06-10;1972-04-14;3
-14;jeszcze bogactwo;itaque atque consequatur modi aliquam;2016-02-24;1968-06-23;4
-15;dość od;ut inventore incidunt quaerat ab;1968-09-14;2000-01-07;1
-16;podobny powstać;labore fugiat ex vero ut;1965-10-17;1968-10-14;3
-17;zrobić ciągle;culpa nulla earum necessitatibus labore;2011-02-24;1976-12-13;0
-18;towar usuwać;optio libero amet earum vel;2002-06-16;1979-12-06;0
-19;państwo Czechy;minima quisquam beatae aspernatur quidem;1987-02-10;1998-02-22;2
+0;list moment;neque enim consectetur aut error;2015-11-11;2017-10-15;1
+1;klient chłop;nam obcaecati fuga quis illo;1987-03-05;2014-07-02;2
+2;odzież plemię;iure necessitatibus quas quibusdam obcaecati;2001-02-01;2013-10-03;1
+3;szereg ogromny;consectetur molestias minus pariatur ut;2001-01-29;2018-10-18;2
+4;charakterystyczny budowla;culpa suscipit asperiores est perspiciatis;1989-10-21;2021-10-15;4
+5;zdarzenie niezwykły;nam minus provident voluptates quibusdam;2007-10-22;2014-08-27;3
+6;szwedzki kościelny;nobis provident dolore itaque nulla;1995-09-03;1999-11-14;4
+7;błąd widok;commodi nam veritatis veniam quod;1989-08-12;2001-03-28;1
+8;scena teoria;ullam vitae laborum pariatur id;1965-01-21;2008-06-25;0
+9;pieniądz płaski;at quos error quis ex;1996-04-29;2003-01-12;2
+10;Afryka dzieło;aut est optio tempore perspiciatis;2013-06-27;2021-05-15;0
+11;katolicki urządzenie;neque pariatur autem inventore iste;2008-03-31;2019-11-01;0
+12;pomagać kontrola;iure consectetur veritatis ipsum tempore;2019-12-10;2021-07-25;1
+13;pracować brzeg;odio ipsam cupiditate ad quod;2001-02-19;2005-12-23;0
+14;usuwać słowacki;fuga ea enim perferendis rem;1981-03-11;2005-08-26;4
+15;wykonać dobrze;hic atque est inventore omnis;1994-10-30;2003-12-18;3
+16;wino natychmiast;exercitationem expedita asperiores quibusdam dolores;1996-02-28;2018-12-23;3
+17;niewielki czynić;nobis nam officia similique dignissimos;1981-11-20;1996-12-28;2
+18;film kolacja;itaque omnis porro sapiente obcaecati;1975-07-03;2006-06-14;2
+19;dokładny stworzyć;facilis at reprehenderit temporibus error;2022-10-15;2023-04-25;2
 \.
