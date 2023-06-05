@@ -1000,15 +1000,34 @@ BEGIN
          FROM sklady_w_zespolach
          WHERE id_turnieju=NEW.id_turnieju
          AND id_osoby=NEW.id_osoby
-         AND id_zespolu!=NEW.id_zespolu) OR
+         AND id_zespolu!=NEW.id_zespolu)
+
+        OR
+
         (SELECT TRUE
          FROM sklady_w_zespolach swz
          JOIN turnieje t ON swz.id_turnieju=t.id_turnieju
-         WHERE szw.id_turnieju!=NEW.id_turnieju
+         -- it was checked befor WHERE szw.id_turnieju!=NEW.id_turnieju
          AND szw.id_osoby=NEW.id_osoby
          AND moj_turniej.data_rozpoczecia BETWEEN t.data_rozpoczecia AND t.data_zakonczenia
-            OR moj_turniej.data_zakonczenia BETWEEN t.data_rozpoczecia AND t.data_zakonczenia
-        )
+            OR moj_turniej.data_zakonczenia BETWEEN t.data_rozpoczecia AND t.data_zakonczenia) 
+        
+        OR
+
+        (SELECT TRUE
+         FROM zmiany
+         WHERE id_osoby=NEW.id_osoby
+         AND id_turnieju=NEW.id_turnieju) 
+         
+        OR
+
+        (SELECT TRUE
+         FROM zmiany z
+         JOIN turnieje t ON z.id_turnieju=t.id_turnieju
+         -- it was checked befor WHERE z.id_turnieju!=NEW.id_turnieju
+         WHERE z.id_osoby=NEW.id_osoby
+         AND moj_turniej.data_rozpoczecia BETWEEN t.data_rozpoczecia AND t.data_zakonczenia
+            OR moj_turniej.data_zakonczenia BETWEEN t.data_rozpoczecia AND t.data_zakonczenia)
     THEN
         RAISE EXCEPTION 'Gracz o id % już gra w turnieju o id %', NEW.id_osoby, NEW.id_turnieju;
     END IF;
