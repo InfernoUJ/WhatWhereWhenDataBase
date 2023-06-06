@@ -436,6 +436,7 @@ BEGIN
     IF (SELECT COUNT(*) FROM sklady_w_zespolach 
         WHERE id_zespolu = NEW.id_zespolu AND rola=1 
         AND id_turnieju=NEW.id_turnieju) >= 5
+    THEN
         RAISE EXCEPTION 'Zespół o id % ma już 5 graczy', NEW.id_zespolu;
     END IF;
     RETURN NEW;
@@ -454,6 +455,7 @@ BEGIN
     IF (SELECT COUNT(*) FROM sklady_w_zespolach 
         WHERE id_zespolu = NEW.id_zespolu AND rola=2
         AND id_turnieju=NEW.id_turnieju) >= 1
+    THEN
         RAISE EXCEPTION 'Zespół o id % ma już trenera', NEW.id_zespolu;
     END IF;
     RETURN NEW;
@@ -472,6 +474,7 @@ BEGIN
     IF (SELECT COUNT(*) FROM sklady_w_zespolach 
         WHERE id_zespolu = NEW.id_zespolu AND rola=3
         AND id_turnieju=NEW.id_turnieju) >= 2
+    THEN
         RAISE EXCEPTION 'Zespół o id % ma już 2 gracze zapasowe', NEW.id_zespolu;
     END IF;
     RETURN NEW;
@@ -479,25 +482,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 DROP TRIGGER IF EXISTS sprawdzanie_czy_jest_max2_zapasowych ON sklady_w_zespolach;
-CREATE TRIGGER sprawdzanie_czy_jest_max2_zapasowych BEFORE INSERT ON sklady_w_zespolach
-FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_jest_max2_zapasowych();
-
-
-CREATE OR REPLACE FUNCTION sprawdz_czy_jest_max2_zapasowych()
-RETURNS TRIGGER
-AS $$
-BEGIN
-    IF (SELECT COUNT(*) FROM sklady_w_zespolach 
-        WHERE id_zespolu = NEW.id_zespolu AND rola=3
-        AND id_turnieju=NEW.id_turnieju) >= 2+TG_ARGV[0]::INT THEN
-        RAISE EXCEPTION 'Zespół o id % ma już 2 gracze zapasowe', NEW.id_zespolu;
-    END IF;
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-DROP TRIGGER IF EXISTS sprawdzanie_czy_jest_max2_zapasowych ON sklady_w_zespolach;
-CREATE TRIGGER sprawdzanie_czy_jest_max2_zapasowychBEFORE INSERT ON sklady_w_zespolach
+CREATE TRIGGER sprawdzanie_czy_jest_max2_zapasowych BEFORE INSERT OR UPDATE ON sklady_w_zespolach
 FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_jest_max2_zapasowych();
 
 
@@ -514,18 +499,20 @@ BEGIN
          WHERE id_turnieju=NEW.id_turnieju
          AND id_osoby=NEW.id_osoby
          AND id_zespolu!=NEW.id_zespolu)
-
-        OR
-
+         OR
         (SELECT TRUE
          FROM sklady_w_zespolach swz
          JOIN turnieje t ON swz.id_turnieju=t.id
-         -- it was checked befor WHERE szw.id_turnieju!=NEW.id_turnieju
+         -- it was checked befor 
+         WHERE swz.id_turnieju!=NEW.id_turnieju
          AND swz.id_osoby=NEW.id_osoby
          AND (moj_turniej.data_startu BETWEEN t.data_startu AND t.data_konca
             OR moj_turniej.data_konca BETWEEN t.data_startu AND t.data_konca)) 
         
-        OR
+    THEN
+        RAISE EXCEPTION 'HERE';
+    ELSEIF
+        
 
         (SELECT TRUE
          FROM zmiany
@@ -561,9 +548,9 @@ BEGIN
         INNER JOIN pytania_na_turniejach pnt ON ap.id_pytania=pnt.id_pytania
         WHERE pnt.id_turnieju=NEW.id_turnieju
         AND ap.id_autora=NEW.id_osoby
-        AND rola IN (SELECT id FROM role_zaangazowane))
+        AND NEW.rola IN (SELECT id FROM role_zaangazowane))
     THEN
-        RAISE EXCEPTION 'Autor % pytania o id % jest zaangażowany w turniej o id %',NEW.id_osoby NEW.id_pytania, NEW.id_turnieju;
+        RAISE EXCEPTION 'Autor % pytania jest zaangażowany w turniej o id %', NEW.id_osoby, NEW.id_turnieju;
     END IF;
     RETURN NEW;
 END;
@@ -574,6 +561,34 @@ CREATE TRIGGER sprawdzanie_autora_pytania BEFORE INSERT OR UPDATE ON sklady_w_ze
 FOR EACH ROW EXECUTE PROCEDURE sprawdz_autora_pytania_sklady();
 
 
+CREATE OR REPLACE FUNCTION sprawdz_czy_zespol_istnial()
+RETURNS TRIGGER
+AS $$
+BEGIN
+    IF (SELECT TRUE 
+        FROM zespoly 
+        WHERE id=NEW.id_zespolu 
+        AND data_zalozenia > (SELECT data_startu FROM turnieje WHERE id=NEW.id_turnieju))
+    THEN
+        RAISE EXCEPTION 'Zespół o id % nie istnial w czasie turnieju %', NEW.id_zespolu, NEW.id_turnieju;
+    ELSEIF
+        (SELECT TRUE
+         FROM zespoly
+         WHERE id=NEW.id_zespolu
+         AND data_likwidacji IS NULL
+         AND data_likwidacji < (SELECT data_konca FROM turnieje WHERE id=NEW.id_turnieju))
+    THEN
+        RAISE EXCEPTION 'Zespół o id % został już zlikwidowany kiedy truniej % odbyl sie', NEW.id_zespolu, NEW.id_turnieju;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- DROP TRIGGER IF EXISTS sprawdzanie_istnienia_turnieju ON sklady_w_zespolach;
+-- CREATE TRIGGER sprawdzanie_istnienia_turnieju BEFORE INSERT OR UPDATE ON sklady_w_zespolach
+-- FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_zespol_istnial();
+
+
 CREATE OR REPLACE FUNCTION sprawdz_wchodzacy_autor_pytania()
 RETURNS TRIGGER
 AS $$
@@ -581,11 +596,11 @@ BEGIN
     IF (SELECT TRUE 
         FROM autorzy_pytan ap
         INNER JOIN pytania_na_turniejach pnt ON ap.id_pytania=pnt.id_pytania
+        INNER JOIN sklady_w_zespolach swz ON swz.id_zespolu=NEW.id_zespolu
         WHERE pnt.id_turnieju=NEW.id_turnieju
-        AND ap.id_autora=NEW.id_wchodzacego
-        AND rola IN (SELECT id FROM role_zaangazowane))
+        AND ap.id_autora=NEW.id_wchodzacego)
     THEN
-        RAISE EXCEPTION 'Autor % pytania o id % jest zaangażowany w turniej o id %',NEW.id_osoby NEW.id_pytania, NEW.id_turnieju;
+        RAISE EXCEPTION 'Autor % pytania jest zaangażowany w turniej o id %',NEW.id_osoby, NEW.id_turnieju;
     END IF;
     RETURN NEW;
 END;
@@ -600,8 +615,9 @@ CREATE OR REPLACE FUNCTION sprawdz_wczodzacy_zarejestrowany()
 RETURNS TRIGGER
 AS $$
 BEGIN
-    IF NOT EXISTS (SELECT * FROM ososklady_w_zespolachby 
+    IF NOT EXISTS (SELECT * FROM sklady_w_zespolach
                    WHERE id_turnieju=NEW.id_turnieju AND id_osoby=NEW.id_wchodzacego AND rola=3)
+    THEN
         RAISE EXCEPTION 'Osoba o id % nie jest zarejestrowana jako gracz zapasowy', NEW.id_wchodzacego;
     END IF;
     RETURN NEW;
@@ -618,14 +634,15 @@ RETURNs TRIGGER
 AS $$
 DECLARE
     moj_turniej turnieje%ROWTYPE;
+    moj_zespol INT;
 BEGIN
     SELECT * INTO moj_turniej FROM turnieje WHERE id=NEW.id_turnieju;
-
+    SELECT id_zespolu INTO moj_zespol FROM sklady_w_zespolach WHERE id_turnieju=NEW.id_turnieju AND id_osoby=NEW.id_wchodzacego LIMIT 1;
     IF  (SELECT TRUE
          FROM sklady_w_zespolach
          WHERE id_turnieju=NEW.id_turnieju
          AND id_osoby=NEW.id_wchodzacego
-         AND id_zespolu!=NEW.id_zespolu)
+         AND (rola!=3 OR id_zespolu!=moj_zespol))
 
         OR
 

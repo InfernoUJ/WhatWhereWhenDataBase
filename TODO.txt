@@ -11,3 +11,9 @@ Zrobić mechanizm sprawdzania poprawności dannych
 Uniemożliwić dodawanie do turnieju likiwdowanego zespolu
 
 Sędzia nie może być graczem
+
+dodac miejscowo do zespolow
+
+dodać możliwość usuwania osob
+
+tagi?
