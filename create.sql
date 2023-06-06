@@ -628,7 +628,7 @@ DROP TRIGGER IF EXISTS sprawdzanie_czy_zapasowy_zarejestrowany ON zmiany;
 CREATE TRIGGER sprawdzanie_czy_zapasowy_zarejestrowany BEFORE INSERT OR UPDATE ON zmiany
 FOR EACH ROW EXECUTE PROCEDURE sprawdz_wczodzacy_zarejestrowany();
 
-
+-- CHECK THIS
 CREATE OR REPLACE FUNCTION sprawdz_wczhodzacego_zmiany()
 RETURNs TRIGGER
 AS $$

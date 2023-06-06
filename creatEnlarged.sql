@@ -584,9 +584,9 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- DROP TRIGGER IF EXISTS sprawdzanie_istnienia_turnieju ON sklady_w_zespolach;
--- CREATE TRIGGER sprawdzanie_istnienia_turnieju BEFORE INSERT OR UPDATE ON sklady_w_zespolach
--- FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_zespol_istnial();
+DROP TRIGGER IF EXISTS sprawdzanie_istnienia_turnieju ON sklady_w_zespolach;
+CREATE TRIGGER sprawdzanie_istnienia_turnieju BEFORE INSERT OR UPDATE ON sklady_w_zespolach
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_zespol_istnial();
 
 
 CREATE OR REPLACE FUNCTION sprawdz_wchodzacy_autor_pytania()
@@ -606,9 +606,9 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- DROP TRIGGER IF EXISTS sprawdzanie_wchodzacego_autor_pytania ON zmiany;
--- CREATE TRIGGER sprawdzanie_wchodzacego_autor_pytania BEFORE INSERT OR UPDATE ON zmiany
--- FOR EACH ROW EXECUTE PROCEDURE sprawdz_wchodzacy_autor_pytania();
+DROP TRIGGER IF EXISTS sprawdzanie_wchodzacego_autor_pytania ON zmiany;
+CREATE TRIGGER sprawdzanie_wchodzacego_autor_pytania BEFORE INSERT OR UPDATE ON zmiany
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_wchodzacy_autor_pytania();
 
 
 CREATE OR REPLACE FUNCTION sprawdz_wczodzacy_zarejestrowany()
