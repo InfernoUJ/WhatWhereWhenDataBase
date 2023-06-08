@@ -304,19 +304,11 @@ BEGIN
     IF(TG_NARGS != 1) THEN
         RAISE EXCEPTION 'Niepoprawna ilość argumantów';
     END IF;
-
-    -- RAISE NOTICE 'Tyo argumentu: %', pg_typeof(TG_ARGV[0])::oid;
-    -- RAISE NOTICE 'Tyo argumentu: %', pg_typeof(TG_ARGV[0])::oid;
-    -- RAISE NOTiCE 'Typ inta: %', 42::oid;
-    -- IF(pg_typeof(TG_ARGV[0])::oid != 42::oid) THEN
-    --     RAISE EXCEPTION 'Niepoprawny typ argumentu';
-    -- END IF;
-
-    IF NEW.numer_pytania != (
+    IF (NEW.numer_pytania != (
         SELECT COALESCE(MAX(numer_pytania), 0)
         FROM pytania_na_turniejach
         WHERE id_turnieju = NEW.id_turnieju
-        GROUP BY id_turnieju) + TG_ARGV[0]::INT
+        GROUP BY id_turnieju) + TG_ARGV[0]::INT)
     THEN
         RAISE EXCEPTION 'Pytanie o id % na turnieju % ma niepoprawny numer %', NEW.id_pytania, NEW.id_turnieju, NEW.numer_pytania;
     END IF;
@@ -431,7 +423,7 @@ AS $$
 BEGIN
     IF (SELECT COUNT(*) FROM sklady_w_zespolach
         WHERE id_zespolu = NEW.id_zespolu AND rola=1
-        AND id_turnieju=NEW.id_turnieju) >= 5
+        AND id_turnieju=NEW.id_turnieju) >= 5 THEN
         RAISE EXCEPTION 'Zespół o id % ma już 5 graczy', NEW.id_zespolu;
     END IF;
     RETURN NEW;
@@ -449,7 +441,7 @@ AS $$
 BEGIN
     IF (SELECT COUNT(*) FROM sklady_w_zespolach
         WHERE id_zespolu = NEW.id_zespolu AND rola=2
-        AND id_turnieju=NEW.id_turnieju) >= 1
+        AND id_turnieju=NEW.id_turnieju) >= 1 THEN
         RAISE EXCEPTION 'Zespół o id % ma już trenera', NEW.id_zespolu;
     END IF;
     RETURN NEW;
@@ -467,7 +459,7 @@ AS $$
 BEGIN
     IF (SELECT COUNT(*) FROM sklady_w_zespolach
         WHERE id_zespolu = NEW.id_zespolu AND rola=3
-        AND id_turnieju=NEW.id_turnieju) >= 2
+        AND id_turnieju=NEW.id_turnieju) >= 2 THEN
         RAISE EXCEPTION 'Zespół o id % ma już 2 gracze zapasowe', NEW.id_zespolu;
     END IF;
     RETURN NEW;
@@ -493,7 +485,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 DROP TRIGGER IF EXISTS sprawdzanie_czy_jest_max2_zapasowych ON sklady_w_zespolach;
-CREATE TRIGGER sprawdzanie_czy_jest_max2_zapasowychBEFORE INSERT ON sklady_w_zespolach
+CREATE TRIGGER sprawdzanie_czy_jest_max2_zapasowych BEFORE INSERT ON sklady_w_zespolach
 FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_jest_max2_zapasowych();
 
 
@@ -559,7 +551,7 @@ BEGIN
         AND ap.id_autora=NEW.id_osoby
         AND rola IN (SELECT id FROM role_zaangazowane))
     THEN
-        RAISE EXCEPTION 'Autor % pytania o id % jest zaangażowany w turniej o id %',NEW.id_osoby NEW.id_pytania, NEW.id_turnieju;
+        RAISE EXCEPTION 'Autor % pytania o id % jest zaangażowany w turniej o id %',NEW.id_osoby, NEW.id_pytania, NEW.id_turnieju;
     END IF;
     RETURN NEW;
 END;
@@ -581,7 +573,7 @@ BEGIN
         AND ap.id_autora=NEW.id_wchodzacego
         AND rola IN (SELECT id FROM role_zaangazowane))
     THEN
-        RAISE EXCEPTION 'Autor % pytania o id % jest zaangażowany w turniej o id %',NEW.id_osoby NEW.id_pytania, NEW.id_turnieju;
+        RAISE EXCEPTION 'Autor % pytania o id % jest zaangażowany w turniej o id %',NEW.id_osoby, NEW.id_pytania, NEW.id_turnieju;
     END IF;
     RETURN NEW;
 END;
@@ -597,7 +589,7 @@ RETURNS TRIGGER
 AS $$
 BEGIN
     IF NOT EXISTS (SELECT * FROM ososklady_w_zespolachby
-                   WHERE id_turnieju=NEW.id_turnieju AND id_osoby=NEW.id_wchodzacego AND rola=3)
+                   WHERE id_turnieju=NEW.id_turnieju AND id_osoby=NEW.id_wchodzacego AND rola=3) THEN
         RAISE EXCEPTION 'Osoba o id % nie jest zarejestrowana jako gracz zapasowy', NEW.id_wchodzacego;
     END IF;
     RETURN NEW;

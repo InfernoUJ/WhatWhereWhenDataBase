@@ -21,7 +21,7 @@
         <configuration>
             <propertyFile>liquibase.properties</propertyFile>
             <searchPath>target/classes</searchPath>
-            <changeLogFile>changelog.sql</changeLogFile>
+            <changeLogFile>liquibase/master.xml</changeLogFile>
         </configuration>
         <executions>
             <execution>
