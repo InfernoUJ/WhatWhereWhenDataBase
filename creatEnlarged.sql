@@ -594,7 +594,7 @@ BEGIN
         (SELECT TRUE
          FROM zespoly
          WHERE id=NEW.id_zespolu
-         AND data_likwidacji IS NULL
+         AND data_likwidacji IS NOT NULL
          AND data_likwidacji < (SELECT data_konca FROM turnieje WHERE id=NEW.id_turnieju))
     THEN
         RAISE EXCEPTION 'Zespół o id % został już zlikwidowany kiedy truniej % odbyl sie', NEW.id_zespolu, NEW.id_turnieju;
@@ -716,6 +716,34 @@ $$ LANGUAGE plpgsql;
 -- DROP TRIGGER IF EXISTS sprawdzanie_czy_gra_w_turnieju_zmainy ON zmiany;
 -- CREATE TRIGGER sprawdzanie_czy_gra_w_turnieju_zmainy BEFORE INSERT OR UPDATE ON zmiany
 -- FOR EACH ROW EXECUTE PROCEDURE sprawdz_wczhodzacego_zmiany();
+
+
+CREATE OR REPLACE FUNCTION sprawdz_gracz_data_turnieja()
+RETURNS TRIGGER
+AS $$
+DECLARE
+    data_urodzenia_osoby DATE;
+BEGIN  
+    BEGIN
+        SELECT data_urodzenia INTO data_urodzenia_osoby FROM uczestnicy WHERE id = NEW.id_osoby;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            RAISE EXCEPTION 'Nie znaleziono osoby o id % w tabeli uczestnicy', NEW.id_osoby;
+    END;
+
+    IF data_urodzenia_osoby > (SELECT data_startu FROM turnieje WHERE id = NEW.id_turnieju) - INTERVAL '5 years'
+    THEN 
+        RAISE EXCEPTION 'Gracz o id % nie miał 5 lat w dniu rozpoczęcia turnieju o id %', NEW.id_osoby, NEW.id_turnieju;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS sprawdzanie_czy_gracz_juz_zyl ON sklady_w_zespolach;
+CREATE TRIGGER sprawdzanie_czy_gracz_juz_zyl BEFORE INSERT OR UPDATE ON sklady_w_zespolach
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_gracz_data_turnieja();
+
 
 
 CREATE OR REPLACE FUNCTION sprawdz_zchodzacego_zmiany()
