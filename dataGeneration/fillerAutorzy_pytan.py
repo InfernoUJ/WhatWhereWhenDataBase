@@ -51,7 +51,7 @@ with open("data/pytania_na_turniejach.data", "w") as f:
     f.write("\\.\n")
 
 
-with (open('sklady_w_zespolach.data', 'w') as f, open('zmiany.data', 'w') as zm):
+with (open('data/sklady_w_zespolach.data', 'w') as f, open('data/zmiany.data', 'w') as zm):
     f.write("COPY sklady_w_zespolach FROM STDIN DELIMITER ';' NULL 'null';\n")
     zm.write("COPY zmiany FROM STDIN DELIMITER ';' NULL 'null';\n")
 
@@ -109,12 +109,12 @@ with (open('sklady_w_zespolach.data', 'w') as f, open('zmiany.data', 'w') as zm)
                 zapas = None
                 while(zapas == None):
                     zapas = random.choice(available_players)
-                    zapas_players.append(zapas)
                     for question in tourn_que[turn]:
                         if que_aut[question-1] == zapas:
                             zapas = None
                             continue
-
+                
+                zapas_players.append(zapas)
                 available_players.remove(zapas)
                 f.write(f"{zapas};{team};{turn};3\n")
 
