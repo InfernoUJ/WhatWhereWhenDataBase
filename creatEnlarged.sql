@@ -250,11 +250,26 @@ commit;
 
 begin;
 
-SELECT 'TWROZENIE WIDOKOW';
+SELECT 'TWROZENIE WIDOKOW ORAZ FUNKCJE';
+
 CREATE OR REPLACE VIEW role_zaangazowane AS
     SELECT id 
     FROM "role"
     WHERE id < 4;
+
+
+CREATE OR REPLACE FUNCTION usun_uczestnika(id_u INT)
+RETURNS BOOLEAN
+AS $$
+BEGIN
+    UPDATE uczestnicy 
+    SET imie = '', nazwisko = '', data_urodzenia = CURRENT_DATE
+    WHERE id = id_u;
+    
+    RETURN FOUND;
+END;
+$$ LANGUAGE plpgsql;
+
 
 commit;
 
