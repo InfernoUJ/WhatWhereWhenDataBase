@@ -29,6 +29,8 @@ with open('data/zespoly.data', 'w') as f:
             data_likwidacji = random_date + datetime.timedelta(days=random_number_of_days)
             data_likwidacji = data_likwidacji.strftime('%Y-%m-%d')
         
-        f.write(f"{i};{fake.word().capitalize()+' '+fake.word()};{formatted_date};{data_likwidacji}\n")
+        city = random.choice([_ for _ in range(1, 20)] + ['null']*3)
+
+        f.write(f"{i};{fake.word().capitalize()+' '+fake.word()};{formatted_date};{data_likwidacji};{city}\n")
     
     f.write("\\.\n")
