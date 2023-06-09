@@ -2575,26 +2575,26 @@ COPY adresy FROM STDIN DELIMITER ',' NULL 'null';
 
 
 COPY turnieje FROM STDIN DELIMITER ';' NULL 'null';
-0;list moment;neque enim consectetur aut error;2015-11-11;2017-10-15;1
-1;klient chłop;nam obcaecati fuga quis illo;1987-03-05;2014-07-02;2
-2;odzież plemię;iure necessitatibus quas quibusdam obcaecati;2001-02-01;2013-10-03;1
-3;szereg ogromny;consectetur molestias minus pariatur ut;2001-01-29;2018-10-18;2
-4;charakterystyczny budowla;culpa suscipit asperiores est perspiciatis;1989-10-21;2021-10-15;4
-5;zdarzenie niezwykły;nam minus provident voluptates quibusdam;2007-10-22;2014-08-27;3
-6;szwedzki kościelny;nobis provident dolore itaque nulla;1995-09-03;1999-11-14;4
-7;błąd widok;commodi nam veritatis veniam quod;1989-08-12;2001-03-28;1
-8;scena teoria;ullam vitae laborum pariatur id;1965-01-21;2008-06-25;0
-9;pieniądz płaski;at quos error quis ex;1996-04-29;2003-01-12;2
-10;Afryka dzieło;aut est optio tempore perspiciatis;2013-06-27;2021-05-15;0
-11;katolicki urządzenie;neque pariatur autem inventore iste;2008-03-31;2019-11-01;0
-12;pomagać kontrola;iure consectetur veritatis ipsum tempore;2019-12-10;2021-07-25;1
-13;pracować brzeg;odio ipsam cupiditate ad quod;2001-02-19;2005-12-23;0
-14;usuwać słowacki;fuga ea enim perferendis rem;1981-03-11;2005-08-26;4
-15;wykonać dobrze;hic atque est inventore omnis;1994-10-30;2003-12-18;3
-16;wino natychmiast;exercitationem expedita asperiores quibusdam dolores;1996-02-28;2018-12-23;3
-17;niewielki czynić;nobis nam officia similique dignissimos;1981-11-20;1996-12-28;2
-18;film kolacja;itaque omnis porro sapiente obcaecati;1975-07-03;2006-06-14;2
-19;dokładny stworzyć;facilis at reprehenderit temporibus error;2022-10-15;2023-04-25;2
+0;oni dziura;excepturi modi repellat in repudiandae;1966-04-04;1966-04-05;0
+1;spór zgadzać się;quidem aliquid unde optio perspiciatis;1973-10-11;1973-10-13;1
+2;oś gotować;tempora sunt itaque nihil voluptates;1999-10-29;1999-11-01;4
+3;rząd oraz;consequuntur corporis hic modi illum;1996-06-17;1996-06-23;0
+4;między różowy;nam porro obcaecati cumque eaque;1966-03-07;1966-03-08;3
+5;dach kawa;eius vel rem ut nihil;2006-01-30;2006-02-06;4
+6;narząd dach;accusamus inventore voluptatibus eos iure;1998-11-01;1998-11-03;3
+7;naczynie dostać;placeat explicabo perspiciatis odio cum;1968-07-05;1968-07-07;1
+8;miasto należy;delectus sit dicta necessitatibus consequatur;1968-09-02;1968-09-07;3
+9;otrzymać zacząć;ullam impedit nihil ipsam ea;2008-12-14;2008-12-19;3
+10;piasek ukraiński;vero vel nemo vitae ratione;1981-04-23;1981-04-26;2
+11;mieszkanka cmentarz;nisi quis asperiores porro quos;1999-02-04;1999-02-11;2
+12;historia bóg;cupiditate voluptatum provident excepturi illum;1996-05-28;1996-05-31;0
+13;godność wrażenie;reiciendis nemo voluptas quidem in;2016-03-26;2016-03-28;1
+14;wola dokładnie;minima quasi est iste voluptatem;1985-03-17;1985-03-23;0
+15;jedenaście chyba;eius ullam nulla voluptas molestias;1988-10-06;1988-10-08;0
+16;srebro pomagać;impedit ullam neque beatae saepe;1981-12-07;1981-12-13;0
+17;grzech zdarzenie;similique commodi vero eveniet consequatur;2014-03-23;2014-03-29;0
+18;przedsiębiorstwo sprzedawać;fuga nihil temporibus architecto laborum;1973-07-15;1973-07-20;4
+19;przedsiębiorstwo czuć;numquam neque laboriosam eaque id;1999-05-14;1999-05-16;4
 \.
 
 

@@ -16,9 +16,8 @@ with open('data/turnieje.data', 'w') as f:
         random_date = start_date + datetime.timedelta(days=random_number_of_days)
         formatted_date = random_date.strftime('%Y-%m-%d')    
 
-        stime_between_dates = end_date - random_date
-        sdays_between_dates = stime_between_dates.days
-        srandom_number_of_days = random.randrange(sdays_between_dates)
+
+        srandom_number_of_days = random.randint(1, 7)
         srandom_date = random_date + datetime.timedelta(days=srandom_number_of_days)
         sformatted_date = srandom_date.strftime('%Y-%m-%d')    
 
