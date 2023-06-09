@@ -518,20 +518,18 @@ BEGIN
          WHERE id_turnieju=NEW.id_turnieju
          AND id_osoby=NEW.id_osoby
          AND id_zespolu!=NEW.id_zespolu)
+
          OR
+
         (SELECT TRUE
          FROM sklady_w_zespolach swz
          JOIN turnieje t ON swz.id_turnieju=t.id
-         -- it was checked befor 
          WHERE swz.id_turnieju!=NEW.id_turnieju
          AND swz.id_osoby=NEW.id_osoby
          AND (moj_turniej.data_startu BETWEEN t.data_startu AND t.data_konca
             OR moj_turniej.data_konca BETWEEN t.data_startu AND t.data_konca)) 
-        
-    THEN
-        RAISE EXCEPTION 'HERE';
-    ELSEIF
-        
+    
+        OR
 
         (SELECT TRUE
          FROM zmiany
@@ -543,8 +541,8 @@ BEGIN
         (SELECT TRUE
          FROM zmiany z
          JOIN turnieje t ON z.id_turnieju=t.id
-         -- it was checked befor WHERE z.id_turnieju!=NEW.id_turnieju
-         WHERE z.id_wchodzacego=NEW.id_osoby
+         WHERE z.id_turnieju!=NEW.id_turnieju
+         AND z.id_wchodzacego=NEW.id_osoby
          AND (moj_turniej.data_startu BETWEEN t.data_startu AND t.data_konca
             OR moj_turniej.data_konca BETWEEN t.data_startu AND t.data_konca))
     THEN
@@ -554,9 +552,9 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- DROP TRIGGER IF EXISTS sprawdzanie_czy_gra_w_turnieju_sklady ON sklady_w_zespolach;
--- CREATE TRIGGER sprawdzanie_czy_gra_w_turnieju__sklady BEFORE INSERT OR UPDATE ON sklady_w_zespolach
--- FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_gra_w_turnieju_sklady();
+DROP TRIGGER IF EXISTS sprawdzanie_czy_gra_w_turnieju_sklady ON sklady_w_zespolach;
+CREATE TRIGGER sprawdzanie_czy_gra_w_turnieju__sklady BEFORE INSERT OR UPDATE ON sklady_w_zespolach
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_gra_w_turnieju_sklady();
 
 CREATE OR REPLACE FUNCTION sprawdz_autora_pytania_sklady()
 RETURNS TRIGGER
@@ -673,7 +671,7 @@ DECLARE
     moj_zespol INT;
 BEGIN
     SELECT * INTO moj_turniej FROM turnieje WHERE id=NEW.id_turnieju;
-    SELECT id_zespolu INTO moj_zespol FROM sklady_w_zespolach WHERE id_turnieju=NEW.id_turnieju AND id_osoby=NEW.id_wchodzacego LIMIT 1;
+    moj_zespol = znajdz_zespol_gracza(NEW.id_wchodzacego, NEW.id_turnieju);
     IF  (SELECT TRUE
          FROM sklady_w_zespolach
          WHERE id_turnieju=NEW.id_turnieju
@@ -685,7 +683,7 @@ BEGIN
         (SELECT TRUE
          FROM sklady_w_zespolach swz
          JOIN turnieje t ON swz.id_turnieju=t.id
-         -- it was checked befor WHERE szw.id_turnieju!=NEW.id_turnieju
+         WHERE swz.id_turnieju!=NEW.id_turnieju
          AND swz.id_osoby=NEW.id_wchodzacego
          AND (moj_turniej.data_startu BETWEEN t.data_startu AND t.data_konca
             OR moj_turniej.data_konca BETWEEN t.data_startu AND t.data_konca)) 
@@ -702,8 +700,8 @@ BEGIN
         (SELECT TRUE
          FROM zmiany z
          JOIN turnieje t ON z.id_turnieju=t.id
-         -- it was checked befor WHERE z.id_turnieju!=NEW.id_turnieju
-         WHERE z.id_wchodzacego=NEW.id_wchodzacego
+         WHERE z.id_turnieju!=NEW.id_turnieju
+         AND z.id_wchodzacego=NEW.id_wchodzacego
          AND (moj_turniej.data_startu BETWEEN t.data_startu AND t.data_konca
             OR moj_turniej.data_konca BETWEEN t.data_startu AND t.data_konca))
     THEN
@@ -713,9 +711,9 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- DROP TRIGGER IF EXISTS sprawdzanie_czy_gra_w_turnieju_zmainy ON zmiany;
--- CREATE TRIGGER sprawdzanie_czy_gra_w_turnieju_zmainy BEFORE INSERT OR UPDATE ON zmiany
--- FOR EACH ROW EXECUTE PROCEDURE sprawdz_wczhodzacego_zmiany();
+DROP TRIGGER IF EXISTS sprawdzanie_czy_gra_w_turnieju_zmainy ON zmiany;
+CREATE TRIGGER sprawdzanie_czy_gra_w_turnieju_zmainy BEFORE INSERT OR UPDATE ON zmiany
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_wczhodzacego_zmiany();
 
 
 CREATE OR REPLACE FUNCTION sprawdz_gracz_data_turnieja()
@@ -5056,6 +5054,7 @@ COPY zmiany FROM STDIN DELIMITER ';' NULL 'null';
 19;215;195;10
 \.
 
+/*
 
 COPY pytania_na_turniejach FROM STDIN DELIMITER ';' NULL 'null';
 0;481;1
@@ -5788,5 +5787,6 @@ COPY organizacja FROM STDIN DELIMITER ';' NULL 'null';
 0;31;UJ
 1;30;UE
 \.
+*/
 
 commit;
