@@ -740,11 +740,28 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-DROP TRIGGER IF EXISTS sprawdzanie_czy_gracz_juz_zyl ON sklady_w_zespolach;
-CREATE TRIGGER sprawdzanie_czy_gracz_juz_zyl BEFORE INSERT OR UPDATE ON sklady_w_zespolach
-FOR EACH ROW EXECUTE PROCEDURE sprawdz_gracz_data_turnieja();
+-- DROP TRIGGER IF EXISTS sprawdzanie_czy_gracz_juz_zyl ON sklady_w_zespolach;
+-- CREATE TRIGGER sprawdzanie_czy_gracz_juz_zyl BEFORE INSERT OR UPDATE ON sklady_w_zespolach
+-- FOR EACH ROW EXECUTE PROCEDURE sprawdz_gracz_data_turnieja();
 
 
+CREATE OR REPLACE FUNCTION sprawdz_sedzia_gra_w_turnieju()
+RETURNS TRIGGER
+AS $$
+BEGIN
+    IF (SELECT TRUE FROM organizacja o 
+        WHERE o.id_turnieju=NEW.id_turnieju 
+        AND o.sedzia_glowny=NEW.id_osoby)
+    THEN
+        RAISE EXCEPTION 'Sedzia o id % nie moze byc graczem w turnieju o id %', NEW.id_osoby, NEW.id_turnieju;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- DROP TRIGGER IF EXISTS sprawdzanie_czy_sedzia_gra_w_turnieju ON sklady_w_zespolach;
+-- CREATE TRIGGER sprawdzanie_czy_sedzia_gra_w_turnieju BEFORE INSERT OR UPDATE ON sklady_w_zespolach
+-- FOR EACH ROW EXECUTE PROCEDURE sprawdz_sedzia_gra_w_turnieju();
 
 CREATE OR REPLACE FUNCTION sprawdz_zchodzacego_zmiany()
 RETURNS TRIGGER
