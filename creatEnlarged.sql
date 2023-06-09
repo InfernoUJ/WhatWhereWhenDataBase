@@ -441,6 +441,29 @@ DROP TRIGGER IF EXISTS sprawdzanie_autora_pytania ON pytania_na_turniejach;
 CREATE TRIGGER sprawdzanie_autora_pytania BEFORE INSERT OR UPDATE ON pytania_na_turniejach
 FOR EACH ROW EXECUTE PROCEDURE sprawdz_autora_pytania();
 
+
+CREATE OR REPLACE FUNCTION sprawdz_czy_pytanie_istnialo()
+RETURNS TRIGGER
+AS $$
+BEGIN
+    IF (SELECT u.data_urodzenia
+        FROM autorzy_pytan ap
+        JOIN uczestnicy u ON ap.id_autora = u.id
+        WHERE ap.id_pytania=NEW.id_pytania) + INTERVAL '5 years' > 
+       (SELECT data_startu
+        FROM turnieje
+        WHERE id=NEW.id_turnieju) 
+    THEN
+        RAISE EXCEPTION 'Pytanie o id % napisał autor poniżej 5 lat dla turnieju %', NEW.id_pytania, NEW.id_turnieju;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- DROP TRIGGER IF EXISTS sprawdzanie_czy_pytanie_istnialo ON pytania_na_turniejach;
+-- CREATE TRIGGER sprawdzanie_czy_pytanie_istnialo BEFORE INSERT OR UPDATE ON pytania_na_turniejach
+-- FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_pytanie_istnialo();
+
 commit; 
 
 
@@ -5054,7 +5077,7 @@ COPY zmiany FROM STDIN DELIMITER ';' NULL 'null';
 19;215;195;10
 \.
 
-/*
+
 
 COPY pytania_na_turniejach FROM STDIN DELIMITER ';' NULL 'null';
 0;481;1
@@ -5787,6 +5810,6 @@ COPY organizacja FROM STDIN DELIMITER ';' NULL 'null';
 0;31;UJ
 1;30;UE
 \.
-*/
+
 
 commit;
