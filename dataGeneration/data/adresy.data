@@ -1,39 +1,23 @@
 COPY adresy FROM STDIN DELIMITER ',' NULL 'null';
-0,0,Polna,66-690,15,42
-1,6,Towarowa,51-703,3,40
-2,9,Orzeszkowej,96-829,21,4
-3,4,Wodna,29-661,20,44
-4,5,Jagiellońska,86-713,35,66
-5,3,Spokojna,92-295,11,93
-6,8,Jeziorna,79-225,11,19
-7,5,Podleśna,88-960,14,34
-8,8,Południowa,08-112,21,61
-9,7,Wczasowa,65-934,37,82
-10,9,Batalionów Chłopskich,84-253,26,22
-11,7,Narcyzowa,47-301,39,18
-12,9,Lotnicza,47-359,27,20
-13,9,Jana,98-590,4,86
-14,1,Prosta,56-165,16,97
-15,9,Wyspiańskiego,30-014,14,2
-16,2,Jana Pawła II,01-604,30,13
-17,6,Jaworowa,75-017,40,5
-18,3,Przechodnia,10-386,8,65
-19,1,Kilińskiego,15-573,35,82
-20,7,Nowowiejska,01-216,1,89
-21,9,Ogrodowa,51-821,29,68
-22,6,Jaskółcza,90-944,2,70
-23,4,Jesienna,86-263,1,22
-24,3,Słowianska,32-954,19,38
-25,2,Kazimierza Wielkiego,04-578,23,91
-26,3,Willowa,47-836,4,15
-27,0,Wałowa,35-482,25,85
-28,8,Górska,77-354,25,98
-29,1,Narutowicza,20-927,35,26
-30,0,Kielecka,10-886,27,42
-31,3,Towarowa,70-480,16,10
-32,6,Kościuszki,24-906,35,87
-33,3,Jana III Sobieskiego,95-335,23,72
-34,3,Toruńska,02-143,33,71
-35,3,Kielecka,02-557,30,5
-36,2,Mokra,12-177,10,15
+0,2,Jesienna,88-366,11,57
+1,2,Wspólna,74-168,33,71
+2,8,Świerczewskiego,12-570,4,99
+3,5,Norwida,32-208,21,57
+4,8,Kopernika,41-729,18,45
+5,2,Majowa,70-335,35,66
+6,1,Andersa,45-398,21,45
+7,7,Malinowa,21-224,25,6
+8,4,Wolności,73-151,21,62
+9,7,Sportowa,39-036,5,34
+10,10,Dojazdowa,60-710,19,20
+11,3,Lipowa,63-573,7,57
+12,8,Irysowa,10-870,33,42
+13,9,Sybiraków,62-785,23,58
+14,0,Klasztorna,52-426,8,56
+15,2,Kolorowa,67-558,12,14
+16,0,Norwida,53-006,39,9
+17,9,Bydgoska,88-826,21,52
+18,2,Wieniawskiego,50-871,14,21
+19,1,Szeroka,23-755,26,61
+20,9,Sybiraków,71-186,15,100
 \.

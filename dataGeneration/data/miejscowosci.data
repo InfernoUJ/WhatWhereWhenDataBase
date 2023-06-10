@@ -1,12 +1,14 @@
 COPY miejscowosci FROM STDIN DELIMITER ',' NULL 'null';
-0,Police
-1,Polkowice
-2,Poznań
-3,Środa Wielkopolska
-4,Kłodzko
-5,Ostrów Mazowiecka
-6,Bełchatów
-7,Brodnica
-8,Poznań
-9,Puławy
+0,Nowa Ruda
+1,Tczew
+2,Legionowo
+3,Zgierz
+4,Skawina
+5,Pabianice
+6,Stargard Szczeciński
+7,Żagań
+8,Lębork
+9,Skarżysko-Kamienna
+10,Biała Podlaska
+11,Tarnów
 \.

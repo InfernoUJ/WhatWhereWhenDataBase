@@ -143,6 +143,8 @@ with open("data/pytania_na_turniejach.data", "w") as f:
 # ZESPOLY
 numberOfTeams = random.randint(numberOfTournaments, numberOfTournaments*3)
 teamsDateOfCreation = [None for _ in range(numberOfTeams)]
+teamsBrokeUpDate = [None for _ in range(numberOfTeams)]
+
 teamsDateOfCreation[0] = datetime.date(2000,2,25)
 teamsDateOfCreation[1] = datetime.date(2018,4,20)
 teamsDateOfCreation[2] = datetime.date(2010,3,17)
@@ -169,6 +171,9 @@ with open('data/zespoly.data', 'w') as f:
             days_between_dates = time_between_dates.days
             random_number_of_days = random.randrange(days_between_dates)
             data_likwidacji = random_date + datetime.timedelta(days=random_number_of_days)
+
+            teamsBrokeUpDate[i] = data_likwidacji # !!!!!!!!!!!!
+
             data_likwidacji = data_likwidacji.strftime('%Y-%m-%d')
         
         city = random.choice([i for i in range(numberOfCities)] + ['null']*3)
@@ -181,13 +186,13 @@ with open('data/zespoly.data', 'w') as f:
 # SKLADY W ZESPOLACH
 # ZMIANY
 
-def checkIfTimesIntersects(player, tourn, playersInTournaments, datesOfTournaments, endsOfTournaments):
-    if len(playersInTournaments[player]) == 0:
+def checkIfTimesIntersects(_player, _tourn, _playersInTournaments, _datesOfTournaments, _endsOfTournaments):
+    if len(_playersInTournaments[_player]) == 0:
         return False
     
-    for start, end in playersInTournaments[player]:
-        if (datesOfTournaments[tourn] <= start <= endsOfTournaments[tourn] 
-           or datesOfTournaments[tourn] <= end <= endsOfTournaments[tourn]):
+    for start, end in _playersInTournaments[_player]:
+        if (_datesOfTournaments[_tourn] <= start <= _endsOfTournaments[_tourn] 
+           or _datesOfTournaments[_tourn] <= end <= _endsOfTournaments[_tourn]):
             return True
     return False
 
@@ -198,11 +203,11 @@ with (open('data/sklady_w_zespolach.data', 'w') as f, open('data/zmiany.data', '
     zm.write("COPY zmiany FROM STDIN DELIMITER ';' NULL 'null';\n")
 
     for turn in range(numberOfTournaments):
-        available_teams = [i for i in range(numberOfTeams) if teamsDateOfCreation[i] <= datesOfTournaments[turn]]
+        available_teams = [i for i in range(numberOfTeams) if teamsDateOfCreation[i] <= datesOfTournaments[turn] and (teamsBrokeUpDate[i] == None or teamsBrokeUpDate[i] >= endsOfTournaments[turn])]
         available_players = [i for i in range(numberOfPlayers) 
-                             if playersBirthday[i] <= datesOfTournaments[turn] - datetime.timedelta(days=365*5) 
+                             if (playersBirthday[i] <= datesOfTournaments[turn] - datetime.timedelta(days=365*5) 
                                 and i not in [que_aut[que] for que in tourn_que[turn]]
-                                and not checkIfTimesIntersects(i, turn, playersInTournaments, datesOfTournaments, endsOfTournaments)]
+                                and not checkIfTimesIntersects(i, turn, playersInTournaments, datesOfTournaments, endsOfTournaments))]
         for i in range(random.randint(5, 20)):
             if(len(available_teams) == 0 or len(available_players) < 8):
                 break
