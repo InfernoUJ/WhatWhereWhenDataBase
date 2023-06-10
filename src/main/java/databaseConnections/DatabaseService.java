@@ -14,7 +14,7 @@ public class DatabaseService {
         em = emf.createEntityManager();
     }
     //create needed methods here
-    public List<Object[]> getAllTournamentsWithDatesAndLocalizationsSortedByDate() {
+    public List<Object[]> getAllTournamentsWithDatesAndCitySortedByDate() {
         return null;
     }
 }
