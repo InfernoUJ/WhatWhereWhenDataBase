@@ -33,6 +33,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Archiwum CoGdzieKiedy?");
+
         VBox buttonsForMainMenu = new VBox();
         showTournamentsButton = new Button("Tournaments");
         showRankingListButton = new Button("Rankings");
@@ -40,6 +41,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         buttonsForMainMenu.getChildren().addAll(showTournamentsButton,showRankingListButton, insertionMode);
         mainMenu = new Scene(buttonsForMainMenu,500,300);
         stage.setScene(mainMenu);
+        stage.show();
     }
 
 
