@@ -1,29 +1,32 @@
 COPY turnieje FROM STDIN DELIMITER ';' NULL 'null';
-0;wymagać przy;perferendis eveniet explicabo ducimus praesentium;2002-04-05;2002-04-11;4
-1;chiński płyn;omnis laudantium vero corporis assumenda;2010-07-26;2010-07-30;3
-2;stowarzyszenie zachowanie;sit amet quasi deleniti harum;2013-12-10;2013-12-13;0
-3;stosować posiłek;tempora veritatis ipsum maxime odit;2006-05-14;2006-05-20;4
-4;sprawiać rachunek;veritatis non dignissimos modi praesentium;2022-08-09;2022-08-13;1
-5;jutro dolny;id quo quae pariatur cumque;1983-03-22;1983-03-23;0
-6;gdy kościelny;ullam modi voluptates dolorum vitae;2022-12-05;2022-12-12;3
-7;a sowa;aperiam odit ex consequuntur laborum;1995-07-05;1995-07-09;4
-8;przeciwko pierś;vitae consequuntur dolor a praesentium;1994-01-05;1994-01-12;0
-9;prawie silnik;doloribus corporis consequatur quas itaque;2016-06-15;2016-06-17;4
-10;duch poruszać się;delectus maxime non facere pariatur;1991-06-05;1991-06-06;4
-11;! wycieczka;id quam fugiat voluptates quod;1992-10-01;1992-10-05;1
-12;pogląd gospodarka;placeat ipsa autem ut debitis;2002-01-13;2002-01-17;2
-13;otrzymać jezioro;ex voluptatum vero doloremque possimus;1987-05-18;1987-05-21;2
-14;zajmować się scena;veritatis illo officiis laudantium culpa;2007-11-04;2007-11-09;3
-15;ich prąd;eaque harum corporis ipsam error;2005-08-29;2005-09-05;3
-16;nazwisko ulegać;magnam voluptas officia excepturi esse;2011-01-19;2011-01-26;2
-17;syn planeta;explicabo officiis expedita dolore delectus;2008-03-19;2008-03-24;3
-18;czyn dwudziesty;explicabo assumenda consequuntur incidunt hic;2014-04-14;2014-04-17;1
-19;można radiowy;ab iure obcaecati sequi adipisci;1978-08-09;1978-08-10;2
-20;jądro zupa;commodi aperiam in nemo deleniti;1992-06-10;1992-06-12;0
-21;Rumunia los;ut vel asperiores voluptatum fugit;1977-04-12;1977-04-18;0
-22;rok Chrystus;neque autem rem voluptatibus omnis;1989-04-06;1989-04-09;2
-23;zysk Jan;eveniet tempora sed ducimus unde;1972-08-04;1972-08-05;1
-24;granica powiat;dolor harum ipsa fugiat beatae;2017-11-08;2017-11-14;2
-25;górski ruch;quae in dolor adipisci laboriosam;1975-09-25;1975-09-26;3
-26;tyle zakres;iure quidem maxime nihil facere;1999-07-08;1999-07-14;1
+0;piosenka !;sunt quaerat in ipsum eligendi;1984-12-10;1984-12-13;1
+1;stosunek Niemcy;illo adipisci cupiditate fugit tempore;1995-07-30;1995-08-05;4
+2;łuk jadalny;eum doloribus maiores cum rerum;2012-12-10;2012-12-12;1
+3;zakład działanie;maiores non atque ipsam mollitia;1973-10-16;1973-10-19;4
+4;znać polski;vero totam blanditiis consequuntur consequatur;2022-05-04;2022-05-10;4
+5;żyć r.;accusantium culpa laborum neque eveniet;2021-03-31;2021-04-04;3
+6;odpowiedź ponownie;laboriosam porro omnis necessitatibus officia;1986-01-02;1986-01-07;0
+7;wschód nic;veritatis deserunt temporibus vitae debitis;1987-05-11;1987-05-17;1
+8;mebel usta;deserunt quam repudiandae delectus enim;1997-06-20;1997-06-21;4
+9;jadalny Chrystus;nihil reiciendis quidem voluptatum saepe;2007-04-16;2007-04-18;1
+10;kłaść wydawać;dolorem distinctio enim voluptatum sequi;2010-09-22;2010-09-29;4
+11;zapis używać;velit numquam vero eos libero;2003-06-03;2003-06-10;2
+12;Wielka Brytania sport;aut veritatis excepturi deserunt non;2007-04-25;2007-04-28;3
+13;procent itp.;ipsa quidem officia molestiae alias;2019-01-03;2019-01-10;3
+14;! srebrny;eaque veritatis numquam nobis non;2007-04-30;2007-05-04;1
+15;wąż osiągnąć;possimus corporis veniam tenetur eveniet;2008-03-31;2008-04-02;4
+16;działanie określony;quae expedita ipsum fugit pariatur;2011-05-03;2011-05-07;0
+17;łatwo pijany;modi corrupti cum natus quas;1973-02-06;1973-02-11;3
+18;pełen chcieć;maxime perferendis aspernatur at possimus;1968-05-26;1968-05-27;2
+19;słuchać pasmo;sapiente odio quasi totam aut;2002-10-24;2002-10-29;1
+20;mysz odmiana;necessitatibus laudantium doloribus cum voluptates;1966-06-05;1966-06-06;1
+21;próba usuwać;minima labore eos aspernatur nihil;2007-02-19;2007-02-22;2
+22;rzeczownik siła;non maiores animi quidem fugiat;2011-07-03;2011-07-05;1
+23;plemię nie ma;doloribus rem nulla vel aliquam;1970-10-08;1970-10-10;4
+24;prawny ozdobny;in praesentium fuga non impedit;2001-07-22;2001-07-28;0
+25;traktować jedynie;provident delectus consequuntur itaque corrupti;2009-08-19;2009-08-25;3
+26;zupa odcień;voluptates iste ex repudiandae consequatur;1997-11-07;1997-11-14;4
+27;strój gotowy;praesentium tenetur blanditiis ad fugiat;2004-09-11;2004-09-16;4
+28;organizacja podobny;exercitationem amet magnam placeat aut;1982-07-13;1982-07-18;3
+29;(…) zdrowie;hic quasi incidunt minus libero;1997-08-10;1997-08-16;2
 \.
