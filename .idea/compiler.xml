@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="WhatWhereWhenDataBase" target="1.5" />
+      <module name="WhatWhereWhenDataBase" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
