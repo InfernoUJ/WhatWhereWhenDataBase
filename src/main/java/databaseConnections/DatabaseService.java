@@ -41,7 +41,7 @@ public class DatabaseService {
 
         return null;
     }
-    public List<Object[]> getRatingLists() {
+    public List<Object[]> getRatingLists(Date date) {
         //returns: All  Players:Surname, Name, Rating Sorted By Rating
 
         return null;
@@ -54,6 +54,11 @@ public class DatabaseService {
     }
     public List<Object[]> getBadAutors() {
         //returns: Player:Surname, Name and amount of rejected questions
+
+        return null;
+    }
+    public List<Object[]> displayTournamentInfo(int id) {
+        //returns: Name,Start and finish Dates, localization, description, staff
 
         return null;
     }
