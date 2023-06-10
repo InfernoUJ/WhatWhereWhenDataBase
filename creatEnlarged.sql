@@ -460,9 +460,9 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- DROP TRIGGER IF EXISTS sprawdzanie_czy_pytanie_istnialo ON pytania_na_turniejach;
--- CREATE TRIGGER sprawdzanie_czy_pytanie_istnialo BEFORE INSERT OR UPDATE ON pytania_na_turniejach
--- FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_pytanie_istnialo();
+DROP TRIGGER IF EXISTS sprawdzanie_czy_pytanie_istnialo ON pytania_na_turniejach;
+CREATE TRIGGER sprawdzanie_czy_pytanie_istnialo BEFORE INSERT OR UPDATE ON pytania_na_turniejach
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_pytanie_istnialo();
 
 commit; 
 
@@ -761,9 +761,9 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- DROP TRIGGER IF EXISTS sprawdzanie_czy_gracz_juz_zyl ON sklady_w_zespolach;
--- CREATE TRIGGER sprawdzanie_czy_gracz_juz_zyl BEFORE INSERT OR UPDATE ON sklady_w_zespolach
--- FOR EACH ROW EXECUTE PROCEDURE sprawdz_gracz_data_turnieja();
+DROP TRIGGER IF EXISTS sprawdzanie_czy_gracz_juz_zyl ON sklady_w_zespolach;
+CREATE TRIGGER sprawdzanie_czy_gracz_juz_zyl BEFORE INSERT OR UPDATE ON sklady_w_zespolach
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_gracz_data_turnieja();
 
 
 CREATE OR REPLACE FUNCTION sprawdz_sedzia_gra_w_turnieju()
@@ -780,9 +780,9 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- DROP TRIGGER IF EXISTS sprawdzanie_czy_sedzia_gra_w_turnieju ON sklady_w_zespolach;
--- CREATE TRIGGER sprawdzanie_czy_sedzia_gra_w_turnieju BEFORE INSERT OR UPDATE ON sklady_w_zespolach
--- FOR EACH ROW EXECUTE PROCEDURE sprawdz_sedzia_gra_w_turnieju();
+DROP TRIGGER IF EXISTS sprawdzanie_czy_sedzia_gra_w_turnieju ON sklady_w_zespolach;
+CREATE TRIGGER sprawdzanie_czy_sedzia_gra_w_turnieju BEFORE INSERT OR UPDATE ON sklady_w_zespolach
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_sedzia_gra_w_turnieju();
 
 CREATE OR REPLACE FUNCTION sprawdz_zchodzacego_zmiany()
 RETURNS TRIGGER
