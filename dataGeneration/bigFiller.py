@@ -10,19 +10,6 @@ end_date = datetime.date(2023, 6, 3)
 
 all_data = open('data/all_data.data', 'w')
 
-# ORGANIZACJA
-with open('data/organizacja.data', 'w') as f:
-    f.write("COPY organizacja FROM STDIN DELIMITER ';' NULL 'null';\n")
-    all_data.write("COPY organizacja FROM STDIN DELIMITER ';' NULL 'null';\n")
-
-    f.write("0;31;UJ\n")
-    all_data.write("0;31;UJ\n")
-    f.write("1;30;UE\n")
-    all_data.write("1;30;UE\n")
-
-    f.write("\\.\n")
-    all_data.write("\\.\n\n\n")
-
 
 # KATEGORIE
 with open('data/kategorie.data', 'w') as f:
@@ -55,6 +42,25 @@ with open('data/kategorie.data', 'w') as f:
     f.write("\\.\n")
     all_data.write("\\.\n\n\n")
 
+
+# ROLE
+with open("data/role.data", "w") as f:
+    f.write("COPY role FROM STDIN DELIMITER ';' NULL 'null';\n")
+    all_data.write("COPY role FROM STDIN DELIMITER ';' NULL 'null';\n")
+
+    f.write("0;kapitan\n")
+    all_data.write("0;kapitan\n")
+    f.write("1;uczestnik\n")
+    all_data.write("1;uczestnik\n")
+    f.write("2;trener\n")
+    all_data.write("2;trener\n")
+    f.write("3;gracz zapasowy\n")
+    all_data.write("3;gracz zapasowy\n")
+
+    f.write("\\.\n")
+    all_data.write("\\.\n\n\n")
+
+
 # CITIES
 numberOfCities = random.randint(10, 20)
 cities = [None for _ in range(numberOfCities)]
@@ -75,8 +81,9 @@ with open('data/adresy.data', 'w') as f:
     all_data.write("COPY adresy FROM STDIN DELIMITER ',' NULL 'null';\n")
 
     for i in range(numberOfAddresses):
-        f.write(f"{i},{random.randint(0, numberOfCities-1)},{fake.street_name()},{fake.postcode()},{random.randint(1,40)},{random.randint(1, 100)}\n")
-        all_data.write(f"{i},{random.randint(0, numberOfCities-1)},{fake.street_name()},{fake.postcode()},{random.randint(1,40)},{random.randint(1, 100)}\n")
+        s = f"{i},{random.randint(0, numberOfCities-1)},{fake.street_name()},{fake.postcode()},{random.randint(1,40)},{random.randint(1, 100)}\n"
+        f.write(s)
+        all_data.write(s)
     
     f.write("\\.\n")
     all_data.write("\\.\n\n\n")
@@ -100,8 +107,8 @@ with open('data/pytania.data', 'w') as f:
     all_data.write("4;Projektant Vadim Kibardin stworzył manipulator przeznaczony do walki z dolegliwością zwaną zespołem cieśni nadgarstka. Nazwa tego manipulatora jest taka sama jak tytuł dzieła, którego premiera odbyła się w 1874 roku. Podaj autora tego dzieła.;[Johann] Strauss;5\n")
     f.write("5;W czasach starożytnych wiele ludów świata przy pochówku oddawało SWOJE ciała. HE odróżnia motocyklistę na motocyklu sportowym, znacznie bardziej niebezpiecznym od innych motocykli, od pozostałych motocyklistów. Wymień JEJ nazwę w dwóch słowach.;pozę embrionalną;10\n")
     all_data.write("5;W czasach starożytnych wiele ludów świata przy pochówku oddawało SWOJE ciała. HE odróżnia motocyklistę na motocyklu sportowym, znacznie bardziej niebezpiecznym od innych motocykli, od pozostałych motocyklistów. Wymień JEJ nazwę w dwóch słowach.;pozę embrionalną;10\n")
-    f.write("6;Na opakowaniu słuchawek znanego kanadyjskiego projektanta znajduje się pięć cienkich, poziomych linii równoległych. Wymień JEJ nazwisko.;[Philip] Starck;11\n")
-    all_data.write("6;Na opakowaniu słuchawek znanego kanadyjskiego projektanta znajduje się pięć cienkich, poziomych linii równoległych. Wymień JEJ nazwisko.;[Philip] Starck;11\n")
+    f.write("6;Na opakowaniu słuchawek znanego kanadyjskiego projektanta znajduje się pięć cienkich, poziomych linii równoległych. Wymień JEJ nazwisko.;[Philip] Starck;10\n")
+    all_data.write("6;Na opakowaniu słuchawek znanego kanadyjskiego projektanta znajduje się pięć cienkich, poziomych linii równoległych. Wymień JEJ nazwisko.;[Philip] Starck;10\n")
     f.write("7;O NIM mówiło się w latach 20. ubiegłego wieku. ONO bylo tematem rozprawy doktorskiej, w której lekarz Caroline Sjönger Philip doszła do wniosku, że immunoalergiczna bronchopneumopatologia jest faktycznie przyczyną zgonów ludzi. Nazwij JEGO w dwóch słowach.;klątwa faraonów;2\n")
     all_data.write("7;O NIM mówiło się w latach 20. ubiegłego wieku. ONO bylo tematem rozprawy doktorskiej, w której lekarz Caroline Sjönger Philip doszła do wniosku, że immunoalergiczna bronchopneumopatologia jest faktycznie przyczyną zgonów ludzi. Nazwij JEGO w dwóch słowach.;klątwa faraonów;2\n")
     f.write("8;Baron Robert Baden-Powell uważał, że ludność kolonii powinna być rządzona żelazną ręką, a jeśli jej siła nie zostanie zauważona, ZROBIĆ TO. Etykieta wymaga, aby mężczyzna podczas powitania zrobił TO, ale kobieta nie. Które dwa słowa zastąpiliśmy słowem ZROIC TO?;zdjąć rękawicę;2\n")
@@ -114,8 +121,9 @@ with open('data/pytania.data', 'w') as f:
     all_data.write("11;Kolizja dwóch samochodów w norweskim miasteczku Bjarkøy, położonym na wyspie w archipelagu Västerålen, od dawna jest omawiana w prasie i nic dziwnego. TAKI samochód i TAKA ciężarówka zderzyły się na TAKIEJ ulicy. Które słowo zastąpiliśmy słowem TAKI?;taki samochód;1\n")
 
     for i in range(12, numberOfQuestions):
-        f.write(f"{i};{lorem.words(random.randint(30,50))};{lorem.words(1)};{random.randint(0,10)}\n")
-        all_data.write(f"{i};{lorem.words(random.randint(30,50))};{lorem.words(1)};{random.randint(0,10)}\n")
+        s = f"{i};{lorem.words(random.randint(30,50))};{lorem.words(1)};{random.randint(0,10)}\n"
+        f.write(s)
+        all_data.write(s)
 
     f.write("\\.\n")
     all_data.write("\\.\n\n\n")
@@ -140,8 +148,9 @@ with open('data/uczestnicy.data', 'w') as f:
         # Format the date as a string in the format "YYYY-MM-DD"
         formatted_date = random_date.strftime('%Y-%m-%d')       
         
-        f.write(f"{i};{fake.first_name()};{fake.last_name()};{random.choice(('M', 'F'))};{formatted_date}\n")
-        all_data.write(f"{i};{fake.first_name()};{fake.last_name()};{random.choice(('M', 'F'))};{formatted_date}\n")
+        s = f"{i};{fake.first_name()};{fake.last_name()};{random.choice(('M', 'F'))};{formatted_date}\n"
+        f.write(s)
+        all_data.write(s)
 
     f.write("\\.\n")
     all_data.write("\\.\n\n\n")
@@ -206,8 +215,9 @@ with open('data/turnieje.data', 'w') as f:
         sformatted_date = srandom_date.strftime('%Y-%m-%d')    
         endsOfTournaments[i] = srandom_date # !!!!!!!!!!!!
         
-        f.write(f"{i};{fake.word()+' '+fake.word()};{lorem.words(5)};{formatted_date};{sformatted_date};{random.randint(0,4)}\n")
-        all_data.write(f"{i};{fake.word()+' '+fake.word()};{lorem.words(5)};{formatted_date};{sformatted_date};{random.randint(0,4)}\n")
+        s = f"{i};{fake.word()+' '+fake.word()};{lorem.words(5)};{formatted_date};{sformatted_date};{random.randint(0,4)}\n"
+        f.write(s)
+        all_data.write(s)
 
     f.write("\\.\n")
     all_data.write("\\.\n\n\n")
@@ -288,8 +298,9 @@ with open('data/zespoly.data', 'w') as f:
         
         city = random.choice([i for i in range(numberOfCities)] + ['null']*3)
 
-        f.write(f"{i};{fake.word().capitalize()+' '+fake.word()};{formatted_date};{data_likwidacji};{city}\n")
-        all_data.write(f"{i};{fake.word().capitalize()+' '+fake.word()};{formatted_date};{data_likwidacji};{city}\n")
+        s = f"{i};{fake.word().capitalize()+' '+fake.word()};{formatted_date};{data_likwidacji};{city}\n"
+        f.write(s)
+        all_data.write(s)
 
     f.write("\\.\n")
     all_data.write("\\.\n\n\n")
@@ -310,14 +321,18 @@ def checkIfTimesIntersects(_player, _tourn, _playersInTournaments, _datesOfTourn
 
 playersInTournaments = [[] for _ in range(numberOfPlayers)]
 tournament_teams = [[] for _ in range(numberOfTournaments)]
+textForZmainy =""
 with (open('data/sklady_w_zespolach.data', 'w') as f, open('data/zmiany.data', 'w') as zm):
     f.write("COPY sklady_w_zespolach FROM STDIN DELIMITER ';' NULL 'null';\n")
+    all_data.write("COPY sklady_w_zespolach FROM STDIN DELIMITER ';' NULL 'null';\n")
+    
     zm.write("COPY zmiany FROM STDIN DELIMITER ';' NULL 'null';\n")
-
+    textForZmainy += "COPY zmiany FROM STDIN DELIMITER ';' NULL 'null';\n"
+    
     for turn in range(numberOfTournaments):
         available_teams = [i for i in range(numberOfTeams) if teamsDateOfCreation[i] <= datesOfTournaments[turn] and (teamsBrokeUpDate[i] == None or teamsBrokeUpDate[i] >= endsOfTournaments[turn])]
         available_players = [i for i in range(numberOfPlayers) 
-                             if (playersBirthday[i] <= datesOfTournaments[turn] - datetime.timedelta(days=365*5) 
+                             if (playersBirthday[i] <= datesOfTournaments[turn] - datetime.timedelta(days=366*5) 
                                 and i not in [que_aut[que] for que in tourn_que[turn]]
                                 and not checkIfTimesIntersects(i, turn, playersInTournaments, datesOfTournaments, endsOfTournaments))]
         for i in range(random.randint(5, 20)):
@@ -327,8 +342,6 @@ with (open('data/sklady_w_zespolach.data', 'w') as f, open('data/zmiany.data', '
             tournament_teams[turn].append(team)
             available_teams.remove(team)
 
-            all_data.write("COPY sklady_w_zespolach FROM STDIN DELIMITER ';' NULL 'null';\n")
-
             #add capitan
             cap = None
             while(cap == None):
@@ -336,7 +349,7 @@ with (open('data/sklady_w_zespolach.data', 'w') as f, open('data/zmiany.data', '
                 for question in tourn_que[turn]:
                     if que_aut[question] == cap:
                         cap = None
-                        continue
+                        break
             
             playersInTournaments[cap].append((datesOfTournaments[turn], endsOfTournaments[turn]))
             available_players.remove(cap)
@@ -352,7 +365,7 @@ with (open('data/sklady_w_zespolach.data', 'w') as f, open('data/zmiany.data', '
                     for question in tourn_que[turn]:
                         if que_aut[question] == player:
                             player = None
-                            continue
+                            break
                 
                 playersInTournaments[player].append((datesOfTournaments[turn], endsOfTournaments[turn]))
                 available_players.remove(player)
@@ -368,7 +381,7 @@ with (open('data/sklady_w_zespolach.data', 'w') as f, open('data/zmiany.data', '
                     for question in tourn_que[turn]:
                         if que_aut[question] == trener:
                             trener = None
-                            continue
+                            break
                 
                 playersInTournaments[trener].append((datesOfTournaments[turn], endsOfTournaments[turn]))
                 available_players.remove(trener)
@@ -385,7 +398,7 @@ with (open('data/sklady_w_zespolach.data', 'w') as f, open('data/zmiany.data', '
                     for question in tourn_que[turn]:
                         if que_aut[question] == zapas:
                             zapas = None
-                            continue
+                            break
                 
                 playersInTournaments[zapas].append((datesOfTournaments[turn], endsOfTournaments[turn]))
                 zapas_players.append(zapas)
@@ -393,21 +406,22 @@ with (open('data/sklady_w_zespolach.data', 'w') as f, open('data/zmiany.data', '
                 f.write(f"{zapas};{team};{turn};3\n")
                 all_data.write(f"{zapas};{team};{turn};3\n")
 
-            all_data.write("\\.\n\n\n")
+            
 
             #add zmiany
-            all_data.write("COPY zmiany FROM STDIN DELIMITER ';' NULL 'null';\n")
             for zap in zapas_players:
                 #print(turn, players)
                 changed = random.choice(players)
                 players.remove(changed)
-                zm.write(f"{turn};{changed};{zap};{random.randint(1, 23)}\n")
-                all_data.write(f"{turn};{changed};{zap};{random.randint(1, 23)}\n")
-
-            all_data.write("\\.\n\n\n")
+                cur_text = f"{turn};{changed};{zap};{random.randint(1, 23)}\n"
+                zm.write(cur_text)
+                textForZmainy += cur_text
     
     f.write("\\.\n")
+    all_data.write("\\.\n\n\n")
     zm.write("\\.\n")
+    textForZmainy += "\\.\n\n\n"
+    all_data.write(textForZmainy)
             
 
 # POPRAWNE ODPOWIEDZI
@@ -418,7 +432,7 @@ with open("data/poprawne_odpowiedzi.data", "w") as f:
     for turn in range(numberOfTournaments):
         for zesp in tournament_teams[turn]:
             for i in range(len(tourn_que[turn])):
-                if(random.randint(0, 2) == 1):
+                if(random.randint(0, 3) == 1):
                     f.write(f"{turn};{zesp};{i+1}\n")
                     all_data.write(f"{turn};{zesp};{i+1}\n")
 
@@ -449,26 +463,9 @@ with open("data/kary_dla_zespolow.data", "w") as f:
     for turn in range(numberOfTournaments):
         for zesp in tournament_teams[turn]:
             if(random.choice(range(20)) == 13):
-                f.write(f"{random.randint(1, 3)};{zesp};{turn};\n")
-                all_data.write(f"{random.randint(1, 3)};{zesp};{turn};\n")
-
-    f.write("\\.\n")
-    all_data.write("\\.\n\n\n")
-
-
-# ROLE
-with open("data/role.data", "w") as f:
-    f.write("COPY role FROM STDIN DELIMITER ';' NULL 'null';\n")
-    all_data.write("COPY role FROM STDIN DELIMITER ';' NULL 'null';\n")
-
-    f.write("0;kapitan\n")
-    all_data.write("0;kapitan\n")
-    f.write("1;uczestnik\n")
-    all_data.write("1;uczestnik\n")
-    f.write("2;trener\n")
-    all_data.write("2;trener\n")
-    f.write("3;gracz zapasowy\n")
-    all_data.write("3;gracz zapasowy\n")
+                s = f"{random.randint(0, 2)};{zesp};{turn}\n"
+                f.write(s)
+                all_data.write(s)
 
     f.write("\\.\n")
     all_data.write("\\.\n\n\n")
@@ -496,10 +493,24 @@ with open("data/nagrody_w_turniejach.data", "w") as f:
     all_data.write("COPY nagrody_w_turniejach FROM STDIN DELIMITER ';' NULL 'null';\n")
 
     for turn in range(numberOfTournaments):
-        for zesp in tournament_teams[turn]:
-            for i in range(3):
-                f.write(f"{random.randint(0, 3)};{turn};{i+1};\n")
-                all_data.write(f"{random.randint(0, 3)};{turn};{i+1};\n")
+        for i in range(3):
+            s = f"{random.randint(0, 2)};{turn};{i+1}\n"
+            f.write(s)
+            all_data.write(s)
+
+    f.write("\\.\n")
+    all_data.write("\\.\n\n\n")
+
+
+# ORGANIZACJA
+with open('data/organizacja.data', 'w') as f:
+    f.write("COPY organizacja FROM STDIN DELIMITER ';' NULL 'null';\n")
+    all_data.write("COPY organizacja FROM STDIN DELIMITER ';' NULL 'null';\n")
+
+    f.write("0;31;UJ\n")
+    all_data.write("0;31;UJ\n")
+    f.write("1;30;UE\n")
+    all_data.write("1;30;UE\n")
 
     f.write("\\.\n")
     all_data.write("\\.\n\n\n")

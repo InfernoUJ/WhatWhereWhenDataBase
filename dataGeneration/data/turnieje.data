@@ -1,28 +1,25 @@
 COPY turnieje FROM STDIN DELIMITER ';' NULL 'null';
-0;wydarzenie mama;temporibus quod sunt quidem atque;1987-09-12;1987-09-14;4
-1;kult wodny;porro nemo et libero enim;1981-04-09;1981-04-16;4
-2;autor gatunek;veritatis fugit facilis tenetur unde;2015-11-24;2015-12-01;0
-3;olej dzielnica;vero vel nesciunt possimus provident;1980-01-25;1980-01-30;2
-4;myśl nasz;laboriosam ullam iure inventore numquam;1986-12-02;1986-12-08;3
-5;tarcza klasztor;hic ratione impedit optio eveniet;1998-05-05;1998-05-08;1
-6;niebezpieczny Węgry;facere tenetur beatae facilis quos;1990-09-21;1990-09-22;2
-7;kto zamknąć;placeat itaque commodi nostrum rerum;1993-10-13;1993-10-16;4
-8;Słońce szereg;labore voluptate similique aliquid doloremque;1986-08-22;1986-08-25;4
-9;dziwny wyraz;aspernatur quas cumque qui repudiandae;1997-04-02;1997-04-04;1
-10;ojciec gmina;quos ipsam commodi molestias est;2002-09-05;2002-09-10;2
-11;potrzebować wiek;corrupti voluptas magni aliquam iste;1992-09-03;1992-09-04;0
-12;zmęczony wykonywanie;dolorum facere ratione sequi repellat;1990-07-27;1990-08-02;3
-13;łódź osiągnąć;modi dolor ducimus libero accusantium;2018-08-27;2018-08-29;2
-14;termin podobny;officiis id dignissimos culpa doloremque;1998-11-18;1998-11-23;2
-15;herbata krowa;quo aperiam dolores cum molestias;2011-09-22;2011-09-23;4
-16;służba wykonanie;quos iusto soluta ipsum tenetur;2010-09-03;2010-09-09;0
-17;mieć na imię stanowić;deleniti libero debitis quasi similique;1993-02-09;1993-02-11;0
-18;ludowy wpaść;minima fuga doloremque explicabo rerum;2008-09-06;2008-09-10;0
-19;obóz kwestia;dicta architecto culpa nam mollitia;2022-03-23;2022-03-24;1
-20;przyjemność roślina;sapiente veniam eos commodi veritatis;2006-01-13;2006-01-16;3
-21;jedynie produkować;odit voluptatem placeat ipsa et;1994-11-05;1994-11-09;2
-22;polować okolica;beatae reiciendis maiores minus assumenda;2020-09-26;2020-09-30;2
-23;jego rząd;iure dicta exercitationem eaque deserunt;2016-04-09;2016-04-13;3
-24;zbyt źle;perferendis reiciendis officia quidem cumque;2009-09-14;2009-09-15;4
-25;zostać zgodnie;excepturi sequi quae sapiente blanditiis;1986-06-26;1986-07-03;1
+0;kilka zarówno;provident et earum at in;1986-09-14;1986-09-20;2
+1;6 choroba;sapiente nihil veritatis esse dicta;1990-04-10;1990-04-16;2
+2;stać późno;tenetur aspernatur ad repellendus ducimus;1984-10-18;1984-10-19;2
+3;brat kawałek;laudantium repellat officia nam natus;1994-11-04;1994-11-05;1
+4;posiadać dobro;voluptatibus aliquid alias ut cupiditate;2001-11-12;2001-11-19;3
+5;przyjmować każdy;enim quos temporibus excepturi aspernatur;2012-06-21;2012-06-28;2
+6;punkt okres;doloribus molestiae itaque eligendi suscipit;1995-07-31;1995-08-06;2
+7;wszystko dziś;ducimus voluptas quam molestiae architecto;2011-07-14;2011-07-19;1
+8;styczeń położenie;vero ex dolore laudantium quaerat;2006-06-28;2006-06-30;3
+9;przyjść prezent;placeat nisi quae illo ullam;2017-12-13;2017-12-19;0
+10;wierzyć ty;illum ab dolores ut molestiae;2012-08-08;2012-08-10;2
+11;chłopak grupa;rem quo numquam veritatis excepturi;1980-02-18;1980-02-25;1
+12;kot wakacje;omnis aperiam nulla iste fugiat;2023-03-02;2023-03-07;2
+13;ból zdobyć;numquam officiis eos nesciunt sint;1996-07-19;1996-07-21;2
+14;gospodarka mąż;excepturi at dicta libero sed;2020-03-27;2020-03-28;0
+15;głód organizm;sit recusandae maxime aperiam fuga;2015-08-16;2015-08-19;3
+16;zająć teraz;voluptates eaque doloremque rerum distinctio;2008-12-12;2008-12-15;2
+17;dokonywać cmentarz;atque quibusdam tenetur eum deleniti;2003-04-10;2003-04-15;2
+18;arabski europejski;quisquam cupiditate ratione amet non;2014-03-23;2014-03-27;1
+19;miasto teatr;soluta illo quibusdam officiis magnam;1997-06-12;1997-06-13;1
+20;pogoda kamień;voluptatum eaque ducimus autem sapiente;1981-08-12;1981-08-15;4
+21;w końcu zwierzę;recusandae ut ab provident cupiditate;1985-09-26;1985-10-01;4
+22;poprzedni plecy;maxime dolores impedit recusandae tempore;2020-10-24;2020-10-30;2
 \.
