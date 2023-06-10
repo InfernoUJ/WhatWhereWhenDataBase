@@ -1,17 +1,57 @@
 COPY zespoly FROM STDIN DELIMITER ';' NULL 'null';
-5;W ciągu dokonywać;2016-08-09;null;null
-6;Czasem teren;2002-09-26;null;2
-7;Cierpienie również;2021-06-08;null;6
-8;Wy wejście;2008-10-17;2014-03-22;10
-9;Teren łóżko;1989-12-21;null;18
-10;Dorosły wojna;1990-10-21;null;13
-11;Uśmiech trudność;1995-03-11;null;4
-12;Dać się dziać się;2012-06-15;null;7
-13;Umożliwiać kiedyś;2011-01-26;null;null
-14;Go sen;1985-01-02;null;null
-15;Do stosować;2012-03-20;null;10
-16;Smak chemiczny;2015-08-16;null;7
-17;Udział umieszczać;2011-01-03;null;10
-18;Jeżeli te;1991-09-16;2015-04-18;null
-19;Początek zaburzenie;1998-08-01;null;17
+5;Społeczeństwo dziwny;2019-05-24;null;2
+6;Od biblioteka;1965-01-03;null;4
+7;Południe włosy;2007-04-17;null;8
+8;Straszny wejść;2002-04-09;null;3
+9;Wioska pacjent;1996-10-01;null;null
+10;Bitwa suma;2021-09-08;null;1
+11;Tracić pozycja;2006-06-18;null;null
+12;Jan znaczyć;2005-04-06;null;3
+13;Warszawa rzeczywistość;1982-12-01;null;2
+14;Tu pracować;1980-10-28;null;null
+15;Jajko rosyjski;1992-05-15;null;3
+16;Boże narodzenie Czechy;2009-04-07;null;null
+17;Ogromny płynąć;2011-09-20;null;7
+18;Biblioteka tu;1979-01-05;null;7
+19;Moralny uśmiech;2004-04-15;null;null
+20;Czeski 4;1996-04-06;null;5
+21;Dwanaście norma;1982-11-19;null;3
+22;Odpowiedni karta;2000-11-08;null;4
+23;Zazwyczaj słowo;1975-05-01;null;7
+24;Wrogość ślad;1972-08-14;null;null
+25;Pokój kwestia;2020-10-17;null;6
+26;40 archipelag;1992-07-09;null;8
+27;Zaufanie okrągły;2020-05-13;null;5
+28;Urządzenie opuścić;1976-03-10;null;7
+29;Środek adres;1992-10-05;null;9
+30;Ciało podział;1990-03-16;null;3
+31;Uciekać przeciw;1981-03-16;null;8
+32;Para proszę;1996-09-02;2003-11-13;3
+33;Stowarzyszenie klimat;2020-12-06;null;null
+34;Swój turecki;1982-09-01;null;5
+35;Rachunek kraina;1995-05-25;null;1
+36;Metal późno;2009-05-13;null;1
+37;Przyjąć nocny;1976-05-14;null;6
+38;Opłata zacząć;2020-05-07;null;5
+39;Wysokość pijany;1978-07-01;null;7
+40;Gospodarka arabski;1975-08-26;null;0
+41;Za 10;1968-04-26;null;7
+42;Klient lub;1985-01-06;null;null
+43;Nikt narodowy;2019-05-09;null;7
+44;Podczas Szwajcaria;1971-05-04;null;5
+45;Oddawać kij;2005-01-24;null;7
+46;Przyjść czyli;1968-02-01;null;8
+47;Uczeń górny;1972-08-05;null;3
+48;Wschód biały;2015-09-03;null;2
+49;Kierunek wiatr;2013-01-07;null;null
+50;Historia 8;1991-04-08;null;1
+51;Lew wojenny;2001-07-01;null;6
+52;Z powodu głupi;2007-06-02;null;4
+53;30 rodzinny;1965-03-12;null;null
+54;Gatunek dzień;1970-10-18;null;2
+55;Aktywny powolny;2006-02-09;null;0
+56;Zniszczyć wiara;2001-10-23;null;8
+57;Wybierać opisać;1965-05-29;null;6
+58;Wnętrze koszula;2022-10-21;null;8
+59;Jajo krok;1999-04-05;null;0
 \.

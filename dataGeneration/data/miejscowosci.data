@@ -1,12 +1,12 @@
 COPY miejscowosci FROM STDIN DELIMITER ',' NULL 'null';
-0,Jelenia Góra
-1,Dębica
-2,Bełchatów
-3,Chorzów
-4,Kędzierzyn-Koźle
-5,Mielec
-6,Inowrocław
-7,Żywiec
-8,Kielce
-9,Skawina
-10,Skarżysko-Kamienna
+0,Police
+1,Polkowice
+2,Poznań
+3,Środa Wielkopolska
+4,Kłodzko
+5,Ostrów Mazowiecka
+6,Bełchatów
+7,Brodnica
+8,Poznań
+9,Puławy
+\.

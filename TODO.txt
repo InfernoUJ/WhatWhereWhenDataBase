@@ -20,3 +20,5 @@ DONE
 dodać możliwość usuwania osob
 
 Przerobić czeky na dodawanie/usuwanie pytan
+
+Zrobić dane dla nagrod

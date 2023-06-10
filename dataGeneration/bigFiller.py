@@ -16,7 +16,7 @@ with open('data/miejscowosci.data', 'w') as f:
     for i in range(numberOfCities):
         cities[i] = fake.city()
         f.write(f"{i},{cities[i]}\n")
-
+    f.write("\\.\n")
 
 # ADRESY
 numberOfAddresses = random.randint(20, 40)
@@ -41,7 +41,7 @@ with open('data/pytania.data', 'w') as f:
 
 
 #UCZESTNICY
-numberOfPlayers = random.randint(300, 400)
+numberOfPlayers = random.randint(800, 1200)
 playersBirthday = [None for _ in range(numberOfPlayers)]
 with open('data/uczestnicy.data', 'w') as f:
     f.write("COPY uczestnicy FROM STDIN DELIMITER ';' NULL 'null';\n")
@@ -94,15 +94,17 @@ with open('data/autorzy.data', 'w') as f:
 
 
 # TURNIEJE
+start_date_tourn = datetime.date(1980, 1, 1)
 numberOfTournaments = random.randint(20, 30)
 datesOfTournaments = [None for _ in range(numberOfTournaments)]
+endsOfTournaments = [None for _ in range(numberOfTournaments)]
 with open('data/turnieje.data', 'w') as f:
     f.write("COPY turnieje FROM STDIN DELIMITER ';' NULL 'null';\n")
     for i in range(numberOfTournaments):
-        time_between_dates = end_date - start_date
+        time_between_dates = end_date - start_date_tourn
         days_between_dates = time_between_dates.days
         random_number_of_days = random.randrange(days_between_dates)
-        random_date = start_date + datetime.timedelta(days=random_number_of_days)
+        random_date = start_date_tourn + datetime.timedelta(days=random_number_of_days)
         datesOfTournaments[i] = random_date # !!!!!!!!!!!!
         formatted_date = random_date.strftime('%Y-%m-%d')    
 
@@ -110,7 +112,7 @@ with open('data/turnieje.data', 'w') as f:
         srandom_number_of_days = random.randint(1, 7)
         srandom_date = random_date + datetime.timedelta(days=srandom_number_of_days)
         sformatted_date = srandom_date.strftime('%Y-%m-%d')    
-
+        endsOfTournaments[i] = srandom_date # !!!!!!!!!!!!
         
         f.write(f"{i};{fake.word()+' '+fake.word()};{lorem.words(5)};{formatted_date};{sformatted_date};{random.randint(0,4)}\n")
 
@@ -128,7 +130,7 @@ with open("data/pytania_na_turniejach.data", "w") as f:
 
     for j in range(numberOfTournaments):
         for i in range(24):
-            print(j, i, len([question for question in que_to_choose if datesOfTournaments[j] > playersBirthday[que_aut[question]] + datetime.timedelta(days=365*5)]))
+            #print(j, i, len([question for question in que_to_choose if datesOfTournaments[j] > playersBirthday[que_aut[question]] + datetime.timedelta(days=365*5)]))
             que = random.choice([question for question in que_to_choose if datesOfTournaments[j] > playersBirthday[que_aut[question]] + datetime.timedelta(days=365*5)])
             que_tourn[que] = j
             tourn_que[j].append(que)
@@ -139,7 +141,14 @@ with open("data/pytania_na_turniejach.data", "w") as f:
 
 
 # ZESPOLY
-numberOfTeams = random.randint(20, 30)
+numberOfTeams = random.randint(numberOfTournaments, numberOfTournaments*3)
+teamsDateOfCreation = [None for _ in range(numberOfTeams)]
+teamsDateOfCreation[0] = datetime.date(2000,2,25)
+teamsDateOfCreation[1] = datetime.date(2018,4,20)
+teamsDateOfCreation[2] = datetime.date(2010,3,17)
+teamsDateOfCreation[3] = datetime.date(2015,11,11)
+teamsDateOfCreation[4] = datetime.date(1990,2,28)
+
 with open('data/zespoly.data', 'w') as f:
     f.write("COPY zespoly FROM STDIN DELIMITER ';' NULL 'null';\n")
     
@@ -149,6 +158,8 @@ with open('data/zespoly.data', 'w') as f:
         days_between_dates = time_between_dates.days
         random_number_of_days = random.randrange(days_between_dates)
         random_date = start_date + datetime.timedelta(days=random_number_of_days)
+
+        teamsDateOfCreation[i] = random_date # !!!!!!!!!!!!
 
         # Format the date as a string in the format "YYYY-MM-DD"
         formatted_date = random_date.strftime('%Y-%m-%d')       
@@ -160,7 +171,7 @@ with open('data/zespoly.data', 'w') as f:
             data_likwidacji = random_date + datetime.timedelta(days=random_number_of_days)
             data_likwidacji = data_likwidacji.strftime('%Y-%m-%d')
         
-        city = random.choice([_ for _ in range(numberOfCities)] + ['null']*3)
+        city = random.choice([i for i in range(numberOfCities)] + ['null']*3)
 
         f.write(f"{i};{fake.word().capitalize()+' '+fake.word()};{formatted_date};{data_likwidacji};{city}\n")
     
@@ -169,15 +180,34 @@ with open('data/zespoly.data', 'w') as f:
 
 # SKLADY W ZESPOLACH
 # ZMIANY
+
+def checkIfTimesIntersects(player, tourn, playersInTournaments, datesOfTournaments, endsOfTournaments):
+    if len(playersInTournaments[player]) == 0:
+        return False
+    
+    for start, end in playersInTournaments[player]:
+        if (datesOfTournaments[tourn] <= start <= endsOfTournaments[tourn] 
+           or datesOfTournaments[tourn] <= end <= endsOfTournaments[tourn]):
+            return True
+    return False
+
+playersInTournaments = [[] for _ in range(numberOfPlayers)]
+tournament_teams = [[] for _ in range(numberOfTournaments)]
 with (open('data/sklady_w_zespolach.data', 'w') as f, open('data/zmiany.data', 'w') as zm):
     f.write("COPY sklady_w_zespolach FROM STDIN DELIMITER ';' NULL 'null';\n")
     zm.write("COPY zmiany FROM STDIN DELIMITER ';' NULL 'null';\n")
 
     for turn in range(numberOfTournaments):
-        available_teams = [i for i in range(0, 20)]
-        available_players = [i for i in range(0, 300)]
-        for i in range(random.randint(6, 20)):
+        available_teams = [i for i in range(numberOfTeams) if teamsDateOfCreation[i] <= datesOfTournaments[turn]]
+        available_players = [i for i in range(numberOfPlayers) 
+                             if playersBirthday[i] <= datesOfTournaments[turn] - datetime.timedelta(days=365*5) 
+                                and i not in [que_aut[que] for que in tourn_que[turn]]
+                                and not checkIfTimesIntersects(i, turn, playersInTournaments, datesOfTournaments, endsOfTournaments)]
+        for i in range(random.randint(5, 20)):
+            if(len(available_teams) == 0 or len(available_players) < 8):
+                break
             team = random.choice(available_teams)
+            tournament_teams[turn].append(team)
             available_teams.remove(team)
 
             #add capitan
@@ -185,10 +215,11 @@ with (open('data/sklady_w_zespolach.data', 'w') as f, open('data/zmiany.data', '
             while(cap == None):
                 cap = random.choice(available_players)
                 for question in tourn_que[turn]:
-                    if que_aut[question-1] == cap:
+                    if que_aut[question] == cap:
                         cap = None
                         continue
-
+            
+            playersInTournaments[cap].append((datesOfTournaments[turn], endsOfTournaments[turn]))
             available_players.remove(cap)
             f.write(f"{cap};{team};{turn};0\n")
 
@@ -199,10 +230,11 @@ with (open('data/sklady_w_zespolach.data', 'w') as f, open('data/zmiany.data', '
                 while(player == None):
                     player = random.choice(available_players)
                     for question in tourn_que[turn]:
-                        if que_aut[question-1] == player:
+                        if que_aut[question] == player:
                             player = None
                             continue
-
+                
+                playersInTournaments[player].append((datesOfTournaments[turn], endsOfTournaments[turn]))
                 available_players.remove(player)
                 players.append(player)
                 f.write(f"{player};{team};{turn};1\n")
@@ -213,10 +245,11 @@ with (open('data/sklady_w_zespolach.data', 'w') as f, open('data/zmiany.data', '
                 while(trener == None):
                     trener = random.choice(available_players)
                     for question in tourn_que[turn]:
-                        if que_aut[question-1] == trener:
+                        if que_aut[question] == trener:
                             trener = None
                             continue
-
+                
+                playersInTournaments[trener].append((datesOfTournaments[turn], endsOfTournaments[turn]))
                 available_players.remove(trener)
                 f.write(f"{trener};{team};{turn};2\n")
             
@@ -228,10 +261,11 @@ with (open('data/sklady_w_zespolach.data', 'w') as f, open('data/zmiany.data', '
                 while(zapas == None):
                     zapas = random.choice(available_players)
                     for question in tourn_que[turn]:
-                        if que_aut[question-1] == zapas:
+                        if que_aut[question] == zapas:
                             zapas = None
                             continue
                 
+                playersInTournaments[zapas].append((datesOfTournaments[turn], endsOfTournaments[turn]))
                 zapas_players.append(zapas)
                 available_players.remove(zapas)
                 f.write(f"{zapas};{team};{turn};3\n")
@@ -246,3 +280,15 @@ with (open('data/sklady_w_zespolach.data', 'w') as f, open('data/zmiany.data', '
     f.write("\\.\n")
     zm.write("\\.\n")
             
+
+# POPRAWNE ODPOWIEDZI
+with open("data/poprawne_odpowiedzi.data", "w") as f:
+    f.write("COPY poprawne_odpowiedzi FROM STDIN DELIMITER ';' NULL 'null';")
+
+    for turn in range(numberOfTournaments):
+        for zesp in tournament_teams[turn]:
+            for i in range(len(tourn_que[turn])):
+                if(random.randint(0, 2) == 1):
+                    f.write(f"{turn};{zesp};{i+1}\n")
+
+    f.write("\\.\n")
