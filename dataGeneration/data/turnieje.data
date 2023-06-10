@@ -1,31 +1,28 @@
 COPY turnieje FROM STDIN DELIMITER ';' NULL 'null';
-0;myśleć Dania;aspernatur consequatur illum porro quae;2009-01-19;2009-01-24;2
-1;średni rzeczywistość;neque temporibus alias nam repellat;1993-08-17;1993-08-21;2
-2;koń ciężki;hic voluptatem rem ab enim;2010-12-23;2010-12-25;4
-3;powieść sól;aliquam sed sit consectetur fuga;2021-06-30;2021-07-07;0
-4;miękki robić;consequatur iusto natus magni error;1988-07-10;1988-07-13;2
-5;epoka program;odio itaque quasi tempore placeat;1989-04-13;1989-04-14;3
-6;latać pieśń;soluta dolorem cumque saepe natus;1982-05-10;1982-05-14;3
-7;wyspa pas;sapiente sequi autem dolorem iste;2012-10-01;2012-10-02;0
-8;głęboki morski;tenetur magni consectetur ut nihil;1981-06-17;1981-06-19;0
-9;rozwiązanie ich;exercitationem esse modi nihil quis;1990-07-22;1990-07-26;4
-10;sen szanowny;quod recusandae illo officiis similique;2014-06-13;2014-06-18;1
-11;prowadzić w formie;id unde veritatis laborum corporis;2018-11-04;2018-11-05;3
-12;twój ze;voluptatem incidunt excepturi culpa placeat;2002-06-02;2002-06-07;2
-13;jednostka letni;veritatis id numquam officia ab;1989-12-20;1989-12-23;4
-14;sen termin;nostrum perspiciatis porro ut nisi;2015-10-25;2015-10-27;1
-15;stowarzyszenie przynosić;repellat blanditiis qui officia consectetur;1987-09-07;1987-09-09;3
-16;opuścić rzeka;nostrum provident minima perspiciatis eaque;1994-12-08;1994-12-15;4
-17;kwestia wkrótce;voluptas veritatis quibusdam esse corrupti;1985-09-30;1985-10-03;4
-18;w. atak;laudantium asperiores voluptas ipsum illum;1985-10-04;1985-10-06;0
-19;tradycja polityka;cumque ipsum deleniti omnis neque;1989-08-25;1989-08-28;0
-20;słyszeć światło;perspiciatis est officia voluptatum quibusdam;2000-05-12;2000-05-19;0
-21;usta podstawowy;quam delectus nulla explicabo placeat;2007-07-21;2007-07-22;0
-22;wąski ślub;soluta eligendi quod consequatur repudiandae;2007-04-05;2007-04-09;3
-23;obywatelka średni;iste quasi incidunt ab laborum;2023-02-05;2023-02-12;4
-24;noc zawierać;eum asperiores maiores aut ut;2003-06-27;2003-07-04;4
-25;Azja zwykle;magni et numquam eaque recusandae;2008-07-08;2008-07-14;2
-26;sylaba dialekt;obcaecati ut tenetur enim atque;2010-06-27;2010-06-29;2
-27;Izrael list;itaque sed voluptate iusto corrupti;2013-11-03;2013-11-07;1
-28;zjeść lewy;distinctio harum maiores illo porro;1983-06-18;1983-06-24;0
+0;wydarzenie mama;temporibus quod sunt quidem atque;1987-09-12;1987-09-14;4
+1;kult wodny;porro nemo et libero enim;1981-04-09;1981-04-16;4
+2;autor gatunek;veritatis fugit facilis tenetur unde;2015-11-24;2015-12-01;0
+3;olej dzielnica;vero vel nesciunt possimus provident;1980-01-25;1980-01-30;2
+4;myśl nasz;laboriosam ullam iure inventore numquam;1986-12-02;1986-12-08;3
+5;tarcza klasztor;hic ratione impedit optio eveniet;1998-05-05;1998-05-08;1
+6;niebezpieczny Węgry;facere tenetur beatae facilis quos;1990-09-21;1990-09-22;2
+7;kto zamknąć;placeat itaque commodi nostrum rerum;1993-10-13;1993-10-16;4
+8;Słońce szereg;labore voluptate similique aliquid doloremque;1986-08-22;1986-08-25;4
+9;dziwny wyraz;aspernatur quas cumque qui repudiandae;1997-04-02;1997-04-04;1
+10;ojciec gmina;quos ipsam commodi molestias est;2002-09-05;2002-09-10;2
+11;potrzebować wiek;corrupti voluptas magni aliquam iste;1992-09-03;1992-09-04;0
+12;zmęczony wykonywanie;dolorum facere ratione sequi repellat;1990-07-27;1990-08-02;3
+13;łódź osiągnąć;modi dolor ducimus libero accusantium;2018-08-27;2018-08-29;2
+14;termin podobny;officiis id dignissimos culpa doloremque;1998-11-18;1998-11-23;2
+15;herbata krowa;quo aperiam dolores cum molestias;2011-09-22;2011-09-23;4
+16;służba wykonanie;quos iusto soluta ipsum tenetur;2010-09-03;2010-09-09;0
+17;mieć na imię stanowić;deleniti libero debitis quasi similique;1993-02-09;1993-02-11;0
+18;ludowy wpaść;minima fuga doloremque explicabo rerum;2008-09-06;2008-09-10;0
+19;obóz kwestia;dicta architecto culpa nam mollitia;2022-03-23;2022-03-24;1
+20;przyjemność roślina;sapiente veniam eos commodi veritatis;2006-01-13;2006-01-16;3
+21;jedynie produkować;odit voluptatem placeat ipsa et;1994-11-05;1994-11-09;2
+22;polować okolica;beatae reiciendis maiores minus assumenda;2020-09-26;2020-09-30;2
+23;jego rząd;iure dicta exercitationem eaque deserunt;2016-04-09;2016-04-13;3
+24;zbyt źle;perferendis reiciendis officia quidem cumque;2009-09-14;2009-09-15;4
+25;zostać zgodnie;excepturi sequi quae sapiente blanditiis;1986-06-26;1986-07-03;1
 \.

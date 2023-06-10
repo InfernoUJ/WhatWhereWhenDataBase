@@ -1,0 +1,5 @@
+COPY typy_kar FROM STDIN DELIMITER ';' NULL 'null';
+0;spoznienie
+1;zle zachowanie
+2;niesportywna gra
+\.

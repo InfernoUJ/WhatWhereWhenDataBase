@@ -1,0 +1,6 @@
+COPY role FROM STDIN DELIMITER ';' NULL 'null';
+0;kapitan
+1;uczestnik
+2;trener
+3;gracz zapasowy
+\.

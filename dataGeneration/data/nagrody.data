@@ -1,0 +1,5 @@
+COPY nagrody FROM STDIN DELIMITER ';' NULL 'null';
+0;peiniędzy
+1;bilety do kina
+2;nagroda od sponosorow
+\.

@@ -1,0 +1,4 @@
+COPY organizacja FROM STDIN DELIMITER ';' NULL 'null';
+0;31;UJ
+1;30;UE
+\.

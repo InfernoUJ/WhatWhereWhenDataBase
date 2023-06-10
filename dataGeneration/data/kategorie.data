@@ -1,0 +1,13 @@
+COPY kategorie FROM STDIN DELIMITER ';' NULL 'null';
+0;Sport
+1;Literatura
+2;Historia
+3;Geografia
+4;Nauka
+5;Muzyka
+6;Sztuka
+7;Kino
+8;Polityk
+9;Technologia
+10;Inne
+\.

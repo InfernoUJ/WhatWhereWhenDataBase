@@ -1,23 +1,24 @@
 COPY adresy FROM STDIN DELIMITER ',' NULL 'null';
-0,2,Jesienna,88-366,11,57
-1,2,Wspólna,74-168,33,71
-2,8,Świerczewskiego,12-570,4,99
-3,5,Norwida,32-208,21,57
-4,8,Kopernika,41-729,18,45
-5,2,Majowa,70-335,35,66
-6,1,Andersa,45-398,21,45
-7,7,Malinowa,21-224,25,6
-8,4,Wolności,73-151,21,62
-9,7,Sportowa,39-036,5,34
-10,10,Dojazdowa,60-710,19,20
-11,3,Lipowa,63-573,7,57
-12,8,Irysowa,10-870,33,42
-13,9,Sybiraków,62-785,23,58
-14,0,Klasztorna,52-426,8,56
-15,2,Kolorowa,67-558,12,14
-16,0,Norwida,53-006,39,9
-17,9,Bydgoska,88-826,21,52
-18,2,Wieniawskiego,50-871,14,21
-19,1,Szeroka,23-755,26,61
-20,9,Sybiraków,71-186,15,100
+0,6,Narcyzowa,67-822,19,64
+1,10,Wiązowa,40-678,22,85
+2,7,Makowa,88-913,10,40
+3,7,Powstańców Śląskich,03-885,7,9
+4,10,Cmentarna,97-891,21,35
+5,8,Waryńskiego,91-261,21,57
+6,3,Browarna,92-219,37,100
+7,2,Dębowa,49-764,32,68
+8,5,Skośna,19-057,23,13
+9,7,Jesionowa,11-045,31,66
+10,1,Akacjowa,37-825,8,21
+11,1,Słonecznikowa,94-573,7,35
+12,3,Czarnieckiego,41-794,17,36
+13,10,Makowa,15-371,22,44
+14,1,Kowalska,01-048,1,2
+15,4,Matejki,70-775,21,93
+16,6,Południowa,12-326,4,86
+17,8,Maja,18-787,11,9
+18,1,Górna,65-723,5,49
+19,10,Wiatraczna,84-816,2,2
+20,8,Wierzbowa,88-201,20,1
+21,3,Stefana Batorego,71-844,31,39
 \.
