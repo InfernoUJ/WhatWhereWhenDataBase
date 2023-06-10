@@ -15,6 +15,8 @@ public class DatabaseService {
     }
     //create needed methods here
     public List<Object[]> getAllTournamentsWithDatesAndCitySortedByDate() {
+        //returns: name, date, city
+
         return null;
     }
 }
