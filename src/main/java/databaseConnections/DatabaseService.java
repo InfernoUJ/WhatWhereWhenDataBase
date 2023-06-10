@@ -36,4 +36,29 @@ public class DatabaseService {
 
         return null;
     }
+    public List<Object[]> getTeamInTournament(String tournamentName, String name) {
+        //returns: the players in the team: Surname, Name, Role
+
+        return null;
+    }
+    public List<Object[]> getRatingLists() {
+        //returns: All  Players:Surname, Name, Rating Sorted By Rating
+
+        return null;
+    }
+
+    public List<Object[]> getPlayerInfo() {
+        //returns: Player:Surname, Name, age, gender,
+
+        return null;
+    }
+    public List<Object[]> getBadAutors() {
+        //returns: Player:Surname, Name and amount of rejected questions
+
+        return null;
+    }
+
+
 }
+
+
