@@ -6,10 +6,10 @@ import jakarta.persistence.Persistence;
 
 import java.util.Properties;
 
-public class QueryExecutor {
+public class DatabaseService {
     private static EntityManager em;
 
-    public QueryExecutor() {
+    public DatabaseService() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("WhatWhereWhenPersistence");
         em = emf.createEntityManager();
     }
