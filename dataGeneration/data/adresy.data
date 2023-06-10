@@ -1,22 +1,40 @@
 COPY adresy FROM STDIN DELIMITER ',' NULL 'null';
-0,Mielec,Asnyka,44-563,34,30
-1,Marki,Jeżynowa,94-451,39,55
-2,Pszczyna,Szczęśliwa,55-293,20,9
-3,Zabrze,Bukowa,16-929,5,6
-4,Augustów,Kościelna,52-283,19,35
-5,Inowrocław,Malinowa,59-974,13,77
-6,Zamość,Lipowa,81-824,9,51
-7,Lubartów,Tulipanowa,49-901,29,24
-8,Elbląg,Zacisze,81-804,9,40
-9,Tychy,Porzeczkowa,16-992,11,13
-10,Warszawa,Żeglarska,28-998,7,89
-11,Łaziska Górne,Południowa,48-378,24,63
-12,Nowa Ruda,Srebrna,86-466,36,34
-13,Jastrzębie-Zdrój,Niepodległości,50-543,22,67
-14,Warszawa,Tulipanowa,65-229,30,63
-15,Lubliniec,Handlowa,62-218,30,95
-16,Gorlice,Majowa,24-561,7,93
-17,Rzeszów,Podgórna,04-926,38,27
-18,Bełchatów,Cedrowa,34-403,13,34
-19,Opole,Stroma,28-860,36,94
+0,Świnoujście,Długosza,81-618,31,5
+1,Zduńska Wola,Bolesława Chrobrego,47-428,21,91
+2,Lubliniec,Klonowa,85-046,14,28
+3,Wieluń,Sybiraków,74-250,12,26
+4,Krotoszyn,Południowa,91-859,15,95
+5,Inowrocław,Polna,76-726,36,41
+6,Skarżysko-Kamienna,Wojska Polskiego,44-664,18,77
+7,Czerwionka-Leszczyny,Żurawia,15-732,17,78
+8,Żyrardów,Pszenna,92-422,32,44
+9,Bydgoszcz,Cegielniana,98-604,36,98
+10,Bolesławiec,Wiosenna,54-763,10,22
+11,Wodzisław Śląski,Kolonia,31-183,31,55
+12,Legnica,Powstańców Śląskich,09-334,7,12
+13,Iława,Przemysłowa,89-966,8,41
+14,Zakopane,Strumykowa,72-185,11,57
+15,Piotrków Trybunalski,Lawendowa,77-837,31,48
+16,Luboń,Moniuszki,86-940,33,68
+17,Gliwice,Strumykowa,79-884,19,23
+18,Bydgoszcz,Tuwima,87-102,18,69
+19,Iława,Jeżynowa,95-541,33,16
+20,Tarnów,Miła,29-077,10,7
+21,Pszczyna,Handlowa,39-275,6,22
+22,Kościerzyna,Staffa,54-947,33,84
+23,Rzeszów,Rataja,78-331,27,71
+24,Zielona Góra,Sarnia,27-489,12,46
+25,Szczecinek,Solidarnosci,25-250,12,35
+26,Jaworzno,Zbożowa,26-613,28,99
+27,Piotrków Trybunalski,Kolonia,16-914,11,20
+28,Tarnowskie Góry,Baczynskiego,36-476,5,82
+29,Chełm,Wypoczynkowa,75-829,9,39
+30,Brzeg,Mieszka I,06-305,20,25
+31,Piła,Grottgera,73-945,17,51
+32,Sochaczew,Przechodnia,28-440,5,96
+33,Zabrze,Rubinowa,09-553,33,40
+34,Oława,Majowa,39-038,34,29
+35,Czeladź,Północna,74-969,20,81
+36,Zabrze,Leśna,46-332,3,90
+37,Nowy Targ,Żeromskiego,60-382,15,75
 \.
