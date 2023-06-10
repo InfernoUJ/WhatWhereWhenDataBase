@@ -21,6 +21,8 @@ dodać możliwość usuwania osob
 
 Przerobić czeky na dodawanie/usuwanie pytan
 
+DONE
 Zrobić dane dla nagrod
 
+DONE
 Zrobic triggery dla kar
