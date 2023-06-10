@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
+import java.util.Date;
 import java.util.List;
 
 public class DatabaseService {
@@ -15,6 +16,22 @@ public class DatabaseService {
     }
     //create needed methods here
     public List<Object[]> getAllTournamentsWithDatesAndCitySortedByDate() {
+        //returns: name, date, city
+
+        return null;
+    }
+
+    public List<Object[]> getTournamentsInPeriod(Date begin,Date finidh) {
+        //returns: name, date, city in date
+
+        return null;
+    }
+    public List<Object[]> getAllTournamentsInRegion(String name) {
+        //returns: name, date, city
+
+        return null;
+    }
+    public List<Object[]> getAllTournamentsInRegionInPeriod(Date begin, Date end, String name) {
         //returns: name, date, city
 
         return null;
