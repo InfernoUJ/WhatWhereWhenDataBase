@@ -8,7 +8,8 @@ import utilityClasses.TournamentInfo;
 import utilityClasses.TournamentShortInfo;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.ZoneId;
+import java.sql.Date;
 import java.util.List;
 
 public class QueryResultToListConverter {
@@ -19,7 +20,7 @@ public class QueryResultToListConverter {
         for(Object[] row : shortInfo) {
             TournamentShortInfo temp = new TournamentShortInfo();
             temp.setName((String)row[0]);
-            temp.setDate((LocalDate)row[1]);
+            temp.setDate(((Date)row[1]).toLocalDate());
             temp.setCity((String)row[2]);
             tournaments.add(temp);
         }
@@ -34,7 +35,7 @@ public class QueryResultToListConverter {
         for(Object[] row : shortInfo) {
             TournamentShortInfo temp = new TournamentShortInfo();
             temp.setName((String)row[0]);
-            temp.setDate((LocalDate)row[1]);
+            temp.setDate(((Date)row[1]).toLocalDate());
             temp.setCity((String)row[2]);
             tournaments.add(temp);
         }
@@ -49,7 +50,7 @@ public class QueryResultToListConverter {
         for(Object[] row : shortInfo) {
             TournamentShortInfo temp = new TournamentShortInfo();
             temp.setName((String)row[0]);
-            temp.setDate((LocalDate)row[1]);
+            temp.setDate(((Date)row[1]).toLocalDate());
             temp.setCity((String)row[2]);
             tournaments.add(temp);
         }
@@ -64,7 +65,7 @@ public class QueryResultToListConverter {
         for(Object[] row : shortInfo) {
             TournamentShortInfo temp = new TournamentShortInfo();
             temp.setName((String)row[0]);
-            temp.setDate((LocalDate)row[1]);
+            temp.setDate(((Date)row[1]).toLocalDate());
             temp.setCity((String)row[2]);
             temp.setId((int)row[3]);
             tournaments.add(temp);
