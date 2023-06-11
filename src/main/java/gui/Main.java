@@ -33,6 +33,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     Button results;
     Button filter;
     Scene mainMenu, rankingScene, insertionScene, tournamentScene, specificTournamentScene;
+    Scene specificTournamentResults, team,playerInfo,tournamentQuestions;
 
     @Override
     public void start(Stage stage) throws Exception {
