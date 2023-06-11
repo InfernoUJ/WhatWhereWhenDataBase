@@ -3,6 +3,7 @@ package gui;
 import databaseConnections.DatabaseService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import utilityClasses.RankingShortInfo;
 import utilityClasses.TournamentShortInfo;
 
 import java.time.LocalDate;
@@ -64,11 +65,26 @@ public class QueryResultToListConverter {
             temp.setName((String)row[0]);
             temp.setDate((LocalDate)row[1]);
             temp.setCity((String)row[2]);
+            temp.setId((int)row[3]);
             tournaments.add(temp);
         }
 
 
         return tournaments;
+    }
+
+
+    public static ObservableList<RankingShortInfo> getAllRankingsInPeriod(LocalDate date) {
+        ObservableList<RankingShortInfo> result = FXCollections.observableArrayList();
+        for(int i = 0; i < 1000;i++) {
+            RankingShortInfo temp = new RankingShortInfo();
+            temp.setPlayerSurname("dcba");
+            temp.setPlayerName("abcd");
+            temp.setRating(28);
+            temp.setId(i);
+            result.add(temp);
+        }
+        return result;
     }
 
 }

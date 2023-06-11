@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import utilityClasses.RankingShortInfo;
 import utilityClasses.TournamentShortInfo;
 
 import java.time.LocalDate;
@@ -20,7 +21,7 @@ public class DataSupplier {
         name.setMinWidth(200);
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        TableColumn<TournamentShortInfo,String> date= new TableColumn<>("Date");
+        TableColumn<TournamentShortInfo,LocalDate> date= new TableColumn<>("Date");
         date.setMinWidth(100);
         date.setCellValueFactory(new PropertyValueFactory<>("date"));
         TableColumn<TournamentShortInfo,String> city = new TableColumn<>("City");
@@ -30,6 +31,25 @@ public class DataSupplier {
         turnieje.setItems(QueryResultToListConverter.getTheListOfAllTournamentsSortedByDate());
         turnieje.getColumns().addAll(name,date,city);
         return turnieje;
+    }
+
+    public static TableView<RankingShortInfo> getRankingsInDate(LocalDate dateOfTheList) {
+        TableView<RankingShortInfo> rankingi;
+
+        TableColumn<RankingShortInfo,String> surname = new TableColumn<>("Surname");
+        surname.setMinWidth(200);
+        surname.setCellValueFactory(new PropertyValueFactory<>("playerSurname"));
+
+        TableColumn<RankingShortInfo,String> name= new TableColumn<>("Name");
+        name.setMinWidth(100);
+        name.setCellValueFactory(new PropertyValueFactory<>("playerName"));
+        TableColumn<RankingShortInfo,Integer> ranking = new TableColumn<>("Ranking");
+        ranking.setMinWidth(100);
+        ranking.setCellValueFactory(new PropertyValueFactory<>("rating"));
+        rankingi = new TableView<>();
+        rankingi.setItems(QueryResultToListConverter.getAllRankingsInPeriod(dateOfTheList));
+        rankingi.getColumns().addAll(surname,name,ranking);
+        return rankingi;
     }
 
 

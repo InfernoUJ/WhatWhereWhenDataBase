@@ -38,30 +38,22 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     public void start(Stage stage) throws Exception {
         stage.setTitle("Archiwum CoGdzieKiedy?");
 
-        /*VBox buttonsForMainMenu = new VBox();
+        VBox buttonsForMainMenu = new VBox();
         showTournamentsButton = new Button("Tournaments");
         showRankingListButton = new Button("Rankings");
         insertionMode = new Button("Insert data");
         buttonsForMainMenu.getChildren().addAll(showTournamentsButton,showRankingListButton, insertionMode);
         mainMenu = new Scene(buttonsForMainMenu,500,300);
-        stage.setScene(mainMenu);*/
-    TableColumn<TournamentShortInfo,String> name = new TableColumn<>("Name");
-    name.setMinWidth(200);
-    name.setCellValueFactory(new PropertyValueFactory<>("name"));
-        TableColumn<TournamentShortInfo, LocalDate> date = new TableColumn<>("Date");
-        name.setMinWidth(200);
-        name.setCellValueFactory(new PropertyValueFactory<>("date"));
-        TableColumn<TournamentShortInfo,String> city = new TableColumn<>("City");
-        name.setMinWidth(200);
-        name.setCellValueFactory(new PropertyValueFactory<>("city"));
+        tournamentScene = new Scene(DataSupplier.getAllTournaments(),500,300);
+        rankingScene = new Scene(DataSupplier.getRankingsInDate(LocalDate.now()), 500,300);
+        stage.setScene(rankingScene);
 
 
-        TableView<TournamentShortInfo> turnieje = new TableView<>();
 
-        turnieje.setItems(QueryResultToListConverter.getTheListOfAllTournamentsSortedByDate());
-        turnieje.getColumns().addAll(name,date,city);
-        mainMenu = new Scene(turnieje,500,300);
-        stage.setScene(mainMenu);
+
+
+
+
         stage.show();
     }
 

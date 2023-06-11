@@ -20,11 +20,12 @@ public class DatabaseService {
     public List<Object[]> getAllTournamentsWithDatesAndCitySortedByDate() {
         //returns: name, date, city
         List<Object[]> temp = new ArrayList<>();
-        for(int i = 0; i < 10;i++) {
-            Object[] adding = new Object[3];
+        for(int i = 0; i < 1000;i++) {
+            Object[] adding = new Object[4];
             adding[0] = new String("turniej123");
             adding[1] = LocalDate.now();
             adding[2] = new String("krakow");
+            adding[3] = i;
             temp.add(adding);
         }
         return temp;

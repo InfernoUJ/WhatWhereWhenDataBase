@@ -8,6 +8,16 @@ public class TournamentShortInfo {
     private LocalDate date;
     private String city;
 
+    private int id;
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }
