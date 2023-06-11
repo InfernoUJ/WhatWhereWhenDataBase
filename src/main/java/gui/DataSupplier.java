@@ -7,7 +7,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
-import utilityClasses.RankingShortInfo;
+import utilityClasses.PersonInfo;
+
 import utilityClasses.TournamentShortInfo;
 
 import java.time.LocalDate;
@@ -34,17 +35,17 @@ public class DataSupplier {
         return turnieje;
     }
 
-    public static TableView<RankingShortInfo> getRankingsInDate(LocalDate dateOfTheList) {
-        TableView<RankingShortInfo> rankingi;
+    public static TableView<PersonInfo> getRankingsInDate(LocalDate dateOfTheList) {
+        TableView<PersonInfo> rankingi;
 
-        TableColumn<RankingShortInfo,String> surname = new TableColumn<>("Surname");
+        TableColumn<PersonInfo,String> surname = new TableColumn<>("Surname");
         surname.setMinWidth(200);
         surname.setCellValueFactory(new PropertyValueFactory<>("playerSurname"));
 
-        TableColumn<RankingShortInfo,String> name= new TableColumn<>("Name");
+        TableColumn<PersonInfo,String> name= new TableColumn<>("Name");
         name.setMinWidth(100);
         name.setCellValueFactory(new PropertyValueFactory<>("playerName"));
-        TableColumn<RankingShortInfo,Integer> ranking = new TableColumn<>("Ranking");
+        TableColumn<PersonInfo,Integer> ranking = new TableColumn<>("Ranking");
         ranking.setMinWidth(100);
         ranking.setCellValueFactory(new PropertyValueFactory<>("rating"));
         rankingi = new TableView<>();

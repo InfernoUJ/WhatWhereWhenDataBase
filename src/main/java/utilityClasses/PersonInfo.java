@@ -1,9 +1,11 @@
 package utilityClasses;
 
-public class RankingShortInfo {
+import java.time.LocalDate;
+
+public class PersonInfo {
     private String playerSurname;
     private String playerName;
-
+    LocalDate birthday;
     public String getPlayerSurname() {
         return playerSurname;
     }
@@ -39,6 +41,11 @@ public class RankingShortInfo {
     private int rating;
     private int id;
 
+    public LocalDate getBirthday() {
+        return birthday;
+    }
 
-
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
 }

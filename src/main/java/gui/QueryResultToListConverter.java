@@ -3,7 +3,7 @@ package gui;
 import databaseConnections.DatabaseService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import utilityClasses.RankingShortInfo;
+import utilityClasses.PersonInfo;
 import utilityClasses.TournamentInfo;
 import utilityClasses.TournamentShortInfo;
 
@@ -75,10 +75,10 @@ public class QueryResultToListConverter {
     }
 
 
-    public static ObservableList<RankingShortInfo> getAllRankingsInPeriod(LocalDate date) {
-        ObservableList<RankingShortInfo> result = FXCollections.observableArrayList();
+    public static ObservableList<PersonInfo> getAllRankingsInPeriod(LocalDate date) {
+        ObservableList<PersonInfo> result = FXCollections.observableArrayList();
         for(int i = 0; i < 1000;i++) {
-            RankingShortInfo temp = new RankingShortInfo();
+            PersonInfo temp = new PersonInfo();
             temp.setPlayerSurname("dcba");
             temp.setPlayerName("abcd");
             temp.setRating(28);
@@ -99,6 +99,8 @@ public class QueryResultToListConverter {
         return temp;
     }
 
-
+    public static ObservableList<PersonInfo> getParticipantsOfTeamInTournament(int id, String name) {
+        return null;
+    }
 
 }

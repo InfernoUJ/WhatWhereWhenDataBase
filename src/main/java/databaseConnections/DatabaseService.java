@@ -49,10 +49,12 @@ public class DatabaseService {
         q.setParameter("nazwa",name);
         return q.getResultList();
     }
-    public List<Object[]> getTeamInTournament(String tournamentName, String name) {
+    public List<Object[]> getTeamInTournament(int idTeam, String name) {
         //returns: the players in the team: Surname, Name, Role
-
-        return null;
+        Query q = em.createNativeQuery("SELECT u.nazwisko, u.imie, r.nazwa, z.id FROM uczestnicy AS u JOIN sklady_w_zespolach AS s ON u.id =s.id_osoby  JOIN zespoly AS z ON z.id = s.id_zespolu JOIN role AS r ON r.id = s.rola  WHERE s.id_turnieju = :id AND z.nazwa = :name   ; ");
+        q.setParameter("id",idTeam);
+        q.setParameter("name",name);
+        return q.getResultList();
     }
     public List<Object[]> getRatingLists(LocalDate date) {
         //returns: All  Players:Surname, Name, Rating Sorted By Rating
