@@ -66,7 +66,7 @@ public class DatabaseService {
         return (long)(q.getResultList().get(0));
     }
     public List<Object[]> getTournamentResults(int id) {
-        Query q = em.createNativeQuery("SELECT DISTINCT  z.nazwa, compute_team_score(z.nazwa,:id) FROM zespoly AS z JOIN sklady_w_zespolach AS s ON z.id = s.id_zespolu WHERE s.id_turnieju = :id ORDER BY 2 DESC;");
+        Query q = em.createNativeQuery("SELECT DISTINCT  z.nazwa, compute_team_score(z.nazwa,:id),z.id FROM zespoly AS z JOIN sklady_w_zespolach AS s ON z.id = s.id_zespolu WHERE s.id_turnieju = :id ORDER BY 2 DESC;");
         q.setParameter("id",id);
         return q.getResultList();
     }
@@ -83,10 +83,21 @@ public class DatabaseService {
     }
     public List<Object[]> displayTournamentInfo(int id) {
         //returns: Name,Start and finish Dates, localization, description, staff
-
-        return null;
+        Query q = em.createNativeQuery("SELECT t.nazwa, t.opis, t.data_startu, t.data_konca, m.nazwa, a.ulica, a.kod_pocztowy, a.numer_budynku, coalesce(a.numer_mieszkania,'0'), t.id FROM turnieje AS t JOIN adresy AS a ON t.id_adresu = a.id JOIN miejscowosci AS m ON m.id = a.miejscowosc WHERE t.id = :id");
+        q.setParameter("id",id);
+        return q.getResultList();
     }
 
+    public List<Object[]> getRewardsForTournament(int id) {
+        Query q = em.createNativeQuery("SELECT nt.miejsce, n.opis FROM nagrody_w_turniejach AS nt JOIN nagrody AS n ON n.id = nt.id_nagrody WHERE nt.id_turnieju = :id;");
+        q.setParameter("id",id);
+        return q.getResultList();
+    }
+    public List<Object[]> getStaffForTournament(int id) {
+        Query q = em.createNativeQuery("SELECT p.nazwisko, p.imie, o.organizator FROM organizacja AS o JOIN uczestnicy AS p ON p.id = o.sedzia_glowny WHERE o.id_turnieju = :id");
+        q.setParameter("id",id);
+        return q.getResultList();
+    }
 
 }
 
