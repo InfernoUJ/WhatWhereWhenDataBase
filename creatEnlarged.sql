@@ -270,6 +270,51 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION oblicz_miejsce_zespolu_w_turnieje(id_z INT, id_t INT)
+RETURNS INT
+AS $$
+DECLARE
+    punkty_zespolow INT[][];
+    ostatnia_ilosc_punktow INT := 25; -- cannot be 25 
+    miejsce INT := 1;
+    idx INT:= 1;
+    rows_count INT;
+BEGIN
+    WITH aggregated_rows AS (SELECT id_zespolu, COUNT(numer_pytania) AS punkty
+                FROM poprawne_odpowiedzi
+                WHERE id_turnieju = id_t
+                GROUP BY id_zespolu
+                ORDER BY 2 DESC
+    ) 
+    SELECT ARRAY_AGG(ARRAY[id_zespolu::INT, punkty::INT]) INTO punkty_zespolow
+    FROM aggregated_rows;
+
+    rows_count := array_length(punkty_zespolow, 1);
+
+    WHILE idx <= 10 LOOP
+        IF punkty_zespolow[idx][1] = id_z THEN
+            EXIT;
+        END IF;
+
+        IF ostatnia_ilosc_punktow = 25 THEN
+            ostatnia_ilosc_punktow := punkty_zespolow[idx][2];
+            miejsce := miejsce + 1;
+        ELSIF ostatnia_ilosc_punktow <> punkty_zespolow[idx][2] THEN
+            ostatnia_ilosc_punktow := punkty_zespolow[idx][2];
+            miejsce := miejsce + 1;
+        END IF;
+        
+        IF miejsce > 10 THEN
+            RETURN NULL;
+        END IF;
+
+        idx:= idx + 1;
+    END LOOP;
+
+    RETURN miejsce;
+END;
+$$ LANGUAGE plpgsql;
+
 
 commit;
 
