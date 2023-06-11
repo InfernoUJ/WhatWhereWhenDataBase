@@ -24,26 +24,30 @@ public class DatabaseService {
 
     //create needed methods here
     public List<Object[]> getAllTournamentsWithDatesAndCitySortedByDate() {
-        Query q = em.createNativeQuery("SELECT t.nazwa, t.data_startu,m.nazwa FROM turnieje AS t JOIN adresy AS a ON t.id =a.id  JOIN miejscowosci AS m ON m.id = a.id ORDER BY 2; ");
+        Query q = em.createNativeQuery("SELECT t.nazwa, t.data_startu,m.nazwa, t.id FROM turnieje AS t JOIN adresy AS a ON t.id =a.id  JOIN miejscowosci AS m ON m.id = a.id ORDER BY 2; ");
         return q.getResultList();
     }
 
     public List<Object[]> getTournamentsInPeriod(LocalDate begin,LocalDate finish) {
         //returns: name, date, city in date
-        Query q = em.createNativeQuery("SELECT t.nazwa, t.data_startu,m.nazwa FROM turnieje AS t JOIN adresy AS a ON t.id =a.id  JOIN miejscowosci AS m ON m.id = a.id WHERE t.data_startu >= :begin AND t.data_konca <= :finish ORDER BY 2;");
+        Query q = em.createNativeQuery("SELECT t.nazwa, t.data_startu,m.nazwa, t.id FROM turnieje AS t JOIN adresy AS a ON t.id =a.id  JOIN miejscowosci AS m ON m.id = a.id WHERE t.data_startu >= :begin AND t.data_konca <= :finish ORDER BY 2;");
         q.setParameter("begin",begin);
         q.setParameter("finish",finish);
         return q.getResultList();
     }
     public List<Object[]> getAllTournamentsInRegion(String name) {
         //returns: name, date, city
-
-        return null;
+        Query q = em.createNativeQuery("SELECT t.nazwa, t.data_startu,m.nazwa, t.id FROM turnieje AS t JOIN adresy AS a ON t.id =a.id  JOIN miejscowosci AS m ON m.id = a.id WHERE m.nazwa = :nazwa ORDER BY 2;");
+        q.setParameter("nazwa",name);
+        return q.getResultList();
     }
-    public List<Object[]> getAllTournamentsInRegionInPeriod(LocalDate begin, LocalDate end, String name) {
+    public List<Object[]> getAllTournamentsInRegionInPeriod(LocalDate begin, LocalDate finish, String name) {
         //returns: name, date, city
-
-        return null;
+        Query q = em.createNativeQuery("SELECT t.nazwa, t.data_startu,m.nazwa, t.id FROM turnieje AS t JOIN adresy AS a ON t.id =a.id  JOIN miejscowosci AS m ON m.id = a.id WHERE t.data_startu >= :begin AND t.data_konca <= :finish AND m.nazwa = :nazwa ORDER BY 2;");
+        q.setParameter("begin",begin);
+        q.setParameter("finish",finish);
+        q.setParameter("nazwa",name);
+        return q.getResultList();
     }
     public List<Object[]> getTeamInTournament(String tournamentName, String name) {
         //returns: the players in the team: Surname, Name, Role
