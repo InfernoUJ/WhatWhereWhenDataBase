@@ -49,10 +49,10 @@ public class DatabaseService {
         q.setParameter("nazwa",name);
         return q.getResultList();
     }
-    public List<Object[]> getTeamInTournament(int idTeam, String name) {
+    public List<Object[]> getTeamInTournament(int idTournament, String name) {
         //returns: the players in the team: Surname, Name, Role
         Query q = em.createNativeQuery("SELECT u.nazwisko, u.imie, r.nazwa, z.id FROM uczestnicy AS u JOIN sklady_w_zespolach AS s ON u.id =s.id_osoby  JOIN zespoly AS z ON z.id = s.id_zespolu JOIN role AS r ON r.id = s.rola  WHERE s.id_turnieju = :id AND z.nazwa = :name   ; ");
-        q.setParameter("id",idTeam);
+        q.setParameter("id",idTournament);
         q.setParameter("name",name);
         return q.getResultList();
     }
@@ -60,6 +60,15 @@ public class DatabaseService {
         //returns: All  Players:Surname, Name, Rating Sorted By Rating
 
         return null;
+    }
+    public long amountOfTournaments() {
+        Query q = em.createNativeQuery("SELECT COUNT(*) FROM turnieje");
+        return (long)(q.getResultList().get(0));
+    }
+    public List<Object[]> getTournamentResults(int id) {
+        Query q = em.createNativeQuery("SELECT DISTINCT  z.nazwa, compute_team_score(z.nazwa,:id) FROM zespoly AS z JOIN sklady_w_zespolach AS s ON z.id = s.id_zespolu WHERE s.id_turnieju = :id ORDER BY 2 DESC;");
+        q.setParameter("id",id);
+        return q.getResultList();
     }
 
     public List<Object[]> getPlayerInfo() {

@@ -38,7 +38,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Archiwum CoGdzieKiedy?");
-
+        System.out.println(new DatabaseService().amountOfTournaments());
         VBox buttonsForMainMenu = new VBox();
         showTournamentsButton = new Button("Tournaments");
         showRankingListButton = new Button("Rankings");
@@ -47,8 +47,8 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         mainMenu = new Scene(buttonsForMainMenu,500,300);
         tournamentScene = new Scene(DataSupplier.getAllTournaments(),500,300);
         rankingScene = new Scene(DataSupplier.getRankingsInDate(LocalDate.now()), 500,300);
-        List<Object[]> temp = new DatabaseService().getTeamInTournament(23,"nojak");
-        stage.setScene(tournamentScene);
+        List<Object[]> temp = new DatabaseService().getTeamInTournament(6,"Postawa grzech");
+        stage.setScene(rankingScene);
         //specificTournamentScene gets its result from DataSupplier.getTournamentInfo: yet to implement
 
 
