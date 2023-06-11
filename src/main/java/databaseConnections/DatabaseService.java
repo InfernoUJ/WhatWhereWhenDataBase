@@ -5,9 +5,9 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.Query;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class DatabaseService {
@@ -56,10 +56,22 @@ public class DatabaseService {
         q.setParameter("name",name);
         return q.getResultList();
     }
-    public List<Object[]> getRatingLists(LocalDate date) {
-        //returns: All  Players:Surname, Name, Rating Sorted By Rating
-
-        return null;
+    public Double getRatingForPerson(int id, LocalDate date) {
+        Query q = em.createNativeQuery("SELECT s.id_turnieju, z.nazwa FROM sklady_w_zespolach AS s JOIN zespoly AS z ON z.id = s.id_zespolu JOIN turnieje AS t ON s.id_turnieju = t.id WHERE s.id_osoby = :id AND t.data_konca < :date ;");
+        q.setParameter("id",id);
+        q.setParameter("date", Date.valueOf(date));
+        List<Object[]> turnieje = q.getResultList();
+        Double result = Double.valueOf(0);
+        for(Object[] e : turnieje) {
+            Query temp = em.createNativeQuery("SELECT compute_team_score(:name, :id );");
+            temp.setParameter("id", (int) e[0]);
+            temp.setParameter("name", (String)e[1]);
+            List<Object[]> bb = temp.getResultList();
+            Double b = (Double)bb.get(0)[0];
+            result += b;
+        }
+        result = result/turnieje.size();
+        return result;
     }
     public long amountOfTournaments() {
         Query q = em.createNativeQuery("SELECT COUNT(*) FROM turnieje");
@@ -71,10 +83,13 @@ public class DatabaseService {
         return q.getResultList();
     }
 
-    public List<Object[]> getPlayerInfo() {
+    public List<Object[]> getPlayerInfo(int id) {
         //returns: Player:Surname, Name, age, gender,
+        Query q = em.createNativeQuery("SELECT nazwisko, imie, plec, data_urodzenia, id FROM uczestnicy WHERE id = :id;");
+        q.setParameter("id",id);
 
-        return null;
+        return q.getResultList();
+
     }
     public List<Object[]> getBadAutors() {
         //returns: Player:Surname, Name and amount of rejected questions

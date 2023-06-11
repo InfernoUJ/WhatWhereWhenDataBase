@@ -1,12 +1,10 @@
 package gui;
 
 import databaseConnections.DatabaseService;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import utilityClasses.PersonInfo;
-import utilityClasses.Reward;
-import utilityClasses.TournamentInfo;
-import utilityClasses.TournamentShortInfo;
+import utilityClasses.*;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -119,8 +117,30 @@ public class QueryResultToListConverter {
         return result;
     }
 
-    public static ObservableList<PersonInfo> getParticipantsOfTeamInTournament(int id, String name) {
-        return null;
+    public static PersonInfo getPlayerInfo(int id, LocalDate date) {
+        List<Object[]> mainInfo = new DatabaseService().getPlayerInfo(id);
+        PersonInfo personInfo = new PersonInfo();
+        personInfo.setId(id);
+        personInfo.setPlayerSurname((String)(mainInfo.get(0)[0]));
+        personInfo.setPlayerName((String) (mainInfo.get(0)[1]));
+        personInfo.setGender((String) (mainInfo.get(0)[2]));
+        personInfo.setBirthday(((Date) mainInfo.get(0)[3]).toLocalDate());
+        personInfo.setRating(new DatabaseService().getRatingForPerson(id,date));
+        return personInfo;
+    }
+    public static ObservableList<PersonInfoWithRole> getParticipantsOfTeamInTournament(int id, String name) {
+        List<Object[]> people = new DatabaseService().getTeamInTournament(id,name);
+
+        ObservableList<PersonInfoWithRole> result = FXCollections.observableArrayList();
+        for(Object[] e: people) {
+            PersonInfoWithRole temp = new PersonInfoWithRole();
+            temp.setPlayerSurname((String) e[0]);
+            temp.setPlayerName((String) e[1]);
+            temp.setRola((String) e[2]);
+            result.add(temp);
+        }
+
+        return result;
     }
 
 }

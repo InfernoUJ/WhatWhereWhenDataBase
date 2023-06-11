@@ -5,7 +5,17 @@ import java.time.LocalDate;
 public class PersonInfo {
     private String playerSurname;
     private String playerName;
+    private String gender;
     LocalDate birthday;
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
     public String getPlayerSurname() {
         return playerSurname;
     }
@@ -22,11 +32,11 @@ public class PersonInfo {
         this.playerName = playerName;
     }
 
-    public int getRating() {
+    public double getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 
@@ -38,7 +48,7 @@ public class PersonInfo {
         this.id = id;
     }
 
-    private int rating;
+    private double rating;
     private int id;
 
     public LocalDate getBirthday() {
