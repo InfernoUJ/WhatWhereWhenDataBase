@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import utilityClasses.TournamentShortInfo;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -44,13 +45,13 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         buttonsForMainMenu.getChildren().addAll(showTournamentsButton,showRankingListButton, insertionMode);
         mainMenu = new Scene(buttonsForMainMenu,500,300);
         stage.setScene(mainMenu);*/
-    TableColumn name = new TableColumn<>("Name");
+    TableColumn<TournamentShortInfo,String> name = new TableColumn<>("Name");
     name.setMinWidth(200);
     name.setCellValueFactory(new PropertyValueFactory<>("name"));
-        TableColumn date = new TableColumn<>("Date");
+        TableColumn<TournamentShortInfo, LocalDate> date = new TableColumn<>("Date");
         name.setMinWidth(200);
         name.setCellValueFactory(new PropertyValueFactory<>("date"));
-        TableColumn city = new TableColumn<>("City");
+        TableColumn<TournamentShortInfo,String> city = new TableColumn<>("City");
         name.setMinWidth(200);
         name.setCellValueFactory(new PropertyValueFactory<>("city"));
 
