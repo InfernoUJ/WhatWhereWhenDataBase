@@ -4,6 +4,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,11 +19,18 @@ public class DatabaseService {
     //create needed methods here
     public List<Object[]> getAllTournamentsWithDatesAndCitySortedByDate() {
         //returns: name, date, city
-
-        return null;
+        List<Object[]> temp = new ArrayList<>();
+        for(int i = 0; i < 10;i++) {
+            Object[] adding = new Object[3];
+            adding[0] = new String("turniej123");
+            adding[1] = LocalDate.now();
+            adding[2] = new String("krakow");
+            temp.add(adding);
+        }
+        return temp;
     }
 
-    public List<Object[]> getTournamentsInPeriod(Date begin,Date finidh) {
+    public List<Object[]> getTournamentsInPeriod(LocalDate begin,LocalDate finidh) {
         //returns: name, date, city in date
 
         return null;
@@ -31,7 +40,7 @@ public class DatabaseService {
 
         return null;
     }
-    public List<Object[]> getAllTournamentsInRegionInPeriod(Date begin, Date end, String name) {
+    public List<Object[]> getAllTournamentsInRegionInPeriod(LocalDate begin, LocalDate end, String name) {
         //returns: name, date, city
 
         return null;
@@ -41,7 +50,7 @@ public class DatabaseService {
 
         return null;
     }
-    public List<Object[]> getRatingLists(Date date) {
+    public List<Object[]> getRatingLists(LocalDate date) {
         //returns: All  Players:Surname, Name, Rating Sorted By Rating
 
         return null;

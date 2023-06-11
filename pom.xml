@@ -58,6 +58,23 @@
                 <configuration>
                     <mainClass>gui.Main</mainClass>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>run</id>
+                        <configuration>
+                            <mainClass>gui.Main</mainClass>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>debug</id>
+                        <configuration>
+                            <mainClass>gui.Main</mainClass>
+                            <options>
+                                <option>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:8000</option>
+                            </options>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

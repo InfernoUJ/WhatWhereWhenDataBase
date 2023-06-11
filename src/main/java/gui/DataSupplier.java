@@ -8,6 +8,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import utilityClasses.TournamentShortInfo;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -32,8 +33,8 @@ public class DataSupplier {
     }
 
 
-    public static TableView<TournamentShortInfo> getTournamentsInPeriod(Date begin, Date end) {
-        if(end.before(begin)) {
+    public static TableView<TournamentShortInfo> getTournamentsInPeriod(LocalDate begin, LocalDate end) {
+        if(end.isBefore(begin)) {
             throw new IllegalArgumentException("incorrect Dates");
         }
         TableView<TournamentShortInfo> turnieje;
@@ -72,8 +73,8 @@ public class DataSupplier {
         turnieje.getColumns().addAll(name,date,city);
         return turnieje;
     }
-    public static TableView<TournamentShortInfo> getTournamentsInPeriod(Date begin, Date end, String town) {
-        if(end.before(begin)) {
+    public static TableView<TournamentShortInfo> getTournamentsInPeriod(LocalDate begin, LocalDate end, String town) {
+        if(end.isBefore(begin)) {
             throw new IllegalArgumentException("incorrect Dates");
         }
         TableView<TournamentShortInfo> turnieje;

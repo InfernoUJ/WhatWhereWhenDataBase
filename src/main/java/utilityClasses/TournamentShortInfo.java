@@ -1,10 +1,11 @@
 package utilityClasses;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class TournamentShortInfo {
     private String name;
-    private Date date;
+    private LocalDate date;
     private String city;
 
     public String getName() {
@@ -15,11 +16,11 @@ public class TournamentShortInfo {
         this.name = name;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
