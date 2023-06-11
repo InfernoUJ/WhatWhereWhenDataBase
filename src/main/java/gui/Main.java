@@ -47,7 +47,8 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         mainMenu = new Scene(buttonsForMainMenu,500,300);
         tournamentScene = new Scene(DataSupplier.getAllTournaments(),500,300);
         rankingScene = new Scene(DataSupplier.getRankingsInDate(LocalDate.now()), 500,300);
-        stage.setScene(rankingScene);
+        List<Object[]> temp = new DatabaseService().getTournamentsInPeriod(LocalDate.now(),LocalDate.now());
+        stage.setScene(tournamentScene);
         //specificTournamentScene gets its result from DataSupplier.getTournamentInfo: yet to implement
 
 

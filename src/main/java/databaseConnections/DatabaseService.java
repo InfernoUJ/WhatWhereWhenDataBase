@@ -3,6 +3,7 @@ package databaseConnections;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import jakarta.persistence.Query;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,25 +17,23 @@ public class DatabaseService {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("WhatWhereWhenPersistence");
         em = emf.createEntityManager();
     }
+
+
+
+
+
     //create needed methods here
     public List<Object[]> getAllTournamentsWithDatesAndCitySortedByDate() {
-        //returns: name, date, city
-        List<Object[]> temp = new ArrayList<>();
-        for(int i = 0; i < 1000;i++) {
-            Object[] adding = new Object[4];
-            adding[0] = new String("turniej123");
-            adding[1] = LocalDate.now();
-            adding[2] = new String("krakow");
-            adding[3] = i;
-            temp.add(adding);
-        }
-        return temp;
+        Query q = em.createNativeQuery("SELECT t.nazwa, t.data_startu,m.nazwa FROM turnieje AS t JOIN adresy AS a ON t.id =a.id  JOIN miejscowosci AS m ON m.id = a.id ORDER BY 2; ");
+        return q.getResultList();
     }
 
-    public List<Object[]> getTournamentsInPeriod(LocalDate begin,LocalDate finidh) {
+    public List<Object[]> getTournamentsInPeriod(LocalDate begin,LocalDate finish) {
         //returns: name, date, city in date
-
-        return null;
+        Query q = em.createNativeQuery("SELECT t.nazwa, t.data_startu,m.nazwa FROM turnieje AS t JOIN adresy AS a ON t.id =a.id  JOIN miejscowosci AS m ON m.id = a.id WHERE t.data_startu >= :begin AND t.data_konca <= :finish ORDER BY 2;");
+        q.setParameter("begin",begin);
+        q.setParameter("finish",finish);
+        return q.getResultList();
     }
     public List<Object[]> getAllTournamentsInRegion(String name) {
         //returns: name, date, city
