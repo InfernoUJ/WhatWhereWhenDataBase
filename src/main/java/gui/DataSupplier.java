@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.StackPane;
 import utilityClasses.RankingShortInfo;
 import utilityClasses.TournamentShortInfo;
 
@@ -113,6 +114,11 @@ public class DataSupplier {
         turnieje.setItems(QueryResultToListConverter.getTheListOfAllTournamentsInPeriodInCity(begin,end,town));
         turnieje.getColumns().addAll(name,date,city);
         return turnieje;
+    }
+    public static void getTournamentInfo(int Id) {
+
+
+
     }
 
 }

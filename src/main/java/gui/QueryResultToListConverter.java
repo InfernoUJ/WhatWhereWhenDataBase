@@ -4,6 +4,7 @@ import databaseConnections.DatabaseService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import utilityClasses.RankingShortInfo;
+import utilityClasses.TournamentInfo;
 import utilityClasses.TournamentShortInfo;
 
 import java.time.LocalDate;
@@ -86,5 +87,18 @@ public class QueryResultToListConverter {
         }
         return result;
     }
+
+    public static TournamentInfo getTournamentResult(int Id) {
+
+        TournamentInfo temp = new TournamentInfo();
+        temp.setKomunikatOrganizacyjny("ajisdifj");
+        temp.setName("aaaa");
+        temp.setId(Id);
+
+
+        return temp;
+    }
+
+
 
 }

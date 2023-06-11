@@ -32,7 +32,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     Button goBack;
     Button results;
     Button filter;
-    Scene mainMenu, rankingScene, insertionScene, tournamentScene;
+    Scene mainMenu, rankingScene, insertionScene, tournamentScene, specificTournamentScene;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -47,7 +47,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         tournamentScene = new Scene(DataSupplier.getAllTournaments(),500,300);
         rankingScene = new Scene(DataSupplier.getRankingsInDate(LocalDate.now()), 500,300);
         stage.setScene(rankingScene);
-
+        //specificTournamentScene gets its result from DataSupplier.getTournamentInfo: yet to implement
 
 
 
