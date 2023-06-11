@@ -369,17 +369,6 @@ CREATE OR REPLACE FUNCTION sprawdz_czy_pytanie_ma_poprawny_numer()
 RETURNS TRIGGER
 AS $$
 BEGIN
-    -- IF(TG_NARGS != 1) THEN
-    --     RAISE EXCEPTION 'Niepoprawna ilość argumantów';
-    -- END IF;
-
-    -- RAISE NOTICE 'Tyo argumentu: %', pg_typeof(TG_ARGV[0])::oid;
-    -- RAISE NOTICE 'Tyo argumentu: %', pg_typeof(TG_ARGV[0])::oid;
-    -- RAISE NOTiCE 'Typ inta: %', 42::oid;
-    -- IF(pg_typeof(TG_ARGV[0])::oid != 42::oid) THEN
-    --     RAISE EXCEPTION 'Niepoprawny typ argumentu';
-    -- END IF;
-
     IF NEW.numer_pytania IN (
         SELECT numer_pytania
         FROM pytania_na_turniejach 
@@ -394,7 +383,7 @@ $$ LANGUAGE plpgsql;
 
 DROP TRIGGER IF EXISTS sprawdzanie_numeru_pytania ON pytania_na_turniejach;
 CREATE TRIGGER sprawdzanie_numeru_pytania BEFORE INSERT OR UPDATE ON pytania_na_turniejach
-FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_pytanie_ma_poprawny_numer;
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_pytanie_ma_poprawny_numer();
 
 
 -- CREATE OR REPLACE FUNCTION sprawdz_czy_pytanie_ma_prawie_unikalny_numer()
