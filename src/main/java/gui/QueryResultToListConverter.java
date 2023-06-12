@@ -89,7 +89,7 @@ public class QueryResultToListConverter {
         return result;
     }
 
-    public static TournamentInfo getTournamentResult(int id) {
+    public static TournamentInfo getTournamentInfo(int id) {
         List<Object[]> mainInfo = new DatabaseService().displayTournamentInfo(id);
         List<Object[]> rewards = new DatabaseService().getRewardsForTournament(id);
         List<Object[]> personel = new DatabaseService().getStaffForTournament(id);
@@ -141,6 +141,18 @@ public class QueryResultToListConverter {
         }
 
         return result;
+    }
+    public static ObservableList<TeamResult> getTournamentResults(int id) {
+        List<Object[]> mainInfo = new DatabaseService().getTournamentResults(id);
+        ObservableList<TeamResult> results = FXCollections.observableArrayList();
+        for(Object[] e : mainInfo) {
+            TeamResult temp = new TeamResult();
+            temp.setId((int)(e[2]));
+            temp.setResult((long)e[1]);
+            temp.setName((String) e[0]);
+            results.add(temp);
+        }
+        return results;
     }
 
 }
