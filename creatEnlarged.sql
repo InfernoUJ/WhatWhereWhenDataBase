@@ -562,6 +562,27 @@ CREATE TRIGGER sprawdzanie_czy_jest_max2_zapasowych BEFORE INSERT OR UPDATE ON s
 FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_jest_max2_zapasowych();
 
 
+CREATE OR REPLACE FUNCTION sprawdz_czy_gracz_nie_zostal_usuniety()
+RETURNS TRIGGER
+AS $$
+BEGIN
+    IF (SELECT TRUE 
+        FROM uczestnicy 
+        WHERE id=NEW.id_osoby
+        AND imie=''
+        AND nazwisko='')
+    THEN
+        RAISE EXCEPTION 'Gracz o id % został usunięty', NEW.id_osoby;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS sprawdzanie_czy_gracz_nie_zostal_usuniety ON sklady_w_zespolach;
+CREATE TRIGGER sprawdzanie_czy_gracz_nie_zostal_usuniety BEFORE INSERT OR UPDATE ON sklady_w_zespolach
+FOR EACH ROW EXECUTE PROCEDURE sprawdz_czy_gracz_nie_zostal_usuniety();
+
+
 CREATE OR REPLACE FUNCTION sprawdz_czy_gra_w_turnieju_sklady()
 RETURNs TRIGGER
 AS $$
