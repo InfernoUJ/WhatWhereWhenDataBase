@@ -169,5 +169,17 @@ public class QueryResultToListConverter {
         }
         return result;
     }
+    public static ObservableList<PersonInfo> getRatingList(LocalDate date) {
+        List<Object[]> allIds = new DatabaseService().getAllPlayersId();
+        ObservableList<PersonInfo> results = FXCollections.observableArrayList();
+        for(Object[] e : allIds) {
+            PersonInfo temp = getPlayerInfo((int)e[0],date);
+            results.add(temp);
+
+
+        }
+
+        return results;
+    }
 
 }

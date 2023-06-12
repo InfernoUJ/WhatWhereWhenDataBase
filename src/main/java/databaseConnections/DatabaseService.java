@@ -119,6 +119,10 @@ public class DatabaseService {
         q.setParameter("id",id);
         return q.getResultList();
     }
+    public List<Object[]> getAllPlayersId() {
+        Query q = em.createNativeQuery("SELECT id FROM uczestnicy");
+        return q.getResultList();
+    }
 
 }
 
