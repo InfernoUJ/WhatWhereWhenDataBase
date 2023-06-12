@@ -155,4 +155,19 @@ public class QueryResultToListConverter {
         return results;
     }
 
+    public static ObservableList<Question> getQuestionsForTournament(int id) {
+        List<Object[]> mainInfo = new DatabaseService().getQuestionsForTournament(id);
+        ObservableList<Question>result  = FXCollections.observableArrayList();
+        for(Object[] e : mainInfo) {
+            Question temp = new Question();
+            temp.setId((int)e[4]);
+            temp.setNumerPytania((int)e[0]);
+            temp.setTresc((String) e[1]);
+            temp.setOdpowiedz((String) e[2]);
+            temp.setKategoria((String) e[3]);
+            result.add(temp);
+        }
+        return result;
+    }
+
 }

@@ -114,6 +114,12 @@ public class DatabaseService {
         return q.getResultList();
     }
 
+    public List<Object[]> getQuestionsForTournament(int id) {
+        Query q = em.createNativeQuery("SELECT pt.numer_pytania, p.tresc, p.odpowiedz, k.nazwa, p.id FROM pytania_na_turniejach AS pt JOIN pytania AS p ON pt.id_pytania = p.id JOIN kategorie AS k ON p.id_kategorii = k.id WHERE pt.id_turnieju = :id");
+        q.setParameter("id",id);
+        return q.getResultList();
+    }
+
 }
 
 
