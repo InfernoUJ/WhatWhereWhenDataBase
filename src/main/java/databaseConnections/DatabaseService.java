@@ -14,8 +14,10 @@ public class DatabaseService {
     private static EntityManager em;
 
     public DatabaseService() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("WhatWhereWhenPersistence");
-        em = emf.createEntityManager();
+        if(em==null) {
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("WhatWhereWhenPersistence");
+            em = emf.createEntityManager();
+        }
     }
 
 
@@ -63,12 +65,16 @@ public class DatabaseService {
         List<Object[]> turnieje = q.getResultList();
         Double result = Double.valueOf(0);
         for(Object[] e : turnieje) {
-            Query temp = em.createNativeQuery("SELECT compute_team_score(:name, :id );");
+            Query temp = em.createNativeQuery("SELECT compute_team_score(:name, :id ),5 ;");
             temp.setParameter("id", (int) e[0]);
             temp.setParameter("name", (String)e[1]);
             List<Object[]> bb = temp.getResultList();
-            Double b = (Double)bb.get(0)[0];
+            Double b = ((Integer)bb.get(0)[0]).doubleValue();
+
             result += b;
+        }
+        if(turnieje.isEmpty()) {
+            return 0.0;
         }
         result = result/turnieje.size();
         return result;
@@ -85,7 +91,7 @@ public class DatabaseService {
 
     public List<Object[]> getPlayerInfo(int id) {
         //returns: Player:Surname, Name, age, gender,
-        Query q = em.createNativeQuery("SELECT nazwisko, imie, plec, data_urodzenia, id FROM uczestnicy WHERE id = :id;");
+        Query q = em.createNativeQuery("SELECT nazwisko, imie, plec, data_urodzenia, id FROM uczestnicy WHERE id = :id ;");
         q.setParameter("id",id);
 
         return q.getResultList();
@@ -98,29 +104,29 @@ public class DatabaseService {
     }
     public List<Object[]> displayTournamentInfo(int id) {
         //returns: Name,Start and finish Dates, localization, description, staff
-        Query q = em.createNativeQuery("SELECT t.nazwa, t.opis, t.data_startu, t.data_konca, m.nazwa, a.ulica, a.kod_pocztowy, a.numer_budynku, coalesce(a.numer_mieszkania,'0'), t.id FROM turnieje AS t JOIN adresy AS a ON t.id_adresu = a.id JOIN miejscowosci AS m ON m.id = a.miejscowosc WHERE t.id = :id");
+        Query q = em.createNativeQuery("SELECT t.nazwa, t.opis, t.data_startu, t.data_konca, m.nazwa, a.ulica, a.kod_pocztowy, a.numer_budynku, coalesce(a.numer_mieszkania,'0'), t.id FROM turnieje AS t JOIN adresy AS a ON t.id_adresu = a.id JOIN miejscowosci AS m ON m.id = a.miejscowosc WHERE t.id = :id ;");
         q.setParameter("id",id);
         return q.getResultList();
     }
 
     public List<Object[]> getRewardsForTournament(int id) {
-        Query q = em.createNativeQuery("SELECT nt.miejsce, n.opis FROM nagrody_w_turniejach AS nt JOIN nagrody AS n ON n.id = nt.id_nagrody WHERE nt.id_turnieju = :id;");
+        Query q = em.createNativeQuery("SELECT nt.miejsce, n.opis FROM nagrody_w_turniejach AS nt JOIN nagrody AS n ON n.id = nt.id_nagrody WHERE nt.id_turnieju = :id ;");
         q.setParameter("id",id);
         return q.getResultList();
     }
     public List<Object[]> getStaffForTournament(int id) {
-        Query q = em.createNativeQuery("SELECT p.nazwisko, p.imie, o.organizator FROM organizacja AS o JOIN uczestnicy AS p ON p.id = o.sedzia_glowny WHERE o.id_turnieju = :id");
+        Query q = em.createNativeQuery("SELECT p.nazwisko, p.imie, o.organizator FROM organizacja AS o JOIN uczestnicy AS p ON p.id = o.sedzia_glowny WHERE o.id_turnieju = :id ;");
         q.setParameter("id",id);
         return q.getResultList();
     }
 
     public List<Object[]> getQuestionsForTournament(int id) {
-        Query q = em.createNativeQuery("SELECT pt.numer_pytania, p.tresc, p.odpowiedz, k.nazwa, p.id FROM pytania_na_turniejach AS pt JOIN pytania AS p ON pt.id_pytania = p.id JOIN kategorie AS k ON p.id_kategorii = k.id WHERE pt.id_turnieju = :id");
+        Query q = em.createNativeQuery("SELECT pt.numer_pytania, p.tresc, p.odpowiedz, k.nazwa, p.id FROM pytania_na_turniejach AS pt JOIN pytania AS p ON pt.id_pytania = p.id JOIN kategorie AS k ON p.id_kategorii = k.id WHERE pt.id_turnieju = :id ;");
         q.setParameter("id",id);
         return q.getResultList();
     }
     public List<Object[]> getAllPlayersId() {
-        Query q = em.createNativeQuery("SELECT id FROM uczestnicy");
+        Query q = em.createNativeQuery("SELECT id, nazwisko FROM uczestnicy;");
         return q.getResultList();
     }
 

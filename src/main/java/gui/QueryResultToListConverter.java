@@ -123,7 +123,7 @@ public class QueryResultToListConverter {
         personInfo.setId(id);
         personInfo.setPlayerSurname((String)(mainInfo.get(0)[0]));
         personInfo.setPlayerName((String) (mainInfo.get(0)[1]));
-        personInfo.setGender((String) (mainInfo.get(0)[2]));
+        personInfo.setGender(String.valueOf(mainInfo.get(0)[2]));
         personInfo.setBirthday(((Date) mainInfo.get(0)[3]).toLocalDate());
         personInfo.setRating(new DatabaseService().getRatingForPerson(id,date));
         return personInfo;

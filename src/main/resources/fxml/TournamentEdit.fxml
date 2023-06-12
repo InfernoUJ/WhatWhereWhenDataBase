@@ -1,0 +1,150 @@
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Button?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import java.lang.String?>
+
+ 
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="563.0" prefWidth="1102.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.controllers.TournamentEditController">
+
+    <children>
+        <GridPane 
+            xmlns:fx="http://javafx.com/fxml" alignment="center"
+            hgap="10" vgap="10">
+            <padding>
+                <Insets top="40" right="40" bottom="40" left="40"/>
+            </padding>
+            <columnConstraints>
+                <ColumnConstraints minWidth="100" prefWidth="100"
+                                   maxWidth="Infinity" halignment="RIGHT">
+                </ColumnConstraints>
+                <ColumnConstraints minWidth="200" prefWidth="200"
+                                   maxWidth="Infinity" hgrow="ALWAYS">
+                </ColumnConstraints>
+            </columnConstraints>
+ 
+
+            <!-- Add Header Label -->
+            <Label text="New Tournament" GridPane.columnIndex="0" 
+                   GridPane.rowIndex="0" GridPane.columnSpan="2" 
+                   GridPane.rowSpan="1" GridPane.halignment="CENTER" >
+                <font>
+                    <Font name="Arial" size="24" ></Font>
+                </font>
+                <GridPane.margin>
+                    <Insets top="20" right="0" bottom="20" left="0"></Insets>
+                </GridPane.margin>
+            </Label>
+ 
+            <Label text="Name :" GridPane.columnIndex="0" 
+                   GridPane.rowIndex="1" >
+            </Label>
+            <TextField fx:id="nameField" prefHeight="40" 
+                       GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+ 
+
+ 
+            <Label text="Start Date: " GridPane.columnIndex="0" 
+                   GridPane.rowIndex="2" >
+            </Label>
+            <!-- Add Email Text Field -->
+            <DatePicker fx:id="startDatePicker" promptText="Start" prefHeight="40"  maxWidth="Infinity"
+                       GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+ 
+ 
+
+            <Label text="End Date: " GridPane.columnIndex="0" 
+                   GridPane.rowIndex="3" >
+            </Label>
+            <!-- Add Email Text Field -->
+            <DatePicker fx:id="endDatePicker" promptText="Start" prefHeight="40" maxWidth="Infinity"
+                       GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+ 
+ 
+             <Label text="Description : " GridPane.columnIndex="0" 
+                   GridPane.rowIndex="4" >
+            </Label>
+            <TextField fx:id="descriptionField" prefHeight="40" 
+                           GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+           
+            
+            <Label text="Referee : " GridPane.columnIndex="2" 
+                               GridPane.rowIndex="1" >
+            </Label>
+
+
+            <ComboBox fx:id="fruitCombo" prefHeight="40" prefWidth="90.0" promptText="choose"  GridPane.columnIndex="3" 
+                      GridPane.rowIndex="1" maxWidth="Infinity">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Apple" />
+                        <String fx:value="Orange" />
+                        <String fx:value="Pear" />
+                    </FXCollections>
+                </items>
+            </ComboBox>
+ 
+
+             <Label text="Organizer : " GridPane.columnIndex="2" 
+                   GridPane.rowIndex="2" >
+            </Label>
+            <TextField fx:id="organizerField" prefHeight="40" 
+                           GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+ 
+            <Label text="City : " GridPane.columnIndex="4" 
+                               GridPane.rowIndex="1" >
+            </Label>
+
+            <ComboBox fx:id="localityCombo" prefHeight="40" prefWidth="90.0" promptText="choose"  GridPane.columnIndex="5" 
+                      GridPane.rowIndex="1" maxWidth="Infinity">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Apple" />
+                        <String fx:value="Orange" />
+                        <String fx:value="Pear" />
+                    </FXCollections>
+                </items>
+            </ComboBox>            
+
+             <Label text="Street : " GridPane.columnIndex="4" 
+                   GridPane.rowIndex="2" >
+            </Label>
+            <TextField fx:id="streetField" prefHeight="40" 
+                           GridPane.columnIndex="5" GridPane.rowIndex="2"/>
+ 
+             <Label text="House : " GridPane.columnIndex="4" 
+                   GridPane.rowIndex="3" >
+            </Label>
+            <TextField fx:id="houseField" prefHeight="40" 
+                           GridPane.columnIndex="5" GridPane.rowIndex="3"/>
+  
+             <Label text="Apartment : " GridPane.columnIndex="4" 
+                   GridPane.rowIndex="4" >
+            </Label>
+            <TextField fx:id="apartmentField" prefHeight="40" 
+                           GridPane.columnIndex="5" GridPane.rowIndex="4"/>
+  
+                                            
+          
+
+            <Button fx:id="submitButton" text="Submit"
+                    prefWidth="100" prefHeight="40" defaultButton="true"
+                    GridPane.columnIndex="0" GridPane.rowIndex="5"
+                    GridPane.columnSpan="2" GridPane.rowSpan="1"
+                    GridPane.halignment="CENTER"
+                    onAction="#handleButtonClicks">
+                <GridPane.margin>
+                    <Insets top="20" right="0" bottom="20" left="0"></Insets>
+                </GridPane.margin>
+            </Button>
+        </GridPane>
+    </children>
+</AnchorPane>
